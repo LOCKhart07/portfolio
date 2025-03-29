@@ -83,6 +83,12 @@ const Projects: React.FC = () => {
   }, [])
 
   if (projects.length === 0) return <div>Loading...</div>;
+  const handleProjectClick = (project: Project) => {
+    console.log(project);
+    if (project.link) {
+      window.open(project.link, '_blank', 'noopener,noreferrer');
+    }
+  };
 
   return (
     <div className="projects-container">
@@ -92,6 +98,7 @@ const Projects: React.FC = () => {
             key={index}
             className="project-card"
             style={{ '--delay': `${index * 0.1}s` } as React.CSSProperties}
+            onClick={() => handleProjectClick(project)}
           >
             <img src={project.image.url} alt={project.title} className="project-image" />
             <div className="project-details">
