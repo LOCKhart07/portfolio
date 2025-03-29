@@ -2,5 +2,5 @@
 
 export const getDatoCmsToken = (): string => {
 
-  return process.env.DATODMSTOKEN_DEFAULT ?? '';
+  return process.env.DATOCMSTOKEN_DEFAULT ?? '';
 };
