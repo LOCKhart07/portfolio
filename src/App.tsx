@@ -15,11 +15,12 @@ import Reading from './pages/Reading';
 import Blogs from './pages/Blogs';
 import Certifications from './pages/Certifications';
 import usePageTracking from "./usePageTracking";
+import ConsentBanner from './components/ConsentBanner';
 
 const App: React.FC = () => {
   usePageTracking();
   return (
-
+    <>
       <Routes>
         <Route path="/" element={<NetflixTitle />} />
         <Route path="/browse" element={<Browse />} />
@@ -35,6 +36,8 @@ const App: React.FC = () => {
         <Route path="/blogs" element={<Layout><Blogs /></Layout>} />
         <Route path="/certifications" element={<Layout><Certifications /></Layout>} />
       </Routes>
+      <ConsentBanner />
+    </>
   );
 };
 
