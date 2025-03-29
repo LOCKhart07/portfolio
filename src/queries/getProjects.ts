@@ -4,7 +4,7 @@ import { Project } from '../types';
 
 const GET_PROJECTS = `
   query {
-    allProjects(orderBy: title_ASC) {
+    allProjects(orderBy: order_ASC) {
       title
       description
       techUsed
