@@ -68,9 +68,6 @@ const Skills: React.FC = () => {
     acc[skill.category].push(skill);
     return acc;
   }, {});
-  console.log("skillsByCategory", skillsByCategory)
-
-
   return (
     <div className="skills-container">
       {Object.keys(skillsByCategory).map((category, index) => (

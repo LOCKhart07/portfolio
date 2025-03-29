@@ -4,7 +4,7 @@ import { Skill } from '../types';
 
 const GET_SKILLS = `
 {
-  allSkills(first: 100, orderBy: category_ASC) {
+  allSkills(first: 100, orderBy: order_ASC) {
     name
     category
     description
@@ -15,6 +15,5 @@ const GET_SKILLS = `
 
 export async function getSkills(): Promise<Skill[]> {
   const data = await datoCMSClient.request<{ allSkills: Skill[] }>(GET_SKILLS);
-  console.log("data", data.allSkills)
   return data.allSkills;
 }
