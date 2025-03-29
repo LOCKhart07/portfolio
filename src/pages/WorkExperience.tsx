@@ -25,6 +25,25 @@ const WorkExperience: React.FC = () => {
   if (!timeLineData) return <div>Loading...</div>;
   console.log("🚀 ~ timeLineData:", timeLineData)
 
+  const parseYear = (range: string): number => {
+    if (range.includes("Present")) return new Date().getFullYear();
+    return parseInt(range.split(" - ")[1]); // Extracts end year
+  };
+
+  const getContentStyle = (timelineType: string, index: number) => {
+    if (timelineType === "work") {
+      return index === 0
+        ? { background: 'rgb(33, 150, 243)', color: '#fff' }
+        : { background: 'rgb(240, 240, 240)', color: '#fff' };
+    }
+    return { background: 'rgb(255, 224, 230)', color: '#fff' };
+  };
+
+  timeLineData.sort(
+    (a, b) => parseYear(b.dateRange) - parseYear(a.dateRange)
+  );
+
+
   return (
     <>
       <div className="timeline-container">
@@ -35,13 +54,7 @@ const WorkExperience: React.FC = () => {
           <VerticalTimelineElement
             key={index}
             className={`vertical-timeline-element--${item.timelineType}`}
-            contentStyle={
-              item.timelineType === "work"
-                ? index === 0
-                  ? { background: 'rgb(33, 150, 243)', color: '#fff' }
-                  : { background: 'rgb(240, 240, 240)', color: '#fff' }
-                : { background: 'rgb(255, 224, 230)', color: '#fff' } // Lighter red for education
-            }
+            contentStyle={getContentStyle(item.timelineType, index)}
             contentArrowStyle={
               item.timelineType === "work"
                 ? { borderRight: index === 0 ? '7px solid rgb(33, 150, 243)' : '7px solid rgb(240, 240, 240)' }
