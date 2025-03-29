@@ -28,7 +28,7 @@ jobs:
       - name: Build project
         run: npm run build
         env:
-          REACT_APP_DATOCMSTOKEN_DEFAULT: ${{ secrets.DATODMSTOKEN_DEFAULT }}
+          REACT_APP_DATOCMSTOKEN_DEFAULT: ${{ secrets.DATOCMSTOKEN_DEFAULT }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
