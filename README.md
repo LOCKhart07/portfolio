@@ -2,18 +2,19 @@
 
 Welcome to my personal portfolio project! 🚀 This website showcases my work, skills, and experiences in web development. It's designed to be lightweight, customizable, and professional while maintaining an approachable style.
 
-This project is forked from [Sumanth Samala's Netflix Portfolio](https://github.com/SamalaSumanth0262/netflix_portfolio).
-
 ![Screenshot from 2024-12-08 19-19-06](https://github.com/user-attachments/assets/f8220485-16ec-48cf-8cb2-7853540c5724)
 
 ---
 
 ## ✨ Features
 
-- 🌍 **Dynamic Content**: Powered by [DatoCMS](https://www.datocms.com) for easy content management.
-- ⚡ **Fast & Responsive**: Built with modern web technologies for seamless performance.
-- 🎨 **Customizable**: Modular and easy to adapt to your own needs.
-- 📈 **Professional Yet Personal**: Highlights projects, skills, and achievements.
+- 🌍 **Dynamic Content**: Powered by [DatoCMS](https://www.datocms.com) for easy content management
+- ⚡ **Fast & Responsive**: Built with modern web technologies for seamless performance
+- 🎨 **Customizable**: Modular and easy to adapt to your own needs
+- 📈 **Professional Yet Personal**: Highlights projects, skills, and achievements
+- 🔒 **Privacy-Focused**: GDPR-compliant analytics with user consent management
+- ♿ **Accessibility**: Follows WCAG guidelines with semantic HTML and ARIA attributes
+- 📊 **Analytics**: Google Analytics 4 integration with privacy-first approach
 
 ---
 
@@ -25,15 +26,32 @@ This portfolio is built with love and:
 - ☁️ **AWS S3 & CloudFront** (Hosting and CDN)
 - 🖌️ **Tailwind CSS** (Styling)
 - 🛡️ **DatoCMS** (Content Management)
+- 📊 **Google Analytics 4** (Privacy-focused analytics)
 - 🧩 **Other Cool Tools**: GitHub Actions
 
 ---
 
-## ⭐ Show Your Support
+## 🔒 Privacy Features
 
-If you find this project helpful or inspiring, give it a ⭐ on GitHub—it means the world to me! 🌟
+The portfolio includes several privacy-focused features:
 
-Happy coding! 💻✨
+- **Consent Management**: Users can opt-in/out of analytics
+- **GDPR Compliance**: Analytics are disabled by default
+- **Data Minimization**: Only essential data is collected
+- **Transparent Controls**: Clear consent banner with easy opt-out
+- **Local Storage**: User preferences are remembered
+
+---
+
+## ⚡ Performance Optimizations
+
+Recent performance improvements include:
+
+- **Optimized Icon Loading**: Efficient icon management system
+- **Lazy Loading**: Images and components load on demand
+- **Memoization**: Prevents unnecessary re-renders
+- **Accessibility**: Semantic HTML and keyboard navigation
+- **Event Tracking**: Efficient user interaction monitoring
 
 ---
 
@@ -57,7 +75,12 @@ npm cache clean --force
 npm install
 ```
 
-3. **Configure Environment Variables**: Create a `.env` file and set up the necessary API keys and configurations.
+3. **Configure Environment Variables**: Create a `.env` file and set up the necessary API keys and configurations:
+```env
+REACT_APP_GA_TRACKING_ID=your_ga4_id
+REACT_APP_DATOCMS_API_TOKEN=your_datocms_token
+```
+
 4. **Run the Project**: Start the development server.
 
 ```bash
@@ -65,7 +88,6 @@ npm start
 ```
 
 5. **Visit the Local Server**: Open your browser and navigate to the local server URL.
-   ![alt text](image.png)
 
 ---
 
@@ -93,9 +115,9 @@ Found a bug? Have a feature in mind? 🤔 Feel free to raise an issue or suggest
 Your feedback is valuable and helps make this project better for everyone. Thank you for contributing!
 
 ---
-
 ## 🌟 Acknowledgments
 
+- This project is forked from [Sumanth Samala's Netflix Portfolio](https://github.com/SamalaSumanth0262/netflix_portfolio).
 - Thanks to [DatoCMS](https://www.datocms.com) for powering the dynamic content.
 - Inspired by countless developers in the open-source community. 💻
 - Special shoutout to all contributors—you rock! 🤘
@@ -105,7 +127,7 @@ Your feedback is valuable and helps make this project better for everyone. Thank
 ## 📧 Contact Me
 
 - 💼 [Portfolio Website](https://portfolio.lockhart.in)
-- 📧 Email: [jenslee.dsouza@example.com](mailto:dsouzajenslee@example.com)
+- 📧 [dsouzajenslee@gmail.com](mailto:dsouzajenslee@example.com)
 - 🔗 [LinkedIn](https://www.linkedin.com/in/jensleedsouza/)
 
 ---
