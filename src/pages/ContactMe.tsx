@@ -4,6 +4,7 @@ import profilePic from '../images/jenslee.jpeg';
 import { FaEnvelope, FaPhoneAlt, FaCoffee, FaLinkedin } from 'react-icons/fa';
 import { ContactMe as IContactMe } from '../types';
 import { getContactMe } from '../queries/getContactMe';
+import { trackEvent } from '../usePageTracking';
 
 const ContactMe: React.FC = () => {
 
@@ -19,6 +20,10 @@ const ContactMe: React.FC = () => {
   }, []);
 
   if (!userData) return <div>Loading...</div>;
+
+  const handleContactClick = (type: string) => {
+    trackEvent('Contact', `Click ${type}`);
+  };
 
   return (
     <div className="contact-container">
@@ -36,6 +41,7 @@ const ContactMe: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="badge-link"
+            onClick={() => handleContactClick('LinkedIn')}
           >
             <FaLinkedin className="linkedin-icon" /> View Profile
           </a>
@@ -47,13 +53,21 @@ const ContactMe: React.FC = () => {
       <div className="contact-details">
         <div className="contact-item">
           <FaEnvelope className="contact-icon" />
-          <a href={`mailto:${userData.email}`} className="contact-link">
+          <a
+            href={`mailto:${userData.email}`}
+            className="contact-link"
+            onClick={() => handleContactClick('Email')}
+          >
             {userData.email}
           </a>
         </div>
         <div className="contact-item">
           <FaPhoneAlt className="contact-icon" />
-          <a href={`tel:${userData.phoneNumber}`} className="contact-link">
+          <a
+            href={`tel:${userData.phoneNumber}`}
+            className="contact-link"
+            onClick={() => handleContactClick('Phone')}
+          >
             {userData.phoneNumber}
           </a>
         </div>

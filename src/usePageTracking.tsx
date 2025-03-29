@@ -5,6 +5,14 @@ import ReactGA from "react-ga4";
 ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID || "");
 ReactGA.send("pageview"); // Send initial page view
 
+export const trackEvent = (category: string, action: string, label?: string) => {
+    ReactGA.event({
+        category,
+        action,
+        label
+    });
+};
+
 const usePageTracking = () => {
     const location = useLocation();
 

@@ -5,6 +5,7 @@ import { SiRubyonrails, SiPostgresql, SiMongodb, SiMaterialdesign, SiHtml5, SiCs
 import { Project } from '../types';
 import { getProjects } from '../queries/getProjects';
 import { GrDeploy, GrKubernetes } from "react-icons/gr";
+import { trackEvent } from '../usePageTracking';
 
 const techIcons: { [key: string]: JSX.Element } = {
   "ReactJS": <FaReact />,
@@ -84,7 +85,7 @@ const Projects: React.FC = () => {
 
   if (projects.length === 0) return <div>Loading...</div>;
   const handleProjectClick = (project: Project) => {
-    console.log(project);
+    trackEvent('Project', 'Click', project.title);
     if (project.link) {
       window.open(project.link, '_blank', 'noopener,noreferrer');
     }

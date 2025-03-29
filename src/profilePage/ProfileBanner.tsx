@@ -4,6 +4,7 @@ import PlayButton from '../components/PlayButton';
 import MoreInfoButton from '../components/MoreInfoButton';
 import { getProfileBanner } from '../queries/getProfileBanner';
 import { ProfileBanner as ProfileBannerType } from '../types';
+import { trackEvent } from '../usePageTracking';
 
 const ProfileBanner: React.FC = () => {
 
@@ -21,10 +22,12 @@ const ProfileBanner: React.FC = () => {
   if (!bannerData) return <div>Loading...</div>;
 
   const handlePlayClick = () => {
+    trackEvent('Profile', 'Click Resume');
     window.open(bannerData.resumeLink.url, '_blank');
   };
 
-  const handleLinkedinClick = () => { 
+  const handleLinkedinClick = () => {
+    trackEvent('Profile', 'Click LinkedIn');
     window.open(bannerData.linkedinLink, '_blank');
   }
 
