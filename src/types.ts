@@ -58,3 +58,12 @@ export interface Skill {
   description: string;
   icon: string;
 }
+
+
+export interface Recommendation {
+  profilePicture: { url: string };
+  name: string;
+  title: string;
+  date: string;
+  body: string;
+}
