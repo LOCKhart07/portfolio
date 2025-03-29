@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Projects.css';
-import { FaReact, FaNodeJs, FaAws, FaDatabase, FaDocker, FaAngular, FaGithub, FaGitlab, FaGoogle, FaJava, FaJenkins, FaMicrosoft, FaPython, FaVuejs } from 'react-icons/fa';
-import { SiRubyonrails, SiPostgresql, SiMongodb, SiMaterialdesign, SiHtml5, SiCss3, SiJquery, SiAwsamplify, SiFirebase, SiTerraform, SiArgo, SiFlask, SiNginx, SiOracle, SiCloudflare } from 'react-icons/si';
+import { FaReact, FaNodeJs, FaAws, FaDatabase, FaDocker, FaAngular, FaGithub, FaGitlab, FaGoogle, FaJava, FaJenkins, FaMicrosoft, FaPython, FaVuejs, FaYoutube, FaJs } from 'react-icons/fa';
+import { SiRubyonrails, SiPostgresql, SiMongodb, SiMaterialdesign, SiHtml5, SiCss3, SiJquery, SiAwsamplify, SiFirebase, SiTerraform, SiArgo, SiFlask, SiNginx, SiOracle, SiCloudflare, SiSelenium, SiGoogle, SiGoogletranslate, SiFirefox, SiRider } from 'react-icons/si';
 import { Project } from '../types';
 import { getProjects } from '../queries/getProjects';
 import { GrDeploy, GrKubernetes } from "react-icons/gr";
@@ -57,25 +57,31 @@ const techIcons: { [key: string]: JSX.Element } = {
   'Tailwind CSS': <SiCss3 />,
   'Bootstrap': <SiCss3 />,
   'JQuery': <SiJquery />,
-  'Flask': <SiFlask/>,
-  'Nginx':<SiNginx/>,
-  "OCI":<SiOracle/>,
-  "Cloudflare":<SiCloudflare/>
+  'Flask': <SiFlask />,
+  'Nginx': <SiNginx />,
+  "OCI": <SiOracle />,
+  "Cloudflare": <SiCloudflare />,
+  "Selenium": <SiSelenium />,
+  "YouTube API": <FaYoutube />,
+  "Google Translate API": <SiGoogletranslate />,
+  "JavaScript": <FaJs />,
+  "Browser Extensions": <SiFirefox />,
+  "Real-Debrid API": <SiRider />
 };
 
 
 const Projects: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([])
-  
-  useEffect(() => { 
+
+  useEffect(() => {
     async function fetchProjects() {
       const data = await getProjects();
       setProjects(data);
     }
-    
+
     fetchProjects()
   }, [])
-  
+
   if (projects.length === 0) return <div>Loading...</div>;
 
   return (
