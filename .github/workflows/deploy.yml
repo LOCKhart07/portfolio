@@ -27,6 +27,8 @@ jobs:
 
       - name: Build project
         run: npm run build
+        env:
+          DATODMSTOKEN_DEFAULT: ${{ secrets.DATODMSTOKEN_DEFAULT }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
