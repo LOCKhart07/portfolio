@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './Skills.css';
 import { getSkills } from '../queries/getSkills';
 
-import { FaReact, FaNodeJs, FaAws, FaDocker,  FaJava } from 'react-icons/fa';
-import { SiRubyonrails, SiTypescript, SiPostgresql, SiMysql, SiKubernetes, SiGooglecloud, SiSpringboot, SiPhp, SiNetlify, SiHeroku, SiRabbitmq, SiImessage } from 'react-icons/si';
+import { FaReact, FaNodeJs, FaAws, FaDocker, FaJava } from 'react-icons/fa';
+import { SiRubyonrails, SiTypescript, SiPostgresql, SiMysql, SiKubernetes, SiGooglecloud, SiSpringboot, SiPhp, SiNetlify, SiHeroku, SiRabbitmq, SiImessage, SiFastapi, SiFlask, SiPython, SiJavascript, SiDjango, SiLangchain, SiApachespark, SiApachekafka, SiDocker, SiVectary, SiGit, SiNginx, SiDash, SiArangodb, SiOpensearch, SiRedis, SiVuedotjs, SiHtml5, SiCss3, SiSelenium, SiSecurityscorecard } from 'react-icons/si';
 import { Skill } from '../types';
 
 const iconMap: { [key: string]: JSX.Element } = {
@@ -24,6 +24,27 @@ const iconMap: { [key: string]: JSX.Element } = {
   SiNetlify: <SiNetlify />,
   SiRabbitmq: <SiRabbitmq />,
   SiImessage: <SiImessage />,
+  SiFastapi: <SiFastapi />,
+  SiFlask: <SiFlask />,
+  SiPython: <SiPython />,
+  SiJavascript: <SiJavascript />,
+  SiDjango: <SiDjango />,
+  SiLangchain: <SiLangchain />,
+  SiApachespark: <SiApachespark />,
+  SiApachekafka: <SiApachekafka />,
+  SiDocker: <SiDocker />,
+  SiVectary: <SiVectary />,
+  SiGit: <SiGit />,
+  SiNginx: <SiNginx />,
+  SiDash: <SiDash />,
+  SiArangodb: <SiArangodb />,
+  SiOpensearch: <SiOpensearch />,
+  SiRedis: <SiRedis />,
+  SiVuedotjs: <SiVuedotjs />,
+  SiHtml5: <SiHtml5 />,
+  SiCss3: <SiCss3 />,
+  SiSelenium: <SiSelenium />,
+  SiSecurityscorecard: <SiSecurityscorecard />,
 };
 
 
@@ -47,6 +68,7 @@ const Skills: React.FC = () => {
     acc[skill.category].push(skill);
     return acc;
   }, {});
+  console.log("skillsByCategory", skillsByCategory)
 
 
   return (
