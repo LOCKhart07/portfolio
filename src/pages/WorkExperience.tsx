@@ -30,15 +30,6 @@ const WorkExperience: React.FC = () => {
     return parseInt(range.split(" - ")[1]); // Extracts end year
   };
 
-  const getContentStyle = (timelineType: string, index: number) => {
-    if (timelineType === "work") {
-      return index === 0
-        ? { background: 'rgb(33, 150, 243)', color: '#fff' }
-        : { background: 'rgb(240, 240, 240)', color: '#fff' };
-    }
-    return { background: 'rgb(255, 224, 230)', color: '#fff' };
-  };
-
   timeLineData.sort(
     (a, b) => parseYear(b.dateRange) - parseYear(a.dateRange)
   );
@@ -54,7 +45,13 @@ const WorkExperience: React.FC = () => {
           <VerticalTimelineElement
             key={index}
             className={`vertical-timeline-element--${item.timelineType}`}
-            contentStyle={getContentStyle(item.timelineType, index)}
+            contentStyle={
+              item.timelineType === "work"
+                ? index === 0
+                  ? { background: 'rgb(33, 150, 243)', color: '#fff' }
+                  : { background: 'rgb(240, 240, 240)', color: '#fff' }
+                : { background: 'rgb(255, 224, 230)', color: '#fff' } // Lighter red for education
+            }
             contentArrowStyle={
               item.timelineType === "work"
                 ? { borderRight: index === 0 ? '7px solid rgb(33, 150, 243)' : '7px solid rgb(240, 240, 240)' }
