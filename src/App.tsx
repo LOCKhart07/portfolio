@@ -14,24 +14,26 @@ import Music from './pages/Music';
 import Reading from './pages/Reading';
 import Blogs from './pages/Blogs';
 import Certifications from './pages/Certifications';
+import usePageTracking from "./usePageTracking";
 
 const App: React.FC = () => {
+  usePageTracking();
   return (
-      <Routes>
-        <Route path="/" element={<NetflixTitle />} />
-        <Route path="/browse" element={<Browse />} />
-        <Route path="/profile/:profileName" element={<Layout><ProfilePage /></Layout>} />
-        <Route path="/work-permit" element={<Layout><WorkPermit /></Layout>} />
-        <Route path="/work-experience" element={<Layout><WorkExperience /></Layout>} />
-        <Route path="/recommendations" element={<Layout><Recommendations /></Layout>} />
-        <Route path="/skills" element={<Layout><Skills /></Layout>} />
-        <Route path="/projects" element={<Layout><Projects /></Layout>} />
-        <Route path="/contact-me" element={<Layout><ContactMe /></Layout>} />
-        <Route path="/music" element={<Layout><Music /></Layout>} />
-        <Route path="/reading" element={<Layout><Reading /></Layout>} />
-        <Route path="/blogs" element={<Layout><Blogs /></Layout>} />
-        <Route path="/certifications" element={<Layout><Certifications /></Layout>} />
-      </Routes>
+    <Routes>
+      <Route path="/" element={<NetflixTitle />} />
+      <Route path="/browse" element={<Browse />} />
+      <Route path="/profile/:profileName" element={<Layout><ProfilePage /></Layout>} />
+      <Route path="/work-permit" element={<Layout><WorkPermit /></Layout>} />
+      <Route path="/work-experience" element={<Layout><WorkExperience /></Layout>} />
+      <Route path="/recommendations" element={<Layout><Recommendations /></Layout>} />
+      <Route path="/skills" element={<Layout><Skills /></Layout>} />
+      <Route path="/projects" element={<Layout><Projects /></Layout>} />
+      <Route path="/contact-me" element={<Layout><ContactMe /></Layout>} />
+      <Route path="/music" element={<Layout><Music /></Layout>} />
+      <Route path="/reading" element={<Layout><Reading /></Layout>} />
+      <Route path="/blogs" element={<Layout><Blogs /></Layout>} />
+      <Route path="/certifications" element={<Layout><Certifications /></Layout>} />
+    </Routes>
   );
 };
 
