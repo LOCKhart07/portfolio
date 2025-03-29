@@ -2,27 +2,28 @@ import React, { useEffect, useState } from 'react';
 import './Skills.css';
 import { getSkills } from '../queries/getSkills';
 
-import { FaReact } from 'react-icons/fa';
+import { FaReact, FaNodeJs, FaAws, FaDocker,  FaJava } from 'react-icons/fa';
+import { SiRubyonrails, SiTypescript, SiPostgresql, SiMysql, SiKubernetes, SiGooglecloud, SiSpringboot, SiPhp, SiNetlify, SiHeroku, SiRabbitmq, SiImessage } from 'react-icons/si';
 import { Skill } from '../types';
 
-import * as FaIcons from "react-icons/fa";
-import * as SiIcons from "react-icons/si";
-
-
-
-const DynamicIcon = ({ iconName }: { iconName: string }) => {
-  let IconComponent;
-  if (iconName.startsWith("Si")) {
-    IconComponent = SiIcons[iconName as keyof typeof SiIcons];
-  } else if (iconName.startsWith("Fa")) {
-    IconComponent = FaIcons[iconName as keyof typeof FaIcons];
-  } else { return <FaReact /> }
-
-  if (!IconComponent) {
-    return <FaReact />
-  }
-
-  return <IconComponent />;
+const iconMap: { [key: string]: JSX.Element } = {
+  SiRubyonrails: <SiRubyonrails />,
+  FaNodeJs: <FaNodeJs />,
+  SiSpringboot: <SiSpringboot />,
+  FaJava: <FaJava />,
+  SiPhp: <SiPhp />,
+  FaReact: <FaReact />,
+  SiTypescript: <SiTypescript />,
+  FaAws: <FaAws />,
+  FaDocker: <FaDocker />,
+  SiPostgresql: <SiPostgresql />,
+  SiMysql: <SiMysql />,
+  SiKubernetes: <SiKubernetes />,
+  SiGooglecloud: <SiGooglecloud />,
+  SiHeroku: <SiHeroku />,
+  SiNetlify: <SiNetlify />,
+  SiRabbitmq: <SiRabbitmq />,
+  SiImessage: <SiImessage />,
 };
 
 
@@ -49,7 +50,6 @@ const Skills: React.FC = () => {
 
 
   return (
-
     <div className="skills-container">
       {Object.keys(skillsByCategory).map((category, index) => (
         <div key={index} className="skill-category">
@@ -57,10 +57,7 @@ const Skills: React.FC = () => {
           <div className="skills-grid">
             {skillsByCategory[category].map((skill: any, idx: number) => (
               <div key={idx} className="skill-card">
-                <div className="icon">
-                  {/* {iconMap[skill.icon] || <FaReact />} */}
-                  <DynamicIcon iconName={skill.icon} />
-                </div>
+                <div className="icon">{iconMap[skill.icon] || <FaReact />}</div>
                 <h3 className="skill-name">
                   {skill.name.split('').map((letter: any, i: number) => (
                     <span key={i} className="letter" style={{ animationDelay: `${i * 0.05}s` }}>
