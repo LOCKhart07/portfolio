@@ -2,36 +2,47 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './ContinueWatching.css';
 
-type ProfileType = 'recruiter' | 'developer' | 'stalker' | 'adventure';
-
+type ProfileType = 'recruiter' | 'developer' | 'stalker' | 'adventurer';
 interface ContinueWatchingProps {
   profile: ProfileType;
 }
 
+const imageMap: { [key: string]: string } = {
+  "Skills": "https://images.unsplash.com/photo-1589652717521-10c0d092dea9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "Experience": "https://images.unsplash.com/photo-1587440871875-191322ee64b0?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "Certifications": "https://plus.unsplash.com/premium_photo-1682075199505-e96c80e84e5a?q=80&w=1957&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "Recommendations": "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "Contact Me": "https://images.unsplash.com/photo-1628891439478-c613e85af7d6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "Work Permit": "https://plus.unsplash.com/premium_photo-1663089819902-b4a7321f38e0?q=80&w=2110&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "Projects": "https://plus.unsplash.com/premium_photo-1663050756824-165ee7eafdac?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "Music": "https://images.unsplash.com/photo-1462965326201-d02e4f455804?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "Reading": "https://images.unsplash.com/photo-1550399105-c4db5fb85c18?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+};
+
 const continueWatchingConfig = {
   recruiter: [
-    { title: "Music", imgSrc: "https://picsum.photos/id/1025/300/200", link: "/music" },
-    { title: "Reading", imgSrc: "https://picsum.photos/id/1026/300/200", link: "/reading" },
-    // { title: "Blogs", imgSrc: "https://picsum.photos/id/1027/300/200", link: "/blogs" },
-    { title: "Contact Me", imgSrc: "https://picsum.photos/id/1029/300/200", link: "/contact-me" }
+    { title: "Music", link: "/music" },
+    { title: "Reading", link: "/reading" },
+    // { title: "Blogs", link: "/blogs" },
+    { title: "Contact Me", link: "/contact-me" }
   ],
   developer: [
-    { title: "Music", imgSrc: "https://picsum.photos/id/1025/300/200", link: "/music" },
-    { title: "Reading", imgSrc: "https://picsum.photos/id/1026/300/200", link: "/reading" },
-    // { title: "Blogs", imgSrc: "https://picsum.photos/id/1027/300/200", link: "/blogs" },
-    { title: "Certifications", imgSrc: "https://picsum.photos/id/1028/300/200", link: "/certifications" },
-    { title: "Contact Me", imgSrc: "https://picsum.photos/id/1029/300/200", link: "/contact-me" }
+    { title: "Music", link: "/music" },
+    { title: "Reading", link: "/reading" },
+    // { title: "Blogs", link: "/blogs" },
+    { title: "Certifications", link: "/certifications" },
+    { title: "Contact Me", link: "/contact-me" }
   ],
   stalker: [
-    { title: "Reading", imgSrc: "https://picsum.photos/id/1026/300/200", link: "/reading" },
-    // { title: "Blogs", imgSrc: "https://picsum.photos/id/1027/300/200", link: "/blogs" },
-    { title: "Contact Me", imgSrc: "https://picsum.photos/id/1029/300/200", link: "/contact-me" }
+    { title: "Reading", link: "/reading" },
+    // { title: "Blogs", link: "/blogs" },
+    { title: "Contact Me", link: "/contact-me" }
   ],
-  adventure: [
-    { title: "Music", imgSrc: "https://picsum.photos/id/1025/300/200", link: "/music" },
-    { title: "Reading", imgSrc: "https://picsum.photos/id/1026/300/200", link: "/reading" },
-    { title: "Certifications", imgSrc: "https://picsum.photos/id/1028/300/200", link: "/certifications" },
-    { title: "Contact Me", imgSrc: "https://picsum.photos/id/1029/300/200", link: "/contact-me" }
+  adventurer: [
+    { title: "Music", link: "/music" },
+    { title: "Reading", link: "/reading" },
+    { title: "Certifications", link: "/certifications" },
+    { title: "Contact Me", link: "/contact-me" }
   ]
 };
 
@@ -40,11 +51,11 @@ const ContinueWatching: React.FC<ContinueWatchingProps> = ({ profile }) => {
 
   return (
     <div className="continue-watching-row">
-      <h2 className="row-title">Continue Watching for {profile}</h2>
+      <h2 className="row-title">Continue watching for {profile.charAt(0).toUpperCase() + profile.slice(1)}</h2>
       <div className="card-row">
         {continueWatching.map((pick, index) => (
           <Link to={pick.link} key={index} className="pick-card">
-            <img src={pick.imgSrc} alt={pick.title} className="pick-image" />
+            <img src={imageMap[pick.title]} alt={pick.title} className="pick-image" />
             <div className="overlay">
               <div className="pick-label">{pick.title}</div>
             </div>
