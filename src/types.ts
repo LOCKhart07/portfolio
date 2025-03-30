@@ -60,11 +60,18 @@ export interface Skill {
   icon: string;
 }
 
-
 export interface Recommendation {
   profilePicture: { url: string };
   name: string;
   title: string;
   date: string;
   body: string;
+}
+
+export interface Award {
+  title: string;
+  issuer: string;
+  date: string;
+  description: string;
+  icon: string;
 }

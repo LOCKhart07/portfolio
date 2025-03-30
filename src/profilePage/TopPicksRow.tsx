@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './TopPicksRow.css';
-import { FaCode, FaBriefcase, FaCertificate, FaHandsHelping, FaProjectDiagram, FaEnvelope, FaMusic, FaQuoteLeft } from 'react-icons/fa';
+import { FaCode, FaBriefcase, FaCertificate, FaHandsHelping, FaProjectDiagram, FaEnvelope, FaMusic, FaQuoteLeft, FaTrophy } from 'react-icons/fa';
 
 type ProfileType = 'recruiter' | 'developer' | 'stalker' | 'adventurer';
 
@@ -19,7 +19,8 @@ const imageMap: { [key: string]: string } = {
   "Projects": "https://plus.unsplash.com/premium_photo-1663050756824-165ee7eafdac?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   "Music": "https://images.unsplash.com/photo-1462965326201-d02e4f455804?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   "Reading": "https://images.unsplash.com/photo-1550399105-c4db5fb85c18?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "Quotes": "https://images.unsplash.com/photo-1530036846422-afb4b7af2fd4?q=80&w=2127&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  "Quotes": "https://images.unsplash.com/photo-1530036846422-afb4b7af2fd4?q=80&w=2127&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "Awards": "https://plus.unsplash.com/premium_photo-1713836954462-6e6cd1eecc1c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 };
 
 const topPicksConfig = {
@@ -29,6 +30,7 @@ const topPicksConfig = {
     { title: "Projects", icon: <FaProjectDiagram />, route: "/projects" },
     { title: "Recommendations", icon: <FaHandsHelping />, route: "/recommendations" },
     { title: "Certifications", icon: <FaCertificate />, route: "/certifications" },
+    { title: "Awards", icon: <FaTrophy />, route: "/awards" },
     { title: "Contact Me", icon: <FaEnvelope />, route: "/contact-me" }
   ],
   developer: [
@@ -36,6 +38,7 @@ const topPicksConfig = {
     { title: "Skills", route: "/skills", icon: <FaCode /> },
     { title: "Experience", route: "/work-experience", icon: <FaBriefcase /> },
     { title: "Certifications", route: "/certifications", icon: <FaCertificate /> },
+    { title: "Awards", route: "/awards", icon: <FaTrophy /> },
     { title: "Recommendations", route: "/recommendations", icon: <FaHandsHelping /> },
     { title: "Contact Me", route: "/contact-me", icon: <FaEnvelope /> }
   ],
@@ -44,6 +47,7 @@ const topPicksConfig = {
     { title: "Experience", route: "/work-experience", icon: <FaBriefcase /> },
     { title: "Skills", route: "/skills", icon: <FaCode /> },
     { title: "Certifications", route: "/certifications", icon: <FaCertificate /> },
+    { title: "Awards", route: "/awards", icon: <FaTrophy /> },
     { title: "Recommendations", route: "/recommendations", icon: <FaHandsHelping /> },
     { title: "Contact Me", route: "/contact-me", icon: <FaEnvelope /> }
   ],
@@ -51,6 +55,7 @@ const topPicksConfig = {
     { title: "Projects", route: "/projects", icon: <FaProjectDiagram /> },
     { title: "Experience", route: "/work-experience", icon: <FaBriefcase /> },
     { title: "Skills", route: "/skills", icon: <FaCode /> },
+    { title: "Awards", route: "/awards", icon: <FaTrophy /> },
     { title: "Quotes", route: "/quotes", icon: <FaQuoteLeft /> },
     { title: "Music", route: "/music", icon: <FaMusic /> },
     { title: "Contact Me", route: "/contact-me", icon: <FaEnvelope /> }
