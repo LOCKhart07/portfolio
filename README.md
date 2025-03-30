@@ -64,34 +64,46 @@ Recent performance improvements include:
 Want to set this up locally? Follow these steps:
 
 1. **Clone the Repository**: Copy the repository to your local system.
-2. **Install Dependencies**: Use a package manager to install the required dependencies.
 
+2. **Install Dependencies**: Use a package manager to install the required dependencies.
 ```bash
 nvm install 18
 nvm use 18
 ```
 
 After upgrading Node.js, clear your node_modules and reinstall:
-
 ```bash
 rm -rf node_modules
 npm cache clean --force
 npm install
 ```
 
-3. **Configure Environment Variables**: Create a `.env` file and set up the necessary API keys and configurations:
+3. **Set Up DatoCMS**:
+   - Create a [DatoCMS account](https://www.datocms.com/)
+   - Create a new project
+   - Set up the following models:
+     - `ProfileBanner`: headline (text), backgroundImage (image), resumeLink (file), linkedinLink (text), profileSummary (text)
+     - `WorkPermit`: visaStatus (text), expiryDate (date), summary (text), additionalInfo (text)
+     - `Timeline`: timelineType (enum: work/education), name (text), title (text), techStack (text), summaryPoints (text), dateRange (text)
+     - `Project`: title (text), description (text), techUsed (text), image (image), link (text)
+     - `Certification`: title (text), issuer (text), issuedDate (text), link (text), iconName (text)
+     - `ContactMe`: profilePicture (image), name (text), title (text), summary (text), companyUniversity (text), linkedinLink (text), email (text), phoneNumber (text)
+     - `Skill`: name (text), category (text), description (text), icon (text)
+   - Generate an API token in Settings > API tokens
+   - Copy the API token for the next step
+
+4. **Configure Environment Variables**: Create a `.env` file and set up the necessary API keys and configurations:
 ```env
 REACT_APP_GA_TRACKING_ID=your_ga4_id
 REACT_APP_DATOCMS_API_TOKEN=your_datocms_token
 ```
 
-4. **Run the Project**: Start the development server.
-
+5. **Run the Project**: Start the development server.
 ```bash
 npm start
 ```
 
-5. **Visit the Local Server**: Open your browser and navigate to the local server URL.
+6. **Visit the Local Server**: Open your browser and navigate to `http://localhost:3000`.
 
 ---
 
