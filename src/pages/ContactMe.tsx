@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './ContactMe.css';
 import profilePic from '../images/jenslee.jpeg';
-import { FaEnvelope, FaPhoneAlt, FaCoffee, FaLinkedin } from 'react-icons/fa';
+import { FaEnvelope, FaPhoneAlt, FaLinkedin } from 'react-icons/fa';
 import { ContactMe as IContactMe } from '../types';
 import { getContactMe } from '../queries/getContactMe';
 import { trackEvent } from '../usePageTracking';
@@ -48,7 +48,7 @@ const ContactMe: React.FC = () => {
         </div>
       </div>
       <div className="contact-header">
-        <p>I'm always up for a chat or a coffee! Feel free to reach out.</p>
+        <p>I'm always up for a chat! Feel free to reach out.</p>
       </div>
       <div className="contact-details">
         <div className="contact-item">
@@ -70,10 +70,6 @@ const ContactMe: React.FC = () => {
           >
             {userData.phoneNumber}
           </a>
-        </div>
-        <div className="contact-fun">
-          <p>Or catch up over a coffee ☕</p>
-          <FaCoffee className="coffee-icon" />
         </div>
       </div>
     </div>
