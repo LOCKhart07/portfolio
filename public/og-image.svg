@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background -->
+    <rect width="1200" height="630" fill="#1a1a1a"/>
+    
+    <!-- Gradient Overlay -->
+    <defs>
+        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#2d3436;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+    <rect width="1200" height="630" fill="url(#grad)"/>
+    
+    <!-- Content Container -->
+    <g transform="translate(100, 100)">
+        <!-- Name -->
+        <text x="0" y="120" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="#ffffff">
+            Jenslee Dsouza
+        </text>
+        
+        <!-- Title -->
+        <text x="0" y="200" font-family="Arial, sans-serif" font-size="36" fill="#00ff9f">
+            AI & Full Stack Developer
+        </text>
+        
+        <!-- Skills -->
+        <text x="0" y="300" font-family="Arial, sans-serif" font-size="24" fill="#ffffff">
+            Python • Java • Spring Boot • Vue.js • Machine Learning • AI
+        </text>
+        
+        <!-- Website -->
+        <text x="0" y="400" font-family="Arial, sans-serif" font-size="20" fill="#888888">
+            portfolio.lockhart.in
+        </text>
+    </g>
+    
+    <!-- Decorative Elements -->
+    <circle cx="1100" cy="100" r="50" fill="#00ff9f" opacity="0.2"/>
+    <circle cx="100" cy="530" r="30" fill="#00ff9f" opacity="0.2"/>
+</svg> 
