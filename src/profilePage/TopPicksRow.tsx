@@ -29,8 +29,8 @@ const topPicksConfig = {
     { title: "Experience", icon: <FaBriefcase />, route: "/work-experience" },
     { title: "Skills", icon: <FaCode />, route: "/skills" },
     { title: "Projects", icon: <FaProjectDiagram />, route: "/projects" },
-    { title: "Certifications", icon: <FaCertificate />, route: "/certifications" },
     { title: "Recommendations", icon: <FaHandsHelping />, route: "/recommendations" },
+    { title: "Certifications", icon: <FaCertificate />, route: "/certifications" },
     { title: "Contact Me", icon: <FaEnvelope />, route: "/contact-me" }
   ],
   developer: [
