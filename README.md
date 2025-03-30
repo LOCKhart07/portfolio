@@ -86,6 +86,7 @@ npm install
      - `WorkPermit`: visaStatus (text), expiryDate (date), summary (text), additionalInfo (text)
      - `Timeline`: timelineType (enum: work/education), name (text), title (text), techStack (text), summaryPoints (text), dateRange (text)
      - `Project`: title (text), description (text), techUsed (text), image (image), link (text)
+     - `Award`: title (text), issuer (text), date (date), description (text), image (image), link (text), category (enum: professional/education/other)
      - `Certification`: title (text), issuer (text), issuedDate (text), link (text), iconName (text)
      - `ContactMe`: profilePicture (image), name (text), title (text), summary (text), companyUniversity (text), linkedinLink (text), email (text), phoneNumber (text)
      - `Skill`: name (text), category (text), description (text), icon (text)
