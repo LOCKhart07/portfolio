@@ -1,15 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './TopPicksRow.css';
-import { FaCode, FaBriefcase, FaCertificate, FaHandsHelping, FaProjectDiagram, FaEnvelope, FaMusic, FaBook } from 'react-icons/fa';
+import { FaCode, FaBriefcase, FaCertificate, FaHandsHelping, FaProjectDiagram, FaEnvelope, FaMusic, FaBook, FaQuoteLeft } from 'react-icons/fa';
 
 type ProfileType = 'recruiter' | 'developer' | 'stalker' | 'adventurer';
 
 interface TopPicksRowProps {
   profile: ProfileType;
 }
-
-
 
 const imageMap: { [key: string]: string } = {
   "Skills": "https://images.unsplash.com/photo-1589652717521-10c0d092dea9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -21,8 +19,8 @@ const imageMap: { [key: string]: string } = {
   "Projects": "https://plus.unsplash.com/premium_photo-1663050756824-165ee7eafdac?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   "Music": "https://images.unsplash.com/photo-1462965326201-d02e4f455804?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   "Reading": "https://images.unsplash.com/photo-1550399105-c4db5fb85c18?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "Quotes": "https://images.unsplash.com/photo-1530036846422-afb4b7af2fd4?q=80&w=2127&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 };
-
 
 const topPicksConfig = {
   recruiter: [
@@ -53,12 +51,11 @@ const topPicksConfig = {
     { title: "Projects", route: "/projects", icon: <FaProjectDiagram /> },
     { title: "Experience", route: "/work-experience", icon: <FaBriefcase /> },
     { title: "Skills", route: "/skills", icon: <FaCode /> },
+    { title: "Quotes", route: "/quotes", icon: <FaQuoteLeft /> },
     { title: "Music", route: "/music", icon: <FaMusic /> },
-    { title: "Reading", route: "/reading", icon: <FaBook /> },
     { title: "Contact Me", route: "/contact-me", icon: <FaEnvelope /> }
   ]
 };
-
 
 const TopPicksRow: React.FC<TopPicksRowProps> = ({ profile }) => {
   const navigate = useNavigate();

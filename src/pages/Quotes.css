@@ -1,0 +1,113 @@
+.quotes-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.quotes-title {
+  font-size: 2.5rem;
+  color: #e50914;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.quotes-intro {
+  text-align: center;
+  color: #808080;
+  margin-bottom: 3rem;
+  font-size: 1.1rem;
+}
+
+.quotes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.quote-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 2rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeIn 0.5s ease forwards;
+  animation-delay: var(--delay);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.quote-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.quote-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.quote-text {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #ffffff;
+  font-style: italic;
+  margin: 0;
+}
+
+.quote-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.quote-author {
+  color: #e50914;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.quote-source {
+  color: #808080;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.quote-category {
+  display: inline-block;
+  background: rgba(229, 9, 20, 0.2);
+  color: #e50914;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .quotes-container {
+    padding: 1rem;
+  }
+
+  .quotes-title {
+    font-size: 2rem;
+  }
+
+  .quote-card {
+    padding: 1.5rem;
+  }
+
+  .quote-text {
+    font-size: 1.1rem;
+  }
+}

@@ -14,6 +14,7 @@ import Music from './pages/Music';
 import Reading from './pages/Reading';
 import Blogs from './pages/Blogs';
 import Certifications from './pages/Certifications';
+import Quotes from './pages/Quotes';
 import usePageTracking from "./usePageTracking";
 import ConsentBanner from './components/ConsentBanner';
 
@@ -35,6 +36,7 @@ const App: React.FC = () => {
         <Route path="/reading" element={<Layout><Reading /></Layout>} />
         <Route path="/blogs" element={<Layout><Blogs /></Layout>} />
         <Route path="/certifications" element={<Layout><Certifications /></Layout>} />
+        <Route path="/quotes" element={<Layout><Quotes /></Layout>} />
       </Routes>
       <ConsentBanner />
     </>

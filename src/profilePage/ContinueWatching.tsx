@@ -17,24 +17,25 @@ const imageMap: { [key: string]: string } = {
   "Projects": "https://plus.unsplash.com/premium_photo-1663050756824-165ee7eafdac?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   "Music": "https://images.unsplash.com/photo-1462965326201-d02e4f455804?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   "Reading": "https://images.unsplash.com/photo-1550399105-c4db5fb85c18?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "Quotes": "https://images.unsplash.com/photo-1530036846422-afb4b7af2fd4?q=80&w=2127&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 };
 
 const continueWatchingConfig = {
   recruiter: [
+    { title: "Quotes", link: "/quotes" },
     { title: "Music", link: "/music" },
-    { title: "Reading", link: "/reading" }
   ],
   developer: [
+    { title: "Quotes", link: "/quotes" },
     { title: "Music", link: "/music" },
-    { title: "Reading", link: "/reading" }
   ],
   stalker: [
+    { title: "Quotes", link: "/quotes" },
     { title: "Music", link: "/music" },
-    { title: "Reading", link: "/reading" }
   ],
   adventurer: [
-    { title: "Certifications", link: "/certifications" },
-    { title: "Recommendations", link: "/recommendations" }
+    { title: "Quotes", link: "/quotes" },
+    { title: "Music", link: "/music" },
   ]
 };
 
