@@ -1,5 +1,8 @@
 ## 🌟 Jenslee Dsouza's Netflix Inspired Portfolio 🌟 - [Visit](https://portfolio.lockhart.in/)
-
+[![Deploy](https://github.com/LOCKhart07/portfolio/actions/workflows/deploy.yml/badge.svg)](https://github.com/LOCKhart07/portfolio/actions/workflows/deploy.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
 Welcome to my personal portfolio project! 🚀 This website showcases my work, skills, and experiences in web development. It's designed to be lightweight, customizable, and professional while maintaining an approachable style.
 
