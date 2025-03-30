@@ -1,4 +1,5 @@
-## 🌟 Jenslee Dsouza's Netflix Inspired Portfolio 🌟 - https://portfolio.lockhart.in/
+## 🌟 Jenslee Dsouza's Netflix Inspired Portfolio 🌟 - [Visit](https://portfolio.lockhart.in/)
+
 
 Welcome to my personal portfolio project! 🚀 This website showcases my work, skills, and experiences in web development. It's designed to be lightweight, customizable, and professional while maintaining an approachable style.
 
