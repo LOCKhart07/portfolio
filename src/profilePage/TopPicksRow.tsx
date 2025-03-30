@@ -26,34 +26,36 @@ const imageMap: { [key: string]: string } = {
 
 const topPicksConfig = {
   recruiter: [
-    // { title: "Work Permit", icon: <FaPassport />, route: "/work-permit" },
-    { title: "Skills", icon: <FaCode />, route: "/skills" },
     { title: "Experience", icon: <FaBriefcase />, route: "/work-experience" },
+    { title: "Skills", icon: <FaCode />, route: "/skills" },
+    { title: "Projects", icon: <FaProjectDiagram />, route: "/projects" },
     { title: "Certifications", icon: <FaCertificate />, route: "/certifications" },
-    { title: "Recommendations", icon: <FaProjectDiagram />, route: "/projects" },
+    { title: "Recommendations", icon: <FaHandsHelping />, route: "/recommendations" },
     { title: "Contact Me", icon: <FaEnvelope />, route: "/contact-me" }
   ],
   developer: [
-    { title: "Skills", route: "/skills", icon: <FaCode /> },
     { title: "Projects", route: "/projects", icon: <FaProjectDiagram /> },
-    { title: "Certifications", route: "/certifications", icon: <FaCertificate /> },
+    { title: "Skills", route: "/skills", icon: <FaCode /> },
     { title: "Experience", route: "/work-experience", icon: <FaBriefcase /> },
+    { title: "Certifications", route: "/certifications", icon: <FaCertificate /> },
     { title: "Recommendations", route: "/recommendations", icon: <FaHandsHelping /> },
     { title: "Contact Me", route: "/contact-me", icon: <FaEnvelope /> }
   ],
   stalker: [
-    { title: "Recommendations", route: "/recommendations", icon: <FaHandsHelping /> },
-    { title: "Contact Me", route: "/contact-me", icon: <FaEnvelope /> },
     { title: "Projects", route: "/projects", icon: <FaProjectDiagram /> },
     { title: "Experience", route: "/work-experience", icon: <FaBriefcase /> },
+    { title: "Skills", route: "/skills", icon: <FaCode /> },
     { title: "Certifications", route: "/certifications", icon: <FaCertificate /> },
+    { title: "Recommendations", route: "/recommendations", icon: <FaHandsHelping /> },
+    { title: "Contact Me", route: "/contact-me", icon: <FaEnvelope /> }
   ],
   adventurer: [
-    { title: "Music", route: "/music", icon: <FaMusic /> },
     { title: "Projects", route: "/projects", icon: <FaProjectDiagram /> },
+    { title: "Experience", route: "/work-experience", icon: <FaBriefcase /> },
+    { title: "Skills", route: "/skills", icon: <FaCode /> },
+    { title: "Music", route: "/music", icon: <FaMusic /> },
     { title: "Reading", route: "/reading", icon: <FaBook /> },
-    { title: "Contact Me", route: "/contact-me", icon: <FaEnvelope /> },
-    { title: "Certifications", route: "/certifications", icon: <FaCertificate /> }
+    { title: "Contact Me", route: "/contact-me", icon: <FaEnvelope /> }
   ]
 };
 

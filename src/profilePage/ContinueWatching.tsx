@@ -22,27 +22,19 @@ const imageMap: { [key: string]: string } = {
 const continueWatchingConfig = {
   recruiter: [
     { title: "Music", link: "/music" },
-    { title: "Reading", link: "/reading" },
-    // { title: "Blogs", link: "/blogs" },
-    { title: "Contact Me", link: "/contact-me" }
+    { title: "Reading", link: "/reading" }
   ],
   developer: [
     { title: "Music", link: "/music" },
-    { title: "Reading", link: "/reading" },
-    // { title: "Blogs", link: "/blogs" },
-    { title: "Certifications", link: "/certifications" },
-    { title: "Contact Me", link: "/contact-me" }
+    { title: "Reading", link: "/reading" }
   ],
   stalker: [
-    { title: "Reading", link: "/reading" },
-    // { title: "Blogs", link: "/blogs" },
-    { title: "Contact Me", link: "/contact-me" }
+    { title: "Music", link: "/music" },
+    { title: "Reading", link: "/reading" }
   ],
   adventurer: [
-    { title: "Music", link: "/music" },
-    { title: "Reading", link: "/reading" },
     { title: "Certifications", link: "/certifications" },
-    { title: "Contact Me", link: "/contact-me" }
+    { title: "Recommendations", link: "/recommendations" }
   ]
 };
 
