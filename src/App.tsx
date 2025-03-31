@@ -16,6 +16,7 @@ import Blogs from './pages/Blogs';
 import Certifications from './pages/Certifications';
 import Quotes from './pages/Quotes';
 import Awards from './pages/Awards';
+import NotFound from './pages/NotFound';
 import usePageTracking from "./usePageTracking";
 import ConsentBanner from './components/ConsentBanner';
 
@@ -39,6 +40,7 @@ const App: React.FC = () => {
         <Route path="/certifications" element={<Layout><Certifications /></Layout>} />
         <Route path="/quotes" element={<Layout><Quotes /></Layout>} />
         <Route path="/awards" element={<Layout><Awards /></Layout>} />
+        <Route path="*" element={<Layout><NotFound /></Layout>} />
       </Routes>
       <ConsentBanner />
     </>
