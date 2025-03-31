@@ -10,21 +10,71 @@ const favoriteGenres = ["Pop", "Indian Indie", "Alternative", "J-pop", "Classica
 // ];
 
 const Music: React.FC = () => {
-
-
   const [topTracks, setTopTracks] = useState<Song[] | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [retryCount, setRetryCount] = useState(0);
+  const MAX_RETRIES = 3;
 
-  useEffect(() => {
-    async function fetchTopTracks() {
+  const fetchTopTracks = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
       const data = await getTopSpotifyTracks();
       setTopTracks(data);
+    } catch (err) {
+      setError('Failed to fetch top tracks. Please try again later.');
+      console.error('Error fetching top tracks:', err);
+
+      // Implement retry logic
+      if (retryCount < MAX_RETRIES) {
+        setTimeout(() => {
+          setRetryCount(prev => prev + 1);
+        }, 2000 * (retryCount + 1)); // Exponential backoff
+      }
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  useEffect(() => {
     fetchTopTracks();
-  }, []);
-  console.log("🚀 ~ topTracks:", topTracks)
+  }, [retryCount]);
 
+  if (isLoading) {
+    return (
+      <div className="music-page">
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <p>Loading your favorite tracks...</p>
+        </div>
+      </div>
+    );
+  }
 
-  if (!topTracks) return <div>Loading...</div>;
+  if (error) {
+    return (
+      <div className="music-page">
+        <div className="error-container">
+          <p className="error-message">{error}</p>
+          {retryCount < MAX_RETRIES ? (
+            <p className="retry-message">Retrying in {2 * (retryCount + 1)} seconds...</p>
+          ) : (
+            <button
+              className="retry-button"
+              onClick={() => {
+                setRetryCount(0);
+                fetchTopTracks();
+              }}
+            >
+              Try Again
+            </button>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="music-page">
       <div className="quote">
@@ -52,8 +102,21 @@ const Music: React.FC = () => {
         <div className="songs">
           {topTracks && topTracks.length > 0 ? (
             topTracks.map((song, index) => (
-              <div key={index} className="song-card" style={{ animationDelay: `${index * 0.3}s` }} onClick={() => window.open(song.url, '_blank')}>
-                <img src={song.image} alt={song.name} className="song-image" />
+              <div
+                key={index}
+                className="song-card"
+                style={{ animationDelay: `${index * 0.3}s` }}
+                onClick={() => window.open(song.url, '_blank')}
+              >
+                <img
+                  src={song.image}
+                  alt={song.name}
+                  className="song-image"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = 'https://via.placeholder.com/150?text=No+Image';
+                  }}
+                />
                 <div className="song-details">
                   <h4>{song.name}</h4>
                   <p>by {song.artist}</p>
