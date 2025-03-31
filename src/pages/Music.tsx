@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Music.css';
-import { getTimeline } from '../queries/getTimeline';
-import { TopSpotifyTracks } from '../types';
+import { Songs } from '../types';
 import { getTopSpotifyTracks } from '../queries/getTopSpotifyTracks';
 
 const favoriteGenres = ["Pop", "Indian Indie", "Alternative", "J-pop", "Classical"];
@@ -14,7 +13,7 @@ const favoriteSongs = [
 const Music: React.FC = () => {
 
 
-  const [topTracks, setTopTracks] = useState<TopSpotifyTracks[] | null>(null);
+  const [topTracks, setTopTracks] = useState<Songs[] | null>(null);
 
   useEffect(() => {
     async function fetchTopTracks() {
