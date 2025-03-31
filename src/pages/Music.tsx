@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import './Music.css';
 import { Song } from '../types';
 import { getTopSpotifyTracks } from '../queries/getTopSpotifyTracks';
@@ -16,7 +16,7 @@ const Music: React.FC = () => {
   const [retryCount, setRetryCount] = useState(0);
   const MAX_RETRIES = 3;
 
-  const fetchTopTracks = async () => {
+  const fetchTopTracks = useCallback(async () => {
     try {
       setIsLoading(true);
       setError(null);
@@ -35,11 +35,11 @@ const Music: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [retryCount]);
 
   useEffect(() => {
     fetchTopTracks();
-  }, [retryCount]);
+  }, [fetchTopTracks]);
 
   if (isLoading) {
     return (
