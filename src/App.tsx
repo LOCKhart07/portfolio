@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import usePageTracking from "./usePageTracking";
 import ConsentBanner from './components/ConsentBanner';
+import ChatBot from './components/ChatBot/ChatBot';
 
 // Route configuration
 import { routes } from './routes';
@@ -11,7 +12,7 @@ const App: React.FC = () => {
   usePageTracking();
 
   return (
-    <>
+    <div style={{ position: 'relative', minHeight: '100vh' }}>
       <Routes>
         {routes.map((route, index) => (
           <Route
@@ -22,7 +23,10 @@ const App: React.FC = () => {
         ))}
       </Routes>
       <ConsentBanner />
-    </>
+      <div id="chatbot-root" style={{ position: 'relative', zIndex: 9999 }}>
+        <ChatBot />
+      </div>
+    </div>
   );
 };
 
