@@ -13,10 +13,12 @@ const urlsToCache = [
     '/favicon-32x32.png',
     '/og-image.jpg',
     '/og-image.svg',
-    '/src/images/blue.png',
-    '/src/images/grey.png',
-    '/src/images/red.png',
-    '/src/images/yellow.png'
+    '/src/images/profiles/blue.png',
+    '/src/images/profiles/grey.png',
+    '/src/images/profiles/red.png',
+    '/src/images/profiles/yellow.png',
+    '/src/images/logos/logo-2.png',
+    '/src/images/profile-pictures/jenslee.jpeg'
 ];
 
 self.addEventListener('install', event => {

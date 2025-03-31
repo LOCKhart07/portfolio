@@ -1,10 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProfileCard from '../components/ProfileCard';
-import blueImage from '../images/blue.png';
-import greyImage from '../images/grey.png';
-import redImage from '../images/red.png';
-import yellowImage from '../images/yellow.png';
+import blueImage from '../images/profiles/blue.png';
+import greyImage from '../images/profiles/grey.png';
+import redImage from '../images/profiles/red.png';
+import yellowImage from '../images/profiles/yellow.png';
 import './browse.css';
 
 const Browse: React.FC = () => {
