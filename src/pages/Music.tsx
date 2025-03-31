@@ -46,7 +46,7 @@ const Music: React.FC = () => {
       <div className="music-page">
         <div className="loading-container">
           <div className="loading-spinner"></div>
-          <p>Loading your favorite tracks...</p>
+          <p>Loading my favorite tracks...</p>
         </div>
       </div>
     );
