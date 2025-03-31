@@ -82,3 +82,8 @@ export interface Song {
   url: string;
   image: string;
 }
+
+export interface Quote {
+  text: string;
+  author: string;
+}
