@@ -12,7 +12,11 @@ const urlsToCache = [
     '/favicon-16x16.png',
     '/favicon-32x32.png',
     '/og-image.jpg',
-    '/og-image.svg'
+    '/og-image.svg',
+    '/src/images/blue.png',
+    '/src/images/grey.png',
+    '/src/images/red.png',
+    '/src/images/yellow.png'
 ];
 
 self.addEventListener('install', event => {
