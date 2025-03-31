@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Music.css';
+import { getTimeline } from '../queries/getTimeline';
+import { TopSpotifyTracks } from '../types';
+import { getTopSpotifyTracks } from '../queries/getTopSpotifyTracks';
 
-const favoriteGenres = ["Pop", "Indian Indie","Alternative", "J-pop", "Classical"];
+const favoriteGenres = ["Pop", "Indian Indie", "Alternative", "J-pop", "Classical"];
 const favoriteSongs = [
   { title: "Too Sweet", artist: "Hozier", imgSrc: "https://cdn-images.dzcdn.net/images/cover/7a7c512b717a4aa7452f3c3e46675322/500x500-000000-80-0-0.jpg" },
   { title: "End of Beginning", artist: "Djo", imgSrc: "https://cdn-images.dzcdn.net/images/cover/f13749b2a226afa7f5f866ce2f4d3015/500x500-000000-80-0-0.jpg" },
@@ -9,6 +12,22 @@ const favoriteSongs = [
 ];
 
 const Music: React.FC = () => {
+
+
+  const [topTracks, setTopTracks] = useState<TopSpotifyTracks[] | null>(null);
+
+  useEffect(() => {
+    async function fetchTopTracks() {
+      const data = await getTopSpotifyTracks();
+      setTopTracks(data);
+    }
+    fetchTopTracks();
+  }, []);
+
+  console.log("🚀 ~ topTracks:", topTracks)
+
+
+  if (!topTracks) return <div>Loading...</div>;
   return (
     <div className="music-page">
       <div className="quote">
@@ -19,10 +38,10 @@ const Music: React.FC = () => {
         <h3>Explore by Genre</h3>
         <div className="genres">
           {favoriteGenres.map((genre, index) => (
-            <div 
-              key={index} 
-              className="genre-card" 
-              style={{ animationDelay: `${index * 0.2}s` }} 
+            <div
+              key={index}
+              className="genre-card"
+              style={{ animationDelay: `${index * 0.2}s` }}
               onClick={() => window.open('https://stats.fm/lockhart', '_blank')}
             >
               <p>{genre}</p>

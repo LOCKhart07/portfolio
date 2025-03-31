@@ -75,3 +75,9 @@ export interface Award {
   description: string;
   icon: string;
 }
+
+export interface TopSpotifyTracks {
+  name: string;
+  artist: string;
+  url: string;
+}
