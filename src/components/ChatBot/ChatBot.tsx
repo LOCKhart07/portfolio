@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import './ChatBot.css';
 
 interface Message {
@@ -28,7 +29,10 @@ const KNOWLEDGE_BASE = {
     // Add more Q&A pairs about yourself here
 };
 
+const HIDDEN_ROUTES = ['/', '/browse'];
+
 const ChatBot: React.FC = () => {
+    const location = useLocation();
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE, WIP_MESSAGE]);
     const [inputText, setInputText] = useState('');
@@ -78,6 +82,11 @@ const ChatBot: React.FC = () => {
             setMessages(prev => [...prev, botMessage]);
         }, 1000);
     };
+
+    // Hide chatbot on specified routes
+    if (HIDDEN_ROUTES.includes(location.pathname)) {
+        return null;
+    }
 
     return (
         <div className="chatbot-container">
