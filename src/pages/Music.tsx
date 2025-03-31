@@ -3,7 +3,11 @@ import './Music.css';
 import { Song } from '../types';
 import { getTopSpotifyTracks } from '../queries/getTopSpotifyTracks';
 const favoriteGenres = ["Pop", "Indian Indie", "Alternative", "J-pop", "Classical"];
-
+// const favoriteSongs = [
+//   { title: "Too Sweet", artist: "Hozier", imgSrc: "https://cdn-images.dzcdn.net/images/cover/7a7c512b717a4aa7452f3c3e46675322/500x500-000000-80-0-0.jpg" },
+//   { title: "End of Beginning", artist: "Djo", imgSrc: "https://cdn-images.dzcdn.net/images/cover/f13749b2a226afa7f5f866ce2f4d3015/500x500-000000-80-0-0.jpg" },
+//   { title: "I love you So", artist: "The Walters", imgSrc: "https://cdn-images.dzcdn.net/images/cover/d6d18c1fa3adc35d95d31edc800d2df7/500x500-000000-80-0-0.jpg" },
+// ];
 
 const Music: React.FC = () => {
 
@@ -46,15 +50,19 @@ const Music: React.FC = () => {
       <div className="songs-section">
         <h3>Favorite Songs This Month</h3>
         <div className="songs">
-          {topTracks.map((song, index) => (
-            <div key={index} className="song-card" style={{ animationDelay: `${index * 0.3}s` }} onClick={() => window.open(song.url, '_blank')}>
-              <img src={song.image} alt={song.name} className="song-image" />
-              <div className="song-details">
-                <h4>{song.name}</h4>
-                <p>by {song.artist}</p>
+          {topTracks && topTracks.length > 0 ? (
+            topTracks.map((song, index) => (
+              <div key={index} className="song-card" style={{ animationDelay: `${index * 0.3}s` }} onClick={() => window.open(song.url, '_blank')}>
+                <img src={song.image} alt={song.name} className="song-image" />
+                <div className="song-details">
+                  <h4>{song.name}</h4>
+                  <p>by {song.artist}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p>No favorite songs available this month.</p>
+          )}
         </div>
       </div>
 
