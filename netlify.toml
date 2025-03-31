@@ -11,7 +11,15 @@
 [build.environment]
   NODE_VERSION = "18"
 
-# Enable CORS headers if needed
+# Enable CORS headers for the Spotify stats API
+[[headers]]
+  for = "/spotify-stats/api/*"
+    [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+    Access-Control-Allow-Headers = "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+
+# Enable CORS headers for all other routes
 [[headers]]
   for = "/*"
     [headers.values]
