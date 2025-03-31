@@ -76,8 +76,9 @@ export interface Award {
   icon: string;
 }
 
-export interface Songs {
+export interface Song {
   name: string;
   artist: string;
   url: string;
+  image: string;
 }

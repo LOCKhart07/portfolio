@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './Music.css';
-import { Songs } from '../types';
+import { Song } from '../types';
 import { getTopSpotifyTracks } from '../queries/getTopSpotifyTracks';
-
 const favoriteGenres = ["Pop", "Indian Indie", "Alternative", "J-pop", "Classical"];
-const favoriteSongs = [
-  { title: "Too Sweet", artist: "Hozier", imgSrc: "https://cdn-images.dzcdn.net/images/cover/7a7c512b717a4aa7452f3c3e46675322/500x500-000000-80-0-0.jpg" },
-  { title: "End of Beginning", artist: "Djo", imgSrc: "https://cdn-images.dzcdn.net/images/cover/f13749b2a226afa7f5f866ce2f4d3015/500x500-000000-80-0-0.jpg" },
-  { title: "I love you So", artist: "The Walters", imgSrc: "https://cdn-images.dzcdn.net/images/cover/d6d18c1fa3adc35d95d31edc800d2df7/500x500-000000-80-0-0.jpg" },
-];
+
 
 const Music: React.FC = () => {
 
 
-  const [topTracks, setTopTracks] = useState<Songs[] | null>(null);
+  const [topTracks, setTopTracks] = useState<Song[] | null>(null);
 
   useEffect(() => {
     async function fetchTopTracks() {
@@ -22,7 +17,6 @@ const Music: React.FC = () => {
     }
     fetchTopTracks();
   }, []);
-
   console.log("🚀 ~ topTracks:", topTracks)
 
 
@@ -50,19 +44,22 @@ const Music: React.FC = () => {
       </div>
 
       <div className="songs-section">
-        <h3>Favorite Songs This Week</h3>
+        <h3>Favorite Songs This Month</h3>
         <div className="songs">
-          {favoriteSongs.map((song, index) => (
-            <div key={index} className="song-card" style={{ animationDelay: `${index * 0.3}s` }} onClick={() => window.open('https://stats.fm/lockhart', '_blank')}>
-              <img src={song.imgSrc} alt={song.title} className="song-image" />
+          {topTracks.map((song, index) => (
+            <div key={index} className="song-card" style={{ animationDelay: `${index * 0.3}s` }} onClick={() => window.open(song.url, '_blank')}>
+              <img src={song.image} alt={song.name} className="song-image" />
               <div className="song-details">
-                <h4>{song.title}</h4>
+                <h4>{song.name}</h4>
                 <p>by {song.artist}</p>
               </div>
             </div>
           ))}
         </div>
       </div>
+
+
+
     </div>
   );
 };
