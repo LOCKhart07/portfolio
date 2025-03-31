@@ -1,5 +1,5 @@
 ## 🌟 Jenslee Dsouza's Netflix Inspired Portfolio 🌟 - [Visit](https://portfolio.lockhart.in/)
-[![Deploy](https://github.com/LOCKhart07/portfolio/actions/workflows/deploy.yml/badge.svg)](https://github.com/LOCKhart07/portfolio/actions/workflows/deploy.yml)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/58584fb9-48fb-4155-b000-bb3c76f7a443/deploy-status)](https://app.netlify.com/sites/portfolio-jenslee/deploys)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -27,11 +27,10 @@ Welcome to my personal portfolio project! 🚀 This website showcases my work, s
 This portfolio is built with love and:
 
 - ⚛️ **React** (Frontend)
-- ☁️ **AWS S3 & CloudFront** (Hosting and CDN)
-- 🖌️ **Tailwind CSS** (Styling)
+- 🌐 **Netlify** (Hosting and CDN)
 - 🛡️ **DatoCMS** (Content Management)
 - 📊 **Google Analytics 4** (Privacy-focused analytics)
-- 🧩 **Other Cool Tools**: GitHub Actions
+- 🎵 **Spotify API** (Music Integration)
 
 ---
 
@@ -97,6 +96,7 @@ npm install
 ```env
 REACT_APP_GA_TRACKING_ID=your_ga4_id
 REACT_APP_DATOCMS_API_TOKEN=your_datocms_token
+REACT_APP_SPOTIFY_STATS_API_KEY=your_spotify_api_key
 ```
 
 5. **Run the Project**: Start the development server.
@@ -105,6 +105,14 @@ npm start
 ```
 
 6. **Visit the Local Server**: Open your browser and navigate to `http://localhost:3000`.
+
+7. **Deploy to Netlify**:
+   - Create a Netlify account and connect your repository
+   - Configure build settings:
+     - Build command: `npm run build`
+     - Publish directory: `build`
+   - Set up environment variables in Netlify dashboard
+   - Configure custom domain if needed
 
 ---
 
