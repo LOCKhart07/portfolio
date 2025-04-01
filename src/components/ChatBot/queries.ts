@@ -46,6 +46,7 @@ export const processStreamingResponse = async (
 
             const chunk = decoder.decode(value);
             try {
+                console.log("chunk", chunk)
                 const data = JSON.parse(chunk);
                 if (data.chunk || data.is_final) {
                     onChunk(data);
