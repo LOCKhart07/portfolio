@@ -52,7 +52,7 @@ export const processStreamingResponse = async (
                     onChunk(data);
                 }
             } catch (e) {
-                console.error('Error parsing streaming response:', e);
+                console.error('Error parsing streaming response:', e, chunk);
             }
         }
     } finally {
