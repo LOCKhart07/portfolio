@@ -12,6 +12,7 @@ const spotifyStatsClient = axios.create({
     headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${SPOTIFY_STATS_API_KEY}`,
+        'Accept': 'application/json',
     },
 });
 
