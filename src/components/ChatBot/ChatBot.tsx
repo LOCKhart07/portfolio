@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import './ChatBot.css';
-import { StreamingMessage } from './types';
+import { StreamingMessage, ChatHistory } from './types';
 import { sendChatMessage, processStreamingResponse } from './queries';
 
 const INITIAL_MESSAGE: StreamingMessage = {
+    message_id: uuidv4(),
     text: "Hi, I'm JenAI. Curious about Jenslee's expertise? Just ask.",
     sender: 'assistant',
     timestamp: new Date()
@@ -30,18 +32,28 @@ const ChatBot: React.FC = () => {
 
     const handleStreamingResponse = async (response: Response) => {
         await processStreamingResponse(response, (data) => {
+
             setMessages(prev => {
                 const newMessages = [...prev];
-                const lastMessage = newMessages[newMessages.length - 1];
-                if (lastMessage.sender === 'assistant' && lastMessage.isStreaming) {
-                    newMessages[newMessages.length - 1] = {
-                        ...lastMessage,
-                        text: lastMessage.text + data.chunk,
+                const messageId = data.message.message_id;
+
+                // Find existing streaming message with matching ID
+                const existingMessageIndex = newMessages.findIndex(
+                    msg => msg.message_id === messageId && msg.isStreaming
+                );
+
+                if (existingMessageIndex !== -1) {
+                    // Update existing streaming message
+                    newMessages[existingMessageIndex] = {
+                        ...newMessages[existingMessageIndex],
+                        text: newMessages[existingMessageIndex].text + data.message.content,
                         isStreaming: !data.is_final
                     };
                 } else {
+                    // Create new message
                     newMessages.push({
-                        text: data.chunk || '',
+                        message_id: messageId,
+                        text: data.message.content || '',
                         sender: 'assistant',
                         timestamp: new Date(),
                         isStreaming: !data.is_final
@@ -57,9 +69,10 @@ const ChatBot: React.FC = () => {
         if (!inputText.trim() || isLoading) return;
 
         const userMessage: StreamingMessage = {
+            message_id: uuidv4(),
             text: inputText.trim(),
             sender: 'user',
-            timestamp: new Date()
+            timestamp: new Date(),
         };
 
         setMessages(prev => [...prev, userMessage]);
@@ -67,12 +80,17 @@ const ChatBot: React.FC = () => {
         setIsLoading(true);
 
         try {
-            const response = await sendChatMessage(inputText, {
+            const history: ChatHistory = {
                 messages: messages.map(msg => ({
+                    message_id: msg.message_id,
                     role: msg.sender === 'user' ? 'user' : 'assistant',
-                    content: msg.text
+                    content: msg.text,
+                    timestamp: msg.timestamp.toISOString()
                 }))
-            });
+            };
+
+            const response = await sendChatMessage(userMessage.text, history, userMessage.message_id);
+
 
             if (!response.ok) {
                 throw new Error('Failed to get response from API');
@@ -82,6 +100,7 @@ const ChatBot: React.FC = () => {
         } catch (error) {
             console.error('Error sending message:', error);
             setMessages(prev => [...prev, {
+                message_id: uuidv4(),
                 text: "I apologize, but I encountered an error. Please try again later.",
                 sender: 'assistant',
                 timestamp: new Date()

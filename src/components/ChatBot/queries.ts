@@ -1,22 +1,13 @@
 // import { Message } from './types';
+import { ChatHistory, ChatResponse } from './types';
 
-const API_BASE_URL = process.env.REACT_APP_ASSISTANT_API_BASE_URL ;
+const API_BASE_URL = process.env.REACT_APP_ASSISTANT_API_BASE_URL;
 
-export interface ChatHistory {
-    messages: {
-        role: 'user' | 'assistant';
-        content: string;
-    }[];
-}
-
-export interface ChatResponse {
-    chunk?: string;
-    is_final: boolean;
-}
 
 export const sendChatMessage = async (
     query: string,
-    history: ChatHistory
+    history: ChatHistory,
+    message_id: string
 ): Promise<Response> => {
     return fetch(`${API_BASE_URL}/chat/stream`, {
         method: 'POST',
@@ -25,7 +16,8 @@ export const sendChatMessage = async (
         },
         body: JSON.stringify({
             query,
-            history
+            history,
+            message_id
         })
     });
 };
@@ -47,10 +39,11 @@ export const processStreamingResponse = async (
             const chunk = decoder.decode(value);
             try {
                 const data = JSON.parse(chunk);
-                if (data.chunk || data.is_final) {
+                if (data.message.content || data.message.is_final) {
                     onChunk(data);
                 }
             } catch (e) {
+                console.log("problem chunk", chunk);
                 console.error('Error parsing streaming response:', e, chunk);
             }
         }
