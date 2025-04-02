@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Recommendations.css';
 import { getRecommendation } from '../queries/getRecommendation';
-import { Recommendation } from '../types';
+import { Recommendation } from '../types/types';
 
 const Recommendations: React.FC = () => {
 

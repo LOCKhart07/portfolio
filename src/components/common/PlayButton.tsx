@@ -1,5 +1,5 @@
 import React from 'react';
-import './PlayButton.css';
+import '../../styles/PlayButton.css';
 
 interface PlayButtonProps {
   onClick: () => void;

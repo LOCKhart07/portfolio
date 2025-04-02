@@ -1,6 +1,6 @@
 // queries/getCertifications.ts
 import datoCMSClient from './datoCMSClient';
-import { Certification } from '../types';
+import { Certification } from '../types/types';
 
 const GET_CERTIFICATIONS = `
   query {

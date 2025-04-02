@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Awards.css';
 import { motion } from 'framer-motion';
-import { Award } from '../types';
+import { Award } from '../types/types';
 import { getAwards } from '../queries/getAwards';
 
 const Awards: React.FC = () => {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import usePageTracking from "./usePageTracking";
-import ConsentBanner from './components/ConsentBanner';
-import ChatBot from './components/ChatBot/ChatBot';
+import usePageTracking from "./hooks/usePageTracking";
+import ConsentBanner from './components/common/ConsentBanner';
+import ChatBot from './components/features/ChatBot/ChatBot';
 
 // Route configuration
 import { routes } from './routes';

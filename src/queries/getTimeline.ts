@@ -1,6 +1,6 @@
 // queries/getTimeline.ts
 import datoCMSClient from './datoCMSClient';
-import { TimelineItem } from '../types';
+import { TimelineItem } from '../types/types';
 
 const GET_TIMELINE = `
 {

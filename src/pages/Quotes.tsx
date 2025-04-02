@@ -1,7 +1,7 @@
 // Quotes.tsx
 import React, { useEffect, useState } from 'react';
 import './Quotes.css';
-import { Quote } from '../types';
+import { Quote } from '../types/types';
 import { getQuotes } from '../queries/getQuotes';
 
 const Quotes: React.FC = () => {

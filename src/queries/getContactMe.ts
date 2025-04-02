@@ -1,6 +1,6 @@
 // queries/getContactMe.ts
 import datoCMSClient from './datoCMSClient';
-import { ContactMe } from '../types';
+import { ContactMe } from '../types/types';
 
 const GET_CONTACT_ME = `
   query {

@@ -1,5 +1,5 @@
 import React from 'react';
-import './MoreInfoButton.css';
+import 'styles/MoreInfoButton.css';
 
 interface MoreInfoButtonProps {
   onClick: () => void;

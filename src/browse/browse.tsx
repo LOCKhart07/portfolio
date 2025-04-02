@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import ProfileCard from '../components/ProfileCard';
+import ProfileCard from '../components/common/ProfileCard';
 import blueImage from '../images/profiles/blue.png';
 import greyImage from '../images/profiles/grey.png';
 import redImage from '../images/profiles/red.png';

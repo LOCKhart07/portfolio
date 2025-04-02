@@ -4,7 +4,7 @@ import { getSkills } from '../queries/getSkills';
 
 import { FaReact, FaNodeJs, FaAws, FaDocker, FaJava } from 'react-icons/fa';
 import { SiRubyonrails, SiTypescript, SiPostgresql, SiMysql, SiKubernetes, SiGooglecloud, SiSpringboot, SiPhp, SiNetlify, SiHeroku, SiRabbitmq, SiImessage, SiFastapi, SiFlask, SiPython, SiJavascript, SiDjango, SiLangchain, SiApachespark, SiApachekafka, SiDocker, SiVectary, SiGit, SiNginx, SiDash, SiArangodb, SiOpensearch, SiRedis, SiVuedotjs, SiHtml5, SiCss3, SiSelenium, SiSecurityscorecard } from 'react-icons/si';
-import { Skill } from '../types';
+import { Skill } from '../types/types';
 
 const iconMap: { [key: string]: JSX.Element } = {
   SiRubyonrails: <SiRubyonrails />,

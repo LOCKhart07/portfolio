@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import './Music.css';
-import { Song } from '../types';
+import { Song } from '../types/types';
 import { getTopSpotifyTracks } from '../queries/getTopSpotifyTracks';
 const favoriteGenres = ["Pop", "Indian Indie", "Alternative", "J-pop", "Classical"];
 // const favoriteSongs = [

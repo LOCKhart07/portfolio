@@ -1,6 +1,6 @@
 // queries/getProjects.ts
 import datoCMSClient from './datoCMSClient';
-import { Project } from '../types';
+import { Project } from '../types/types';
 
 const GET_PROJECTS = `
   query {

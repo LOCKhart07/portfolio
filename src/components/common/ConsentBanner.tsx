@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { updateAnalyticsConsent } from '../usePageTracking';
-import './ConsentBanner.css';
+import { updateAnalyticsConsent } from '../../usePageTracking';
+import 'styles/ConsentBanner.css';
 
 const ConsentBanner: React.FC = () => {
     const [showBanner, setShowBanner] = useState(false);

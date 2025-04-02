@@ -1,14 +1,13 @@
 import React from 'react';
-import NetflixTitle from './NetflixTitle';
+import NetflixTitle from './components/common/NetflixTitle';
 import ProfilePage from './profilePage/profilePage';
 import Browse from './browse/browse';
-import WorkPermit from './pages/WorkPermit';
 import WorkExperience from './pages/WorkExperience';
 import Recommendations from './pages/Recommendations';
 import Skills from './pages/Skills';
 import Projects from './pages/Projects';
 import ContactMe from './pages/ContactMe';
-import Layout from './Layout';
+import Layout from './components/layout/Layout';
 import Music from './pages/Music';
 import Reading from './pages/Reading';
 import Blogs from './pages/Blogs';
@@ -29,10 +28,6 @@ export const routes = [
     {
         path: '/profile/:profileName',
         element: <Layout><ProfilePage /></Layout>
-    },
-    {
-        path: '/work-permit',
-        element: <Layout><WorkPermit /></Layout>
     },
     {
         path: '/work-experience',

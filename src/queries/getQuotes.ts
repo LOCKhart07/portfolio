@@ -1,6 +1,6 @@
 // queries/getQuotes.ts
 import datoCMSClient from './datoCMSClient';
-import { Quote } from '../types';
+import { Quote } from '../types/types';
 
 const GET_QUOTES = `
   query {
