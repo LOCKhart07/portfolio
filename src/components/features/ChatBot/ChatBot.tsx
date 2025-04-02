@@ -120,6 +120,10 @@ const ChatBot: React.FC = () => {
         return null;
     }
 
+    function markdownToHTML(text: string) {
+        return DOMPurify.sanitize(marked(text, { breaks: true }) as string);
+    }
+
     return (
         <div className="chatbot-container">
             <button
@@ -143,7 +147,7 @@ const ChatBot: React.FC = () => {
                                 className={`message ${message.sender === 'assistant' ? 'assistant' : 'user'}`}
                             >
                                 <div className="message-content">
-                                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parseInline(message.text) as string) }} />
+                                    <div dangerouslySetInnerHTML={{ __html: markdownToHTML(message.text) }} />
                                     {message.isStreaming && <span className="streaming-dot">...</span>}
                                 </div>
                                 <div className="message-timestamp">
