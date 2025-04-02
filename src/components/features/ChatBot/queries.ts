@@ -30,21 +30,29 @@ export const processStreamingResponse = async (
     if (!reader) return;
 
     const decoder = new TextDecoder();
+    let buffer = '';
 
     try {
         while (true) {
             const { done, value } = await reader.read();
             if (done) break;
 
-            const chunk = decoder.decode(value);
-            try {
-                const data = JSON.parse(chunk);
-                if (data.message.content || data.message.is_final) {
-                    onChunk(data);
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split('\n');
+            buffer = lines.pop() || ''; // Keep the last incomplete line in the buffer
+
+            for (const line of lines) {
+                if (line.trim()) {
+                    try {
+                        const data = JSON.parse(line);
+                        if (data.message.content || data.message.is_final) {
+                            onChunk(data);
+                        }
+                    } catch (e) {
+                        console.log("problem line", line);
+                        console.error('Error parsing streaming response:', e, line);
+                    }
                 }
-            } catch (e) {
-                console.log("problem chunk", chunk);
-                console.error('Error parsing streaming response:', e, chunk);
             }
         }
     } finally {
