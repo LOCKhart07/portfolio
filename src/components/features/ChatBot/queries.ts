@@ -37,14 +37,18 @@ export const processStreamingResponse = async (
             if (done) break;
 
             const chunk = decoder.decode(value);
-            try {
-                const data = JSON.parse(chunk);
-                if (data.message.content || data.message.is_final) {
-                    onChunk(data);
+            // Dealing with buffer issues. Needs to be fixed properly.
+            const jsonStrings = chunk.split(/\n(?={"message"|{)/).filter(str => str.trim());
+            
+            for (const jsonString of jsonStrings) {
+                try {
+                    const data = JSON.parse(jsonString);
+                    if (data.message.content || data.message.is_final) {
+                        onChunk(data);
+                    }
+                } catch (e) {
+                    console.error('Error parsing JSON:', e, jsonString);
                 }
-            } catch (e) {
-                console.log("problem chunk", chunk);
-                console.error('Error parsing streaming response:', e, chunk);
             }
         }
     } finally {
