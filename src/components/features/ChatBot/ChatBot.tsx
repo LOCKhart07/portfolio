@@ -1,9 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import DOMPurify from 'dompurify';
+import { marked } from 'marked';
 import './ChatBot.css';
 import { StreamingMessage, ChatHistory } from './types';
 import { sendChatMessage, processStreamingResponse } from './queries';
+
+// Configure marked to use synchronous mode
+marked.setOptions({ async: false });
 
 const INITIAL_MESSAGE: StreamingMessage = {
     message_id: uuidv4(),
@@ -138,7 +143,7 @@ const ChatBot: React.FC = () => {
                                 className={`message ${message.sender === 'assistant' ? 'assistant' : 'user'}`}
                             >
                                 <div className="message-content">
-                                    {message.text}
+                                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked.parseInline(message.text) as string) }} />
                                     {message.isStreaming && <span className="streaming-dot">...</span>}
                                 </div>
                                 <div className="message-timestamp">
