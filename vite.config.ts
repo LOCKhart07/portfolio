@@ -4,6 +4,7 @@ import { defineConfig, loadEnv, Plugin, createFilter, transformWithEsbuild } fro
 import react from "@vitejs/plugin-react";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { fileURLToPath } from "node:url";
+import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 
 
 // https://vitejs.dev/config/
@@ -21,8 +22,26 @@ export default defineConfig(({ mode }) => {
       importPrefixPlugin(),
       htmlPlugin(mode),
       svgrPlugin(),
-      
-      
+      ViteImageOptimizer({
+        test: /\.(jpe?g|png|gif|tiff|webp|svg|avif)$/i,
+        includePublic: true,
+        logStats: true,
+        png: {
+          quality: 80,
+        },
+        jpeg: {
+          quality: 80,
+        },
+        jpg: {
+          quality: 80,
+        },
+        webp: {
+          quality: 80,
+        },
+        avif: {
+          quality: 80,
+        },
+      }),
     ],
   };
 });
