@@ -10,19 +10,18 @@ interface TopPicksRowProps {
 }
 
 const imageMap: { [key: string]: string } = {
-  "Skills": "https://images.unsplash.com/photo-1589652717521-10c0d092dea9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "Experience": "https://images.unsplash.com/photo-1587440871875-191322ee64b0?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "Certifications": "https://plus.unsplash.com/premium_photo-1682075199505-e96c80e84e5a?q=80&w=1957&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "Recommendations": "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "Contact Me": "https://images.unsplash.com/photo-1628891439478-c613e85af7d6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "Work Permit": "https://plus.unsplash.com/premium_photo-1663089819902-b4a7321f38e0?q=80&w=2110&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "Projects": "https://plus.unsplash.com/premium_photo-1663050756824-165ee7eafdac?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "Music": "https://images.unsplash.com/photo-1462965326201-d02e4f455804?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "Reading": "https://images.unsplash.com/photo-1550399105-c4db5fb85c18?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "Quotes": "https://images.unsplash.com/photo-1530036846422-afb4b7af2fd4?q=80&w=2127&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "Awards": "https://plus.unsplash.com/premium_photo-1713836954462-6e6cd1eecc1c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  "Skills": "/images/sections/Skills.jpeg",
+  "Experience": "/images/sections/Experience.jpeg",
+  "Certifications": "/images/sections/Certifications.jpeg",
+  "Recommendations": "/images/sections/Recommendations.jpeg",
+  "Contact Me": "/images/sections/Contact Me.jpeg",
+  "Work Permit": "/images/sections/Work Permit.jpeg",
+  "Projects": "/images/sections/Projects.jpeg",
+  "Music": "/images/sections/Music.jpeg",
+  "Reading": "/images/sections/Reading.jpeg",
+  "Quotes": "/images/sections/Quotes.jpeg",
+  "Awards": "/images/sections/Awards.jpeg",
 };
-
 const topPicksConfig = {
   recruiter: [
     { title: "Experience", icon: <FaBriefcase />, route: "/work-experience" },
