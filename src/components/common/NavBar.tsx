@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaHome, FaBriefcase, FaTools, FaProjectDiagram, FaEnvelope } from 'react-icons/fa'; // Import icons
 import 'styles/Navbar.css';
-import netflixLogo from 'images/logos/jenslee-netflix-logo.png';
-import blueImage from 'images/profiles/blue.png';
+import netflixLogo from 'images/logos/jenslee-netflix-logo.webp';
+import blueImage from 'images/profiles/blue.webp';
 
 const Navbar: React.FC = () => {
   const location = useLocation();

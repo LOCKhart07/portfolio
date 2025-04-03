@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import 'styles/NetflixTitle.css';
 import netflixSound from 'sounds/netflix-sound.mp3';
 import { useNavigate } from 'react-router-dom';
-import logoImage from 'images/logos/jenslee-netflix-logo.png';
+import logoImage from 'images/logos/jenslee-netflix-logo.webp';
 
 const NetflixTitle = () => {
   const [isAnimating, setIsAnimating] = useState(false);

@@ -2,17 +2,17 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './TopPicksRow.css';
 import { FaCode, FaBriefcase, FaCertificate, FaHandsHelping, FaProjectDiagram, FaEnvelope, FaMusic, FaQuoteLeft, FaTrophy } from 'react-icons/fa';
-import Skills from 'images/sections/Skills.jpeg';
-import Experience from 'images/sections/Experience.jpeg';
-import Certifications from 'images/sections/Certifications.jpeg';
-import Recommendations from 'images/sections/Recommendations.jpeg';
-import ContactMe from 'images/sections/Contact Me.jpeg';
-import WorkPermit from 'images/sections/Work Permit.jpeg';
-import Projects from 'images/sections/Projects.jpeg';
-import Music from 'images/sections/Music.jpeg';
-import Reading from 'images/sections/Reading.jpeg';
-import Quotes from 'images/sections/Quotes.jpeg';
-import Awards from 'images/sections/Awards.jpeg';
+import Skills from 'images/sections/Skills.webp';
+import Experience from 'images/sections/Experience.webp';
+import Certifications from 'images/sections/Certifications.webp';
+import Recommendations from 'images/sections/Recommendations.webp';
+import ContactMe from 'images/sections/Contact Me.webp';
+import WorkPermit from 'images/sections/Work Permit.webp';
+import Projects from 'images/sections/Projects.webp';
+import Music from 'images/sections/Music.webp';
+import Reading from 'images/sections/Reading.webp';
+import Quotes from 'images/sections/Quotes.webp';
+import Awards from 'images/sections/Awards.webp';
 
 
 type ProfileType = 'recruiter' | 'developer' | 'stalker' | 'adventurer';
@@ -34,7 +34,6 @@ const imageMap: { [key: string]: string } = {
   "Quotes": Quotes,
   "Awards": Awards
 };
-
 
 const topPicksConfig = {
   recruiter: [
