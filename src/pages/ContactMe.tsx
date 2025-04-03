@@ -36,6 +36,24 @@ const ContactMe: React.FC = () => {
             {userData.summary}
           </p>
           <p className="badge-company">{userData.companyUniversity}</p>
+          <div className="contact-details">
+            <a
+              href={`mailto:${userData.email}`}
+              className="contact-item"
+              onClick={() => handleContactClick('Email')}
+            >
+              <FaEnvelope className="contact-icon" />
+              <span className="contact-link">{userData.email}</span>
+            </a>
+            <a
+              href={`tel:${userData.phoneNumber}`}
+              className="contact-item"
+              onClick={() => handleContactClick('Phone')}
+            >
+              <FaPhoneAlt className="contact-icon" />
+              <span className="contact-link">{userData.phoneNumber}</span>
+            </a>
+          </div>
           <a
             href={userData.linkedinLink}
             target="_blank"
@@ -49,28 +67,6 @@ const ContactMe: React.FC = () => {
       </div>
       <div className="contact-header">
         <p>I'm always up for a chat! Feel free to reach out.</p>
-      </div>
-      <div className="contact-details">
-        <div className="contact-item">
-          <FaEnvelope className="contact-icon" />
-          <a
-            href={`mailto:${userData.email}`}
-            className="contact-link"
-            onClick={() => handleContactClick('Email')}
-          >
-            {userData.email}
-          </a>
-        </div>
-        <div className="contact-item">
-          <FaPhoneAlt className="contact-icon" />
-          <a
-            href={`tel:${userData.phoneNumber}`}
-            className="contact-link"
-            onClick={() => handleContactClick('Phone')}
-          >
-            {userData.phoneNumber}
-          </a>
-        </div>
       </div>
     </div>
   );
