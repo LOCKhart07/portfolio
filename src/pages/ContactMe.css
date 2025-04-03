@@ -108,7 +108,8 @@
   align-items: center;
   gap: 12px;
   margin-top: 25px;
-  width: 100%;
+  margin-left: 30px;
+  width: fit-content;
   padding-top: 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -116,11 +117,14 @@
 .contact-item {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 12px;
   background: rgba(30, 30, 30, 0.5);
-  padding: 12px 20px;
+  padding: 12px 25px;
   border-radius: 25px;
-  width: 100%;
+  width: auto;
+  min-width: 250px;
+  max-width: 100%;
   transition: all 0.3s ease;
   text-decoration: none;
   color: #fff;
@@ -135,18 +139,20 @@
 .contact-icon {
   font-size: 1.2rem;
   color: #d62b2b;
-  min-width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .contact-link {
   color: #fff;
   font-size: 0.95rem;
   text-decoration: none;
-  flex: 1;
-  text-align: left;
+  text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin: 0 auto;
 }
 
 .contact-link:hover {
