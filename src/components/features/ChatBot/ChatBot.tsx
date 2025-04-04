@@ -6,6 +6,8 @@ import { marked } from 'marked';
 import './ChatBot.css';
 import { StreamingMessage, ChatHistory } from './types';
 import { sendChatMessage, processStreamingResponse } from './queries';
+import { FaExpand, FaCompress } from 'react-icons/fa';
+import { FaTimes } from 'react-icons/fa';
 
 // Configure marked to use synchronous mode
 marked.setOptions({ async: false });
@@ -22,6 +24,7 @@ const HIDDEN_ROUTES = ['/', '/browse'];
 const ChatBot: React.FC = () => {
     const location = useLocation();
     const [isOpen, setIsOpen] = useState(false);
+    const [isFullscreen, setIsFullscreen] = useState(false);
     const [messages, setMessages] = useState<StreamingMessage[]>([INITIAL_MESSAGE]);
     const [inputText, setInputText] = useState('');
     const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -33,6 +36,10 @@ const ChatBot: React.FC = () => {
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    const toggleFullscreen = () => {
+        setIsFullscreen(!isFullscreen);
     };
 
     const handleStreamingResponse = async (response: Response) => {
@@ -134,10 +141,21 @@ const ChatBot: React.FC = () => {
             </button>
 
             {isOpen && (
-                <div className="chatbot-window">
+                <div className={`chatbot-window ${isFullscreen ? 'fullscreen' : ''}`}>
                     <div className="chatbot-header">
                         <h3>JenAI Assistant</h3>
-                        <button className="close-button" onClick={() => setIsOpen(false)}>×</button>
+                        <div className="chatbot-controls">
+                            <button
+                                className="fullscreen-button"
+                                onClick={toggleFullscreen}
+                                title={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+                            >
+                                {isFullscreen ? <FaCompress /> : <FaExpand />}
+                            </button>
+                            <button className="close-button" onClick={() => setIsOpen(false)}>
+                                <FaTimes />
+                            </button>
+                        </div>
                     </div>
 
                     <div className="messages-container">
