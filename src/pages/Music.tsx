@@ -98,7 +98,7 @@ const Music: React.FC = () => {
       </div>
 
       <div className="songs-section">
-        <h3>Favorite Songs This Month</h3>
+        <h3>Favorite Songs Recently</h3>
         <div className="songs">
           {topTracks && topTracks.length > 0 ? (
             topTracks.map((song, index) => (
