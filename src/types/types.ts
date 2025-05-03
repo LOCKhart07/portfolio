@@ -87,3 +87,7 @@ export interface Quote {
   text: string;
   author: string;
 }
+
+export interface BlacklistedMusic {
+  name: string;
+}

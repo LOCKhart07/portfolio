@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import './Music.css';
 import { Song } from '../types/types';
 import { getTopSpotifyTracks } from '../queries/getTopSpotifyTracks';
+import { getBlacklistedMusic } from '../queries/getBlacklistedMusic';
 const favoriteGenres = ["Pop", "Indian Indie", "Alternative", "J-pop", "Classical"];
 // const favoriteSongs = [
 //   { title: "Too Sweet", artist: "Hozier", imgSrc: "https://cdn-images.dzcdn.net/images/cover/7a7c512b717a4aa7452f3c3e46675322/500x500-000000-80-0-0.jpg" },
@@ -21,7 +22,13 @@ const Music: React.FC = () => {
       setIsLoading(true);
       setError(null);
       const data = await getTopSpotifyTracks();
-      setTopTracks(data);
+      const blackListedMusic = await getBlacklistedMusic();
+      const filteredData = data.filter((track: Song) =>
+        !blackListedMusic.some(blacklisted =>
+          blacklisted.name.toLowerCase().trim() === track.name.toLowerCase().trim()
+        )
+      );
+      setTopTracks(filteredData.slice(0, 3));
     } catch (err) {
       setError('Failed to fetch top tracks. Please try again later.');
       console.error('Error fetching top tracks:', err);
