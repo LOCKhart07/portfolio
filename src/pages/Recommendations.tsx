@@ -26,7 +26,7 @@ const Recommendations: React.FC = () => {
           <div>
             <h3>{recommendation?.name}</h3>
             <p>{recommendation?.title}</p>
-            <p className="date">October 24, 2024</p>
+            <p className="date">{recommendation?.date}</p>
           </div>
         </div>
         <div className="recommendation-body">
