@@ -20,13 +20,12 @@ const Recommendations: React.FC = () => {
   if (recommendation === null) return <div>Loading...</div>;
   return (
     <div className='timeline-container'>
-      <div className="recommendation-card">
-        <div className="recommendation-header">
+      <div className="recommendation-card" onClick={() => window.open(recommendation?.link, '_blank')}>
+        <div className="recommendation-header centered-header">
           <img src={recommendation?.profilePicture.url} alt={recommendation?.name} className="profile-pic" />
-          <div>
+          <div className="header-text">
             <h3>{recommendation?.name}</h3>
             <p>{recommendation?.title}</p>
-            <p className="date">{recommendation?.date}</p>
           </div>
         </div>
         <div className="recommendation-body">

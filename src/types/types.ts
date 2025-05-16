@@ -66,6 +66,7 @@ export interface Recommendation {
   title: string;
   date: string;
   body: string;
+  link: string;
 }
 
 export interface Award {
