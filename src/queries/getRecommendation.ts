@@ -14,8 +14,6 @@ const GET_RECOMMENDATION = `
       title
       body
       date
-      relation
-      link
     }
   }
 `;

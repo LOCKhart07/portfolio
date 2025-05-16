@@ -20,27 +20,19 @@ const Recommendations: React.FC = () => {
   if (recommendation === null) return <div>Loading...</div>;
   return (
     <div className='timeline-container'>
-      <a
-        href={recommendation?.link}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="recommendation-link"
-        style={{ textDecoration: 'none', color: 'inherit' }}
-      >
-        <div className="recommendation-card">
-          <div className="recommendation-header">
-            <img src={recommendation?.profilePicture.url} alt={recommendation?.name} className="profile-pic" />
-            <div>
-              <h3>{recommendation?.name}</h3>
-              <p>{recommendation?.title}</p>
-              <p className="relation">{recommendation?.relation}</p>
-            </div>
-          </div>
-          <div className="recommendation-body">
-            <p>{recommendation?.body}</p>
+      <div className="recommendation-card">
+        <div className="recommendation-header">
+          <img src={recommendation?.profilePicture.url} alt={recommendation?.name} className="profile-pic" />
+          <div>
+            <h3>{recommendation?.name}</h3>
+            <p>{recommendation?.title}</p>
+            <p className="date">{recommendation?.date}</p>
           </div>
         </div>
-      </a>
+        <div className="recommendation-body">
+          <p>{recommendation?.body}</p>
+        </div>
+      </div>
     </div>
   );
 };
