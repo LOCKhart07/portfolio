@@ -1,7 +1,12 @@
 /* Ensure the container takes up the full viewport height and centers the content */
 .timeline-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 4rem 1rem 0;
 }
 
 /* Styling for the recommendation card */
