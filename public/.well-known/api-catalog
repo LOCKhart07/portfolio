@@ -9,11 +9,18 @@
           "title": "Sitemap — canonical, machine-readable inventory of every page"
         }
       ],
+      "service-desc": [
+        {
+          "href": "https://portfolio.lockhart.in/.well-known/agent-skills/index.json",
+          "type": "application/json",
+          "title": "Agent Skills discovery index (RFC v0.2.0) — how an agent should answer questions about Jenslee"
+        }
+      ],
       "service-meta": [
         {
           "href": "https://portfolio.lockhart.in/robots.txt",
           "type": "text/plain",
-          "title": "Crawl policy and sitemap pointer"
+          "title": "Crawl policy, sitemap pointer, and Content-Signal usage preferences"
         }
       ],
       "service-doc": [

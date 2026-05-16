@@ -1,4 +1,14 @@
 # https://www.robotstxt.org/robotstxt.html
+#
+# Content Signals (https://contentsignals.org/,
+# draft-romm-aipref-contentsignals): declared usage preferences for this
+# site's content. yes = permitted, no = not permitted.
+#   search    = build a search index and link back here
+#   ai-input  = use this content to ground an AI answer at query time (RAG)
+#   ai-train  = use this content to train or fine-tune an AI model
+# This portfolio is built to be found and read by agents (search=yes,
+# ai-input=yes) but is not offered as model training data (ai-train=no).
 User-agent: *
 Allow: /
+Content-Signal: search=yes, ai-input=yes, ai-train=no
 Sitemap: https://portfolio.lockhart.in/sitemap.xml

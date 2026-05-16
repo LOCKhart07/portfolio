@@ -52,7 +52,8 @@ crawlable URLs below render the full content for the recruiter persona.
 
 - [Sitemap](https://portfolio.lockhart.in/sitemap.xml)
 - [API catalog (RFC 9727)](https://portfolio.lockhart.in/.well-known/api-catalog)
-- [robots.txt](https://portfolio.lockhart.in/robots.txt)
+- [Agent Skills index (RFC v0.2.0)](https://portfolio.lockhart.in/.well-known/agent-skills/index.json)
+- [robots.txt + Content-Signal](https://portfolio.lockhart.in/robots.txt)
 
 ## Structured data
 
