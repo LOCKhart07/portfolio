@@ -23,13 +23,16 @@
 }
 
 .awards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 2rem;
   padding: 1rem;
 }
 
 .award-card {
+  flex: 0 1 340px;
+  max-width: 340px;
   background: #1f1f1f;
   border-radius: 12px;
   padding: 2rem;
@@ -40,7 +43,7 @@
   align-items: center;
   text-align: center;
   border: 1px solid #333;
-  height: 350px;
+  min-height: 350px;
   justify-content: space-between;
 }
 
@@ -105,12 +108,10 @@
     padding: 5rem 1rem 2rem;
   }
 
-  .awards-grid {
-    grid-template-columns: 1fr;
-  }
-
   .award-card {
+    flex-basis: 100%;
+    max-width: 100%;
     padding: 1.5rem;
-    height: 300px;
+    min-height: 300px;
   }
 }
