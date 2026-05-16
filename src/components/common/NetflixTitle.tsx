@@ -13,6 +13,9 @@ const NetflixTitle = () => {
     const audio = new Audio(netflixSound);
     audio.play().catch(error => console.error("Audio play error:", error));
     setIsAnimating(true);
+    // Warm the lazily-loaded /browse chunk while the 4s splash plays so the
+    // auto-navigate below lands instantly instead of hitting the fallback.
+    import('browse/browse');
   }, []); // Empty dependency array means this runs once on mount
 
   useEffect(() => {

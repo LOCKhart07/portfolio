@@ -1,20 +1,25 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import NetflixTitle from './components/common/NetflixTitle';
-import ProfilePage from './profilePage/profilePage';
-import Browse from './browse/browse';
-import WorkExperience from './pages/WorkExperience';
-import Recommendations from './pages/Recommendations';
-import Skills from './pages/Skills';
-import Projects from './pages/Projects';
-import ContactMe from './pages/ContactMe';
 import Layout from './components/layout/Layout';
-import Music from './pages/Music';
-import Reading from './pages/Reading';
-import Blogs from './pages/Blogs';
-import Certifications from './pages/Certifications';
-import Quotes from './pages/Quotes';
-import Awards from './pages/Awards';
-import NotFound from './pages/NotFound';
+
+// The `/` splash (NetflixTitle) and the shared Layout stay eagerly imported so
+// the first paint is instant. Every other route is code-split — the landing
+// screen no longer ships every page's bundle (framer-motion, the timeline
+// component, etc.). Vite emits one chunk per import() below.
+const Browse = lazy(() => import('./browse/browse'));
+const ProfilePage = lazy(() => import('./profilePage/profilePage'));
+const WorkExperience = lazy(() => import('./pages/WorkExperience'));
+const Recommendations = lazy(() => import('./pages/Recommendations'));
+const Skills = lazy(() => import('./pages/Skills'));
+const Projects = lazy(() => import('./pages/Projects'));
+const ContactMe = lazy(() => import('./pages/ContactMe'));
+const Music = lazy(() => import('./pages/Music'));
+const Reading = lazy(() => import('./pages/Reading'));
+const Blogs = lazy(() => import('./pages/Blogs'));
+const Certifications = lazy(() => import('./pages/Certifications'));
+const Quotes = lazy(() => import('./pages/Quotes'));
+const Awards = lazy(() => import('./pages/Awards'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 export const routes = [
     {
@@ -77,4 +82,4 @@ export const routes = [
         path: '*',
         element: <Layout><NotFound /></Layout>
     }
-]; 
+];
