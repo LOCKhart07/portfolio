@@ -40,9 +40,8 @@
   box-shadow: 0 4px 12px rgba(255, 0, 0, 0.1);
   text-decoration: none;
   color: inherit;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  position: relative;
+  display: block;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
   opacity: 0;
@@ -60,6 +59,7 @@
   text-align: left;
   display: flex;
   flex-direction: column;
+  padding-right: 2.25rem;
 }
 
 .certification-icon {
@@ -69,7 +69,10 @@
 }
 
 .certification-link {
-  font-size: 1.5rem;
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  font-size: 1.25rem;
   color: #e50914; /* Netflix red */
   transition: transform 0.2s ease;
 }
