@@ -1,6 +1,18 @@
 .top-picks-row {
-  margin: 20px 0;
+  /* Pull the first row up so its title + card tops peek over the
+     billboard's bottom gradient (Netflix-style). position+z-index are
+     required: .profile-page is positioned, so without this the
+     negatively-margined row would paint *behind* the hero. */
+  position: relative;
+  z-index: 1;
+  margin: -72px 0 24px;
   padding: 10px clamp(16px, 4vw, 20px);
+}
+
+@media (max-width: 768px) {
+  .top-picks-row {
+    margin-top: -44px;
+  }
 }
 
 .row-title {
