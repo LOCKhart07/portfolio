@@ -66,8 +66,9 @@ Want to set this up locally? Follow these steps:
 
 2. **Install Dependencies**: Use a package manager to install the required dependencies.
 ```bash
-nvm install 18
-nvm use 18
+# Uses the Node version pinned in .nvmrc (single source of truth)
+nvm install
+nvm use
 ```
 
 After upgrading Node.js, clear your node_modules and reinstall:
