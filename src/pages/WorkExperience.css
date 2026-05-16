@@ -10,12 +10,12 @@
 
 .timeline-container {
   text-align: center;
-  padding: 20px;
+  padding: 20px clamp(8px, 3vw, 20px);
   margin-top: 5rem;
 }
 
 .timeline-title {
-  font-size: 2rem;
+  font-size: clamp(1.4rem, 6vw, 2rem);
   color: #fff;
   font-weight: bold;
   margin-bottom: 40px;
@@ -35,5 +35,15 @@
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .timeline-container {
+    margin-top: 4rem;
+  }
+
+  .timeline-title {
+    margin-bottom: 24px;
   }
 }

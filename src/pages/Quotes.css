@@ -1,11 +1,11 @@
 .quotes-container {
-  padding: 2rem;
+  padding: 6rem 2rem 3rem;
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .quotes-title {
-  font-size: 2.5rem;
+  font-size: clamp(1.6rem, 6vw, 2.5rem);
   color: #e50914;
   margin-bottom: 1rem;
   text-align: center;
@@ -20,7 +20,7 @@
 
 .quotes-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: 2rem;
   padding: 1rem;
 }
@@ -96,11 +96,7 @@
 
 @media (max-width: 768px) {
   .quotes-container {
-    padding: 1rem;
-  }
-
-  .quotes-title {
-    font-size: 2rem;
+    padding: 5rem 1rem 2rem;
   }
 
   .quote-card {

@@ -3,7 +3,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
+  padding: 2rem 1rem;
   background-color: #141414;
 }
 
@@ -26,6 +27,11 @@
 
 @media (max-width: 768px) {
   .who-is-watching {
-    font-size: 30px;
+    font-size: 28px;
+  }
+
+  .profiles {
+    gap: 12px;
+    margin-bottom: 3rem;
   }
 }

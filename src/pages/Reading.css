@@ -8,7 +8,7 @@
 }
 
 .reading-title {
-  font-size: 2.5rem;
+  font-size: clamp(1.6rem, 6vw, 2.5rem);
   color: #ff6f61;
   font-weight: bold;
   margin-bottom: 0.5rem;
@@ -23,7 +23,7 @@
 
 .books-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
   gap: 1.5rem;
 }
 
@@ -41,10 +41,8 @@
 }
 
 .book-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
   transform: scale(1.05); /* Zoom-in effect */
-  box-shadow: 0rem 0rem 20rem 20px rgba(211, 29, 29, 0.4)
+  box-shadow: 0 0 24px 4px rgba(211, 29, 29, 0.4);
 }
 
 .book-cover {
@@ -104,5 +102,15 @@
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .reading-container {
+    padding: 5rem 1rem 2rem;
+  }
+
+  .book-cover {
+    height: clamp(220px, 55vw, 300px);
   }
 }

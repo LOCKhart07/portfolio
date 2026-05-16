@@ -1,10 +1,10 @@
 .top-picks-row {
   margin: 20px 0;
-  padding: 10px 20px;
+  padding: 10px clamp(16px, 4vw, 20px);
 }
 
 .row-title {
-  font-size: 2rem;
+  font-size: clamp(1.25rem, 4.5vw, 2rem);
   color: #fff;
   margin-bottom: 20px;
   animation: fadeIn 1s ease-in-out;
@@ -12,13 +12,25 @@
 
 .card-row {
   display: flex;
-  gap: 15px;
+  gap: clamp(10px, 2vw, 15px);
+  /* Netflix-style horizontal scroll carousel */
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  padding-bottom: 8px;
+}
+
+.card-row::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
 }
 
 .pick-card {
   position: relative;
-  width: 250px;
-  height: 200px;
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  width: clamp(150px, 42vw, 250px);
+  aspect-ratio: 5 / 4;
   border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
@@ -93,5 +105,25 @@
   to {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+
+/* Touch devices can't hover: keep the label permanently visible so the
+   user can tell the cards apart. Desktop hover behaviour is untouched. */
+@media (hover: none) {
+  .overlay {
+    opacity: 1;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.75) 0%,
+      rgba(0, 0, 0, 0.1) 60%,
+      transparent 100%
+    );
+    align-items: flex-end;
+  }
+
+  .pick-label {
+    padding-bottom: 12px;
+    font-size: 1rem;
   }
 }

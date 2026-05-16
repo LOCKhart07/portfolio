@@ -255,3 +255,18 @@
 .fullscreen-button:hover {
   transform: scale(1.1);
 }
+
+/* On phones the fixed 350x500 window overflows — size it to the viewport */
+@media (max-width: 480px) {
+  .chatbot-container {
+    bottom: 16px;
+    right: 16px;
+  }
+
+  .chatbot-window {
+    width: calc(100vw - 24px);
+    height: min(70vh, 520px);
+    right: 12px;
+    bottom: 80px;
+  }
+}

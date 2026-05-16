@@ -89,13 +89,13 @@
   }
 
   .banner-headline {
-    font-size: 2rem;
-    margin-top: 10rem;
+    font-size: clamp(1.5rem, 7vw, 2rem);
+    margin-top: 0;
   }
 
   .banner-description {
     line-height: 1.5;
-    font-size: 12px;
+    font-size: 13px;
   }
 
   /* Button adjustments */

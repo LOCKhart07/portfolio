@@ -1,9 +1,29 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  /* Prevent fixed-width children from forcing a horizontal scrollbar on mobile */
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
 body {
   margin: 0;
   font-family: 'Netflix Sans',Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #141414;
+}
+
+/* Media never overflows its container */
+img,
+svg,
+video {
+  max-width: 100%;
 }
 
 code {

@@ -5,7 +5,7 @@
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  padding: 10rem 1rem;
+  padding: 8rem 1rem 4rem;
   text-align: center;
   background: linear-gradient(180deg, rgba(0, 0, 1, 0.9) 10%, rgba(20, 20, 20, 0.9) 100%);
   background-size: 200% 200%;
@@ -14,7 +14,7 @@
 }
 
 .certifications-title {
-  font-size: 2.5rem;
+  font-size: clamp(1.6rem, 6vw, 2.5rem);
   color: #e50914; /* Netflix red */
   font-weight: bold;
   margin-bottom: 2rem;
@@ -26,7 +26,7 @@
 
 .certifications-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
   gap: 1.5rem;
   width: 100%;
   max-width: 1000px;
@@ -101,4 +101,14 @@
 @keyframes cardFadeIn {
   from { opacity: 0; transform: translateY(50px) rotate(-2deg) scale(0.95); }
   to { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
+}
+
+@media (max-width: 768px) {
+  .certifications-container {
+    padding: 6rem 1rem 3rem;
+  }
+
+  .certification-card {
+    padding: 1.25rem;
+  }
 }
