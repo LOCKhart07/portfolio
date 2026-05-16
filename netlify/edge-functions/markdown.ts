@@ -65,8 +65,8 @@ crawlable URLs below render the full content for the recruiter persona.
   "url": "https://portfolio.lockhart.in/",
   "jobTitle": "Software Developer focused on Backend, AI & Web3",
   "sameAs": [
-    "https://github.com/jenslee",
-    "https://linkedin.com/in/jenslee"
+    "https://github.com/LOCKhart07",
+    "https://www.linkedin.com/in/jensleedsouza/"
   ],
   "knowsAbout": [
     "Backend Development",
