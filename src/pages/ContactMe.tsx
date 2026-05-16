@@ -4,7 +4,7 @@ import profilePic from '../images/profile-pictures/jenslee.jpeg';
 import { FaEnvelope, FaPhoneAlt, FaLinkedin } from 'react-icons/fa';
 import { ContactMe as IContactMe } from '../types/types';
 import { getContactMe } from '../queries/getContactMe';
-import { trackEvent } from '../usePageTracking';
+import { trackEvent } from '../hooks/usePageTracking';
 
 const ContactMe: React.FC = () => {
 

@@ -10,7 +10,6 @@ const analyticsEnabled = Boolean(GA_MEASUREMENT_ID);
 
 if (analyticsEnabled) {
     ReactGA.initialize(GA_MEASUREMENT_ID, {
-        testMode: true,
         gtagOptions: {
             'consent': 'default',
             'ad_storage': 'denied',
@@ -28,6 +27,12 @@ export const updateAnalyticsConsent = (hasConsent: boolean) => {
     ReactGA.gtag('consent', 'update', {
         'analytics_storage': hasConsent ? 'granted' : 'denied'
     });
+    // The page-tracking effect is keyed on route changes, so granting consent
+    // mid-session won't re-fire it. Send the current pageview now, otherwise
+    // the landing page of every first-time visit is never counted.
+    if (hasConsent) {
+        ReactGA.send({ hitType: "pageview", page: window.location.pathname });
+    }
 };
 
 // Only track if consent is given
@@ -47,6 +52,7 @@ const usePageTracking = () => {
     const location = useLocation();
 
     useEffect(() => {
+        if (!analyticsEnabled) return;
         const hasConsent = localStorage.getItem('analyticsConsent') === 'true';
         if (hasConsent) {
             ReactGA.send({ hitType: "pageview", page: location.pathname });

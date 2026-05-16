@@ -4,7 +4,7 @@ import PlayButton from '../components/common/PlayButton';
 import MoreInfoButton from '../components/common/MoreInfoButton';
 import { getProfileBanner } from '../queries/getProfileBanner';
 import { ProfileBanner as ProfileBannerType } from '../types/types';
-import { trackEvent } from '../usePageTracking';
+import { trackEvent } from '../hooks/usePageTracking';
 
 const ProfileBanner: React.FC = () => {
 

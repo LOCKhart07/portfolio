@@ -5,7 +5,7 @@ import { SiRubyonrails, SiPostgresql, SiMongodb, SiMaterialdesign, SiHtml5, SiCs
 import { Project } from '../types/types';
 import { getProjects } from '../queries/getProjects';
 import { GrDeploy, GrKubernetes } from "react-icons/gr";
-import { trackEvent } from '../usePageTracking';
+import { trackEvent } from '../hooks/usePageTracking';
 
 const techIcons: { [key: string]: JSX.Element } = {
   "ReactJS": <FaReact />,

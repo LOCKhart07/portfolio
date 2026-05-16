@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { updateAnalyticsConsent } from '../../usePageTracking';
+import { updateAnalyticsConsent } from '../../hooks/usePageTracking';
 import 'styles/ConsentBanner.css';
 
 const ConsentBanner: React.FC = () => {
