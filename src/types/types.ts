@@ -30,7 +30,10 @@ export interface Project {
   title: string;
   description: string;
   techUsed: string;
-  image: { url: string };
+  // DatoCMS returns null when a project has no image uploaded — the previous
+  // `{ url: string }` type was a lie and crashed the page on the first such
+  // project ("can't access property url, a.image is null").
+  image: { url: string } | null;
   link: string;
 }
 

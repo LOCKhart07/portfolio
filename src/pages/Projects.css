@@ -38,6 +38,18 @@
   transition: transform 0.3s ease;
 }
 
+/* Shown when a project has no image in DatoCMS (keeps the grid uniform
+   instead of crashing / collapsing the card). */
+.project-image-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  font-weight: 700;
+  color: #e50914;
+  background: #2a2a2a;
+}
+
 .project-card:hover .project-image {
   transform: scale(1.05);
 }

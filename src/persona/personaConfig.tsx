@@ -174,11 +174,13 @@ export const personaContent: Record<ProfileType, PersonaContent> = {
       '/work-experience': { intro: 'Career at a glance — scope, ownership, and the impact at each stop.' },
       '/skills': {
         intro: 'The stack I hire-ready in, grouped by where I add the most value.',
-        priorityTags: ['Cloud', 'DevOps', 'Backend', 'Leadership'],
+        // Match exact DatoCMS skill categories (case-insensitive substring).
+        priorityTags: ['Backend', 'Cloud & DevOps', 'Databases'],
       },
       '/projects': {
         intro: 'Shipped work with measurable outcomes — production systems, not toy demos.',
-        priorityTags: ['AWS', 'Kubernetes', 'CI/CD', 'GraphQL', 'Docker'],
+        // Bubble up the deployed, product-shaped builds (matched against techUsed).
+        priorityTags: ['Cloudflare', 'Nginx', 'Gemini', 'FastAPI', 'Docker'],
       },
       '/recommendations': { intro: 'What managers and peers say about working with me.' },
       '/certifications': { intro: 'Validated credentials backing the experience above.' },
@@ -193,11 +195,12 @@ export const personaContent: Record<ProfileType, PersonaContent> = {
     sections: {
       '/projects': {
         intro: 'Builds I actually wrote — architecture, trade-offs, and the hard parts.',
-        priorityTags: ['Python', 'React', 'LangChain', 'Solidity', 'Kubernetes', 'Node'],
+        // Bubble up the technically deepest (AI / backend / automation) builds.
+        priorityTags: ['LangChain', 'FastAPI', 'Flask', 'Docker', 'Selenium'],
       },
       '/skills': {
         intro: 'Languages and tools I reach for, and what I use each for.',
-        priorityTags: ['Languages', 'Backend', 'Frontend', 'DevOps'],
+        priorityTags: ['Backend', 'Frontend', 'Cloud & DevOps'],
       },
       '/work-experience': { intro: 'The systems I worked on and the role I played in shipping them.' },
       '/certifications': { intro: 'Credentials worth the exam — the rest is in the code.' },

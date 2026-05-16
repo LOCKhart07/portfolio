@@ -98,7 +98,7 @@ const Projects: React.FC = () => {
   // untouched (stable).
   const orderedProjects = orderByPriority(
     projects,
-    (p) => p.techUsed,
+    (p) => p.techUsed ?? '',
     content.sections['/projects']?.priorityTags,
   );
   const handleProjectClick = (project: Project) => {
@@ -119,12 +119,18 @@ const Projects: React.FC = () => {
             style={{ '--delay': `${index * 0.1}s` } as React.CSSProperties}
             onClick={() => handleProjectClick(project)}
           >
-            <img src={project.image.url} alt={project.title} className="project-image" />
+            {project.image?.url ? (
+              <img src={project.image.url} alt={project.title} className="project-image" />
+            ) : (
+              <div className="project-image project-image-fallback" aria-hidden="true">
+                {project.title?.charAt(0) ?? '★'}
+              </div>
+            )}
             <div className="project-details">
               <h3>{project.title}</h3>
               <p>{project.description}</p>
               <div className="tech-used">
-                {project.techUsed.split(', ').map((tech: string, i: number) => (
+                {(project.techUsed ?? '').split(', ').filter(Boolean).map((tech: string, i: number) => (
                   <span key={i} className="tech-badge">
                     {techIcons[tech] || "🔧"} {tech}
                   </span>
