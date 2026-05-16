@@ -41,10 +41,11 @@ describe('Navbar links', () => {
     }
   });
 
-  test('persona-independent links stay flat', () => {
+  test('logo stays flat, Home points to the persona landing page', () => {
     const hrefs = renderNavAs('explorer');
     expect(hrefs).toContain('/'); // logo
-    expect(hrefs).toContain('/browse'); // Home
+    expect(hrefs).toContain('/profile/explorer'); // Home → persona landing page
+    expect(hrefs).not.toContain('/browse'); // no longer the persona picker
   });
 
   test('switching persona changes the link targets', () => {

@@ -41,7 +41,7 @@ const Navbar: React.FC = () => {
             <img src={netflixLogo} alt="Netflix" />
           </Link>
           <ul className="navbar-links">
-            <li><Link to="/browse">Home</Link></li>
+            <li><Link to={base}>Home</Link></li>
             <li><Link to={`${base}/work-experience`}>Career</Link></li>
             <li><Link to={`${base}/skills`}>Skills</Link></li>
             <li><Link to={`${base}/projects`}>Projects</Link></li>
@@ -68,7 +68,7 @@ const Navbar: React.FC = () => {
           <img src={netflixLogo} alt="Netflix Logo" />
         </div>
         <ul>
-          <li><Link to="/browse" onClick={closeSidebar}><FaHome /> Home</Link></li>
+          <li><Link to={base} onClick={closeSidebar}><FaHome /> Home</Link></li>
           <li><Link to={`${base}/work-experience`} onClick={closeSidebar}><FaBriefcase /> Career</Link></li>
           <li><Link to={`${base}/skills`} onClick={closeSidebar}><FaTools /> Skills</Link></li>
           <li><Link to={`${base}/projects`} onClick={closeSidebar}><FaProjectDiagram /> Projects</Link></li>
