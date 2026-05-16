@@ -1,6 +1,7 @@
 import { test, expect, describe } from 'vitest';
 import {
   PERSONAS,
+  ProfileType,
   isPersona,
   coercePersona,
   imageMap,
@@ -24,8 +25,8 @@ describe('isPersona', () => {
 
 describe('coercePersona', () => {
   test('passes a valid persona through unchanged', () => {
-    expect(coercePersona('developer')).toBe('developer');
-    expect(coercePersona('adventurer')).toBe('adventurer');
+    expect(coercePersona('engineer')).toBe('engineer');
+    expect(coercePersona('explorer')).toBe('explorer');
   });
 
   test('falls back to recruiter for anything invalid', () => {
@@ -46,5 +47,29 @@ describe('config invariants', () => {
     ];
     const missing = titles.filter((t) => !imageMap[t]);
     expect(missing).toEqual([]);
+  });
+
+  // The product rule: picking a persona reorders sections, it never hides
+  // them. So every persona's two rows must cover the SAME full set — and a
+  // section must not appear twice for one persona (it'd render a dup card).
+  const sectionsFor = (p: ProfileType) => [
+    ...topPicksConfig[p].map((t) => t.title),
+    ...continueWatchingConfig[p].map((c) => c.title),
+  ];
+
+  test('no persona hides a section another persona shows', () => {
+    const fullSet = [
+      ...new Set(PERSONAS.flatMap(sectionsFor)),
+    ].sort();
+    for (const p of PERSONAS) {
+      expect([...new Set(sectionsFor(p))].sort()).toEqual(fullSet);
+    }
+  });
+
+  test('a section is never duplicated within one persona', () => {
+    for (const p of PERSONAS) {
+      const titles = sectionsFor(p);
+      expect(titles.length).toBe(new Set(titles).size);
+    }
   });
 });

@@ -27,9 +27,9 @@ import greyImage from 'images/profiles/grey.webp';
 import redImage from 'images/profiles/red.webp';
 import yellowImage from 'images/profiles/yellow.webp';
 
-export type ProfileType = 'recruiter' | 'developer' | 'stalker' | 'adventurer';
+export type ProfileType = 'recruiter' | 'engineer' | 'collaborator' | 'explorer';
 
-export const PERSONAS: ProfileType[] = ['recruiter', 'developer', 'stalker', 'adventurer'];
+export const PERSONAS: ProfileType[] = ['recruiter', 'engineer', 'collaborator', 'explorer'];
 
 export const isPersona = (x?: string): x is ProfileType =>
   !!x && (PERSONAS as readonly string[]).includes(x);
@@ -58,18 +58,18 @@ export const imageMap: Record<string, string> = {
 // it from the persona keeps it correct everywhere.
 export const avatarMap: Record<ProfileType, string> = {
   recruiter: blueImage,
-  developer: greyImage,
-  stalker: redImage,
-  adventurer: yellowImage,
+  engineer: greyImage,
+  collaborator: redImage,
+  explorer: yellowImage,
 };
 
 // Navbar contact CTA label. The link always routes to /contact-me; only the
 // wording changes so each persona gets a call-to-action in its own register.
 export const contactCtaLabel: Record<ProfileType, string> = {
   recruiter: 'Hire Me',
-  developer: "Let's Build",
-  stalker: 'Get in Touch',
-  adventurer: 'Say Hi',
+  engineer: "Let's Build",
+  collaborator: 'Work With Me',
+  explorer: 'Say Hi',
 };
 
 // Profile-page background. Was previously passed via router state from
@@ -77,11 +77,11 @@ export const contactCtaLabel: Record<ProfileType, string> = {
 export const backgroundGif: Record<ProfileType, string> = {
   recruiter:
     'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExOTZ5eWwwbjRpdWM1amxyd3VueHhteTVzajVjeGZtZGJ1dDc4MXMyNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dg/16u7Ifl2T4zYfQ932F/giphy.gif',
-  developer:
+  engineer:
     'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnNsdDE2YXYxZnU5MzJ3bjIxYzRiOW5rbHYydWVzMzN1cXl2NTU5MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8fQ1oiRxx9stbdECAo/giphy.gif',
-  stalker:
+  collaborator:
     'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExc28yMjMyZmJ6eWtxbmNwdDV6cXk4dWZmcjFhZms2cXBjN2h5ZDJjeSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QjZXUBUr89CkiWLPjL/giphy.gif',
-  adventurer:
+  explorer:
     'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmxib24ycWo2cjlmazh0NGV5NTZ2Mzd2YWY0M2tvam9oYXBwYW1ocCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ERKMnDK6tkzJe8YVa3/giphy-downsized-large.gif',
 };
 
@@ -93,42 +93,44 @@ export interface TopPick {
 
 // `route` is the section path WITHOUT the persona prefix; callers prepend
 // `/profile/<persona>`.
+// Order encodes persona intent (what that visitor wants to see first). No
+// persona drops a section — anything not led with here lives in that
+// persona's continueWatchingConfig, so every section stays reachable.
 export const topPicksConfig: Record<ProfileType, TopPick[]> = {
+  // recruiter — skim & screen: credibility-forward.
   recruiter: [
-    { title: 'Experience', icon: <FaBriefcase />, route: '/work-experience' },
-    { title: 'Skills', icon: <FaCode />, route: '/skills' },
-    { title: 'Projects', icon: <FaProjectDiagram />, route: '/projects' },
-    { title: 'Recommendations', icon: <FaHandsHelping />, route: '/recommendations' },
-    { title: 'Certifications', icon: <FaCertificate />, route: '/certifications' },
-    { title: 'Awards', icon: <FaTrophy />, route: '/awards' },
-    { title: 'Contact Me', icon: <FaEnvelope />, route: '/contact-me' },
-  ],
-  developer: [
-    { title: 'Projects', route: '/projects', icon: <FaProjectDiagram /> },
-    { title: 'Skills', route: '/skills', icon: <FaCode /> },
     { title: 'Experience', route: '/work-experience', icon: <FaBriefcase /> },
+    { title: 'Skills', route: '/skills', icon: <FaCode /> },
+    { title: 'Projects', route: '/projects', icon: <FaProjectDiagram /> },
+    { title: 'Recommendations', route: '/recommendations', icon: <FaHandsHelping /> },
     { title: 'Certifications', route: '/certifications', icon: <FaCertificate /> },
     { title: 'Awards', route: '/awards', icon: <FaTrophy /> },
-    { title: 'Recommendations', route: '/recommendations', icon: <FaHandsHelping /> },
     { title: 'Contact Me', route: '/contact-me', icon: <FaEnvelope /> },
   ],
-  stalker: [
+  // engineer — judging depth: lead with the work and the stack.
+  engineer: [
     { title: 'Projects', route: '/projects', icon: <FaProjectDiagram /> },
-    { title: 'Experience', route: '/work-experience', icon: <FaBriefcase /> },
     { title: 'Skills', route: '/skills', icon: <FaCode /> },
+    { title: 'Experience', route: '/work-experience', icon: <FaBriefcase /> },
+    { title: 'Awards', route: '/awards', icon: <FaTrophy /> },
     { title: 'Certifications', route: '/certifications', icon: <FaCertificate /> },
-    { title: 'Awards', route: '/awards', icon: <FaTrophy /> },
-    { title: 'Recommendations', route: '/recommendations', icon: <FaHandsHelping /> },
     { title: 'Contact Me', route: '/contact-me', icon: <FaEnvelope /> },
   ],
-  adventurer: [
+  // collaborator — sizing up working together: proof, trust, easy contact.
+  collaborator: [
     { title: 'Projects', route: '/projects', icon: <FaProjectDiagram /> },
     { title: 'Experience', route: '/work-experience', icon: <FaBriefcase /> },
+    { title: 'Recommendations', route: '/recommendations', icon: <FaHandsHelping /> },
+    { title: 'Contact Me', route: '/contact-me', icon: <FaEnvelope /> },
     { title: 'Skills', route: '/skills', icon: <FaCode /> },
-    { title: 'Awards', route: '/awards', icon: <FaTrophy /> },
+  ],
+  // explorer — here for the person: the fun stuff up front, work still here.
+  explorer: [
+    { title: 'Projects', route: '/projects', icon: <FaProjectDiagram /> },
     { title: 'Quotes', route: '/quotes', icon: <FaQuoteLeft /> },
     { title: 'Music', route: '/music', icon: <FaMusic /> },
-    { title: 'Contact Me', route: '/contact-me', icon: <FaEnvelope /> },
+    { title: 'Awards', route: '/awards', icon: <FaTrophy /> },
+    { title: 'Skills', route: '/skills', icon: <FaCode /> },
   ],
 };
 
@@ -137,23 +139,39 @@ export interface ContinueItem {
   link: string;
 }
 
-// Secondary row, per-persona. Kept distinct from each persona's topPicks so
-// the two rows complement rather than repeat.
+// Secondary row, per-persona. Holds exactly what that persona's topPicks
+// doesn't lead with, so topPicks ∪ continueWatching == every section for
+// every persona. Personas differ by ordering/emphasis, never by hiding.
 export const continueWatchingConfig: Record<ProfileType, ContinueItem[]> = {
   recruiter: [
     { title: 'Quotes', link: '/quotes' },
     { title: 'Music', link: '/music' },
   ],
-  developer: [
+  engineer: [
+    { title: 'Recommendations', link: '/recommendations' },
     { title: 'Quotes', link: '/quotes' },
     { title: 'Music', link: '/music' },
   ],
-  stalker: [
-    { title: 'Music', link: '/music' },
+  collaborator: [
+    { title: 'Awards', link: '/awards' },
+    { title: 'Certifications', link: '/certifications' },
     { title: 'Quotes', link: '/quotes' },
+    { title: 'Music', link: '/music' },
   ],
-  adventurer: [
+  explorer: [
+    { title: 'Experience', link: '/work-experience' },
     { title: 'Recommendations', link: '/recommendations' },
     { title: 'Certifications', link: '/certifications' },
+    { title: 'Contact Me', link: '/contact-me' },
   ],
+};
+
+// Persona keys that shipped in shared links / bookmarks before the
+// recruiter|engineer|collaborator|explorer rename. PersonaProvider redirects
+// these to the new key (preserving the rest of the path) so old external
+// links don't 404 into the recruiter fallback.
+export const LEGACY_PERSONA_ALIASES: Record<string, ProfileType> = {
+  developer: 'engineer',
+  stalker: 'collaborator',
+  adventurer: 'explorer',
 };

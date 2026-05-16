@@ -31,19 +31,35 @@ describe('PersonaProvider', () => {
   test('resolves the persona from the :profileName URL segment', () => {
     atRoute(
       '/profile/:profileName/*',
-      '/profile/developer/skills',
+      '/profile/engineer/skills',
       <PersonaProvider><PersonaProbe /></PersonaProvider>,
     );
-    expect(screen.getByTestId('persona')).toHaveTextContent('developer');
+    expect(screen.getByTestId('persona')).toHaveTextContent('engineer');
   });
 
   test('caches the active persona to localStorage', () => {
     atRoute(
       '/profile/:profileName/*',
-      '/profile/adventurer/skills',
+      '/profile/explorer/skills',
       <PersonaProvider><PersonaProbe /></PersonaProvider>,
     );
-    expect(localStorage.getItem('lastPersona')).toBe('adventurer');
+    expect(localStorage.getItem('lastPersona')).toBe('explorer');
+  });
+
+  test('redirects a pre-rename persona key to its new key', () => {
+    // developer → engineer (not the generic recruiter fallback): asserting
+    // the pathname proves the legacy-alias branch fired, not just coercion.
+    render(
+      <MemoryRouter initialEntries={['/profile/developer/skills']}>
+        <Routes>
+          <Route
+            path="/profile/:profileName/skills"
+            element={<PersonaProvider><LocationProbe /></PersonaProvider>}
+          />
+        </Routes>
+      </MemoryRouter>,
+    );
+    expect(screen.getByTestId('loc')).toHaveTextContent('/profile/engineer/skills');
   });
 
   test('redirects an invalid persona segment to the recruiter equivalent', () => {
@@ -98,7 +114,7 @@ describe('LegacyRedirect', () => {
   });
 
   test('uses the last-used persona from localStorage when present', () => {
-    localStorage.setItem('lastPersona', 'stalker');
+    localStorage.setItem('lastPersona', 'collaborator');
     render(
       <MemoryRouter initialEntries={['/projects']}>
         <Routes>
@@ -107,7 +123,7 @@ describe('LegacyRedirect', () => {
         </Routes>
       </MemoryRouter>,
     );
-    expect(screen.getByTestId('loc')).toHaveTextContent('/profile/stalker/projects');
+    expect(screen.getByTestId('loc')).toHaveTextContent('/profile/collaborator/projects');
   });
 
   test('a garbage stored persona is coerced, not trusted', () => {

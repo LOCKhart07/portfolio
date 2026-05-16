@@ -26,29 +26,29 @@ const renderNavAs = (persona: string) => {
 
 describe('Navbar links', () => {
   test('content links are prefixed with the active persona', () => {
-    const hrefs = renderNavAs('stalker');
+    const hrefs = renderNavAs('collaborator');
     // Desktop + mobile sidebar each render the set, so these appear twice.
-    expect(hrefs).toContain('/profile/stalker/skills');
-    expect(hrefs).toContain('/profile/stalker/work-experience');
-    expect(hrefs).toContain('/profile/stalker/projects');
-    expect(hrefs).toContain('/profile/stalker/contact-me');
+    expect(hrefs).toContain('/profile/collaborator/skills');
+    expect(hrefs).toContain('/profile/collaborator/work-experience');
+    expect(hrefs).toContain('/profile/collaborator/projects');
+    expect(hrefs).toContain('/profile/collaborator/contact-me');
   });
 
   test('no bare flat content links survive the persona migration', () => {
-    const hrefs = renderNavAs('developer');
+    const hrefs = renderNavAs('engineer');
     for (const flat of ['/skills', '/work-experience', '/projects', '/contact-me']) {
       expect(hrefs).not.toContain(flat);
     }
   });
 
   test('persona-independent links stay flat', () => {
-    const hrefs = renderNavAs('adventurer');
+    const hrefs = renderNavAs('explorer');
     expect(hrefs).toContain('/'); // logo
     expect(hrefs).toContain('/browse'); // Home
   });
 
   test('switching persona changes the link targets', () => {
     expect(renderNavAs('recruiter')).toContain('/profile/recruiter/projects');
-    expect(renderNavAs('developer')).toContain('/profile/developer/projects');
+    expect(renderNavAs('engineer')).toContain('/profile/engineer/projects');
   });
 });

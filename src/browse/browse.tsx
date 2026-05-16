@@ -15,9 +15,9 @@ const Browse: React.FC = () => {
   // nothing needs to be threaded through router state.
   const profiles = [
     { name: "recruiter", image: blueImage },
-    { name: "developer", image: greyImage },
-    { name: "stalker", image: redImage },
-    { name: "adventurer", image: yellowImage },
+    { name: "engineer", image: greyImage },
+    { name: "collaborator", image: redImage },
+    { name: "explorer", image: yellowImage },
   ];
 
   const handleProfileClick = (profile: { name: string; image: string }) => {
