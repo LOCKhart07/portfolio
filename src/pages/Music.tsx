@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import './Music.css';
-import PersonaIntro from '../persona/PersonaIntro';
 import { Song } from '../types/types';
 import { getTopSpotifyTracks } from '../queries/getTopSpotifyTracks';
 import { getBlacklistedMusic } from '../queries/getBlacklistedMusic';
@@ -85,7 +84,6 @@ const Music: React.FC = () => {
 
   return (
     <div className="music-page">
-      <PersonaIntro section="/music" />
       <div className="quote">
         <p>“La Vie en rose” 🌺</p>
       </div>

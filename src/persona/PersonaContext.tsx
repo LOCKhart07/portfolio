@@ -1,16 +1,9 @@
 import React, { createContext, useContext, useEffect } from 'react';
 import { Navigate, useLocation, useParams } from 'react-router-dom';
-import {
-  ProfileType,
-  coercePersona,
-  isPersona,
-  personaContent,
-  PersonaContent,
-} from './personaConfig';
+import { ProfileType, coercePersona, isPersona } from './personaConfig';
 
 interface PersonaValue {
   persona: ProfileType;
-  content: PersonaContent;
 }
 
 const PersonaContext = createContext<PersonaValue | null>(null);
@@ -49,18 +42,15 @@ export const PersonaProvider: React.FC<{ children: React.ReactNode }> = ({ child
   }
 
   return (
-    <PersonaContext.Provider value={{ persona, content: personaContent[persona] }}>
+    <PersonaContext.Provider value={{ persona }}>
       {children}
     </PersonaContext.Provider>
   );
 };
 
 /**
- * Active persona + its content config. Falls back to recruiter when called
- * outside a provider (e.g. the global ChatBot) so it never throws.
+ * Active persona. Falls back to recruiter when called outside a provider
+ * (e.g. the global ChatBot) so it never throws.
  */
 export const usePersona = (): PersonaValue =>
-  useContext(PersonaContext) ?? {
-    persona: 'recruiter',
-    content: personaContent.recruiter,
-  };
+  useContext(PersonaContext) ?? { persona: 'recruiter' };

@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './Projects.css';
-import PersonaIntro from '../persona/PersonaIntro';
-import { usePersona } from '../persona/PersonaContext';
-import { orderByPriority } from '../persona/personaConfig';
 import { FaReact, FaNodeJs, FaAws, FaDatabase, FaDocker, FaAngular, FaGithub, FaGitlab, FaGoogle, FaJava, FaJenkins, FaMicrosoft, FaPython, FaVuejs, FaYoutube, FaJs } from 'react-icons/fa';
 import { SiRubyonrails, SiPostgresql, SiMongodb, SiMaterialdesign, SiHtml5, SiCss3, SiJquery, SiAwsamplify, SiFirebase, SiTerraform, SiArgo, SiFlask, SiNginx, SiOracle, SiCloudflare, SiSelenium, SiGoogletranslate, SiFirefox, SiRider, SiSpotify, SiFastapi, SiRedis, SiGooglegemini, SiLangchain, SiDatocms } from 'react-icons/si';
 import { Project } from '../types/types';
@@ -82,7 +79,6 @@ const techIcons: { [key: string]: JSX.Element } = {
 
 const Projects: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([])
-  const { content } = usePersona();
 
   useEffect(() => {
     async function fetchProjects() {
@@ -94,13 +90,6 @@ const Projects: React.FC = () => {
   }, [])
 
   if (projects.length === 0) return <div>Loading...</div>;
-  // Persona-relevant tech stacks bubble to the top; order is otherwise
-  // untouched (stable).
-  const orderedProjects = orderByPriority(
-    projects,
-    (p) => p.techUsed ?? '',
-    content.sections['/projects']?.priorityTags,
-  );
   const handleProjectClick = (project: Project) => {
     trackEvent('Project', 'Click', project.title);
     if (project.link) {
@@ -110,9 +99,8 @@ const Projects: React.FC = () => {
 
   return (
     <div className="projects-container">
-      <PersonaIntro section="/projects" />
       <div className="projects-grid">
-        {orderedProjects.map((project, index) => (
+        {projects.map((project, index) => (
           <div
             key={index}
             className="project-card"

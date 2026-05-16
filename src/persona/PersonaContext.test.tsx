@@ -2,7 +2,6 @@ import { test, expect, describe, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { PersonaProvider, usePersona } from './PersonaContext';
-import PersonaIntro from './PersonaIntro';
 import { LegacyRedirect } from '../routes';
 
 beforeEach(() => {
@@ -122,39 +121,5 @@ describe('LegacyRedirect', () => {
       </MemoryRouter>,
     );
     expect(screen.getByTestId('loc')).toHaveTextContent('/profile/recruiter/projects');
-  });
-});
-
-describe('PersonaIntro', () => {
-  const renderIntro = (entry: string, section: string) =>
-    render(
-      <MemoryRouter initialEntries={[entry]}>
-        <Routes>
-          <Route
-            path="/profile/:profileName/*"
-            element={
-              <PersonaProvider>
-                <PersonaIntro section={section} />
-              </PersonaProvider>
-            }
-          />
-        </Routes>
-      </MemoryRouter>,
-    );
-
-  test('renders the persona-specific copy for the section', () => {
-    renderIntro('/profile/developer/projects', '/projects');
-    expect(screen.getByText(/Builds I actually wrote/)).toBeInTheDocument();
-  });
-
-  test('same section, different persona => different copy (not a constant)', () => {
-    renderIntro('/profile/recruiter/projects', '/projects');
-    expect(screen.getByText(/Shipped work with measurable outcomes/)).toBeInTheDocument();
-  });
-
-  test('renders nothing when the persona has no copy for the section', () => {
-    // developer has no "/music" entry in personaContent.
-    const { container } = renderIntro('/profile/developer/music', '/music');
-    expect(container.querySelector('.persona-intro')).toBeNull();
   });
 });

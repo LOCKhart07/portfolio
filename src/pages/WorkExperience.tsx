@@ -7,7 +7,6 @@ import { FaStar as StarIcon } from 'react-icons/fa';
 import './WorkExperience.css';
 import { TimelineItem } from '../types/types';
 import { getTimeline } from '../queries/getTimeline';
-import PersonaIntro from '../persona/PersonaIntro';
 
 
 const WorkExperience: React.FC = () => {
@@ -39,7 +38,6 @@ const WorkExperience: React.FC = () => {
     <>
       <div className="timeline-container">
         <h2 className="timeline-title">📅 Work Experience & Education Timeline</h2>
-        <PersonaIntro section="/work-experience" />
       </div>
       <VerticalTimeline>
         {timeLineData.map((item, index) => (

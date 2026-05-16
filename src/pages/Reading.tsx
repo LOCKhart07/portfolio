@@ -2,7 +2,6 @@
 
 import React from 'react';
 import './Reading.css';
-import PersonaIntro from '../persona/PersonaIntro';
 
 const books = [
   {
@@ -31,7 +30,6 @@ const Reading: React.FC = () => {
   return (
     <div className="reading-container">
       <h2 className="reading-title">📚 Books That Shaped My Journey</h2>
-      <PersonaIntro section="/reading" />
       <p className="reading-intro">These books have influenced my perspectives, motivation, and self-growth.</p>
       <div className="books-grid">
         {books.map((book, index) => (

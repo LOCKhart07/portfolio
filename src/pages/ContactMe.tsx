@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './ContactMe.css';
-import PersonaIntro from '../persona/PersonaIntro';
 import profilePic from '../images/profile-pictures/jenslee.jpeg';
 import { FaEnvelope, FaPhoneAlt, FaLinkedin } from 'react-icons/fa';
 import { ContactMe as IContactMe } from '../types/types';
@@ -28,7 +27,6 @@ const ContactMe: React.FC = () => {
 
   return (
     <div className="contact-container">
-      <PersonaIntro section="/contact-me" />
       <div className="linkedin-badge-custom">
         <img src={profilePic} alt="Jenslee Dsouza" className="badge-avatar" />
         <div className="badge-content">
