@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Projects.css';
 import { FaReact, FaNodeJs, FaAws, FaDatabase, FaDocker, FaAngular, FaGithub, FaGitlab, FaGoogle, FaJava, FaJenkins, FaMicrosoft, FaPython, FaVuejs, FaYoutube, FaJs } from 'react-icons/fa';
-import { SiRubyonrails, SiPostgresql, SiMongodb, SiMaterialdesign, SiHtml5, SiCss3, SiJquery, SiAwsamplify, SiFirebase, SiTerraform, SiArgo, SiFlask, SiNginx, SiOracle, SiCloudflare, SiSelenium, SiGoogletranslate, SiFirefox, SiRider, SiSpotify, SiFastapi, SiRedis, SiGooglegemini, SiLangchain, SiDatocms } from 'react-icons/si';
+import { SiRubyonrails, SiPostgresql, SiMongodb, SiMaterialdesign, SiHtml5, SiCss3, SiJquery, SiAwsamplify, SiFirebase, SiTerraform, SiArgo, SiFlask, SiNginx, SiOracle, SiCloudflare, SiSelenium, SiGoogletranslate, SiFirefox, SiRider, SiSpotify, SiFastapi, SiRedis, SiGooglegemini, SiLangchain, SiDatocms, SiKotlin, SiAndroid, SiGradle, SiGithubactions, SiSqlite } from 'react-icons/si';
 import { Project } from '../types/types';
 import { getProjects } from '../queries/getProjects';
 import { GrDeploy, GrKubernetes } from "react-icons/gr";
@@ -43,7 +43,11 @@ const techIcons: { [key: string]: JSX.Element } = {
   'Express.js': <FaNodeJs />,
   'Hibernate': <FaJava />,
   'Maven': <FaJava />,
-  'Gradle': <FaJava />,
+  'Gradle': <SiGradle />,
+  'Kotlin': <SiKotlin />,
+  'Android': <SiAndroid />,
+  'Room': <SiSqlite />,
+  'GitHub Actions': <SiGithubactions />,
   'JUnit': <FaJava />,
   'Mockito': <FaJava />,
   'Jest': <FaReact />,
