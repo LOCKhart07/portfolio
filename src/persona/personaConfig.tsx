@@ -19,7 +19,6 @@ import ContactMeImg from 'images/sections/Contact Me.webp';
 import WorkPermit from 'images/sections/Work Permit.webp';
 import Projects from 'images/sections/Projects.webp';
 import Music from 'images/sections/Music.webp';
-import Reading from 'images/sections/Reading.webp';
 import Quotes from 'images/sections/Quotes.webp';
 import Awards from 'images/sections/Awards.webp';
 
@@ -50,7 +49,6 @@ export const imageMap: Record<string, string> = {
   'Work Permit': WorkPermit,
   Projects,
   Music,
-  Reading,
   Quotes,
   Awards,
 };
@@ -130,24 +128,23 @@ export interface ContinueItem {
   link: string;
 }
 
-// Previously four identical [Quotes, Music] copies. Now genuinely per-persona
-// and used to surface the previously-orphaned Reading route (its `/reading`
-// page had no entry point from any persona).
+// Secondary row, per-persona. Kept distinct from each persona's topPicks so
+// the two rows complement rather than repeat.
 export const continueWatchingConfig: Record<ProfileType, ContinueItem[]> = {
   recruiter: [
-    { title: 'Reading', link: '/reading' },
+    { title: 'Quotes', link: '/quotes' },
     { title: 'Music', link: '/music' },
   ],
   developer: [
-    { title: 'Reading', link: '/reading' },
     { title: 'Quotes', link: '/quotes' },
+    { title: 'Music', link: '/music' },
   ],
   stalker: [
     { title: 'Music', link: '/music' },
-    { title: 'Reading', link: '/reading' },
+    { title: 'Quotes', link: '/quotes' },
   ],
   adventurer: [
-    { title: 'Reading', link: '/reading' },
     { title: 'Recommendations', link: '/recommendations' },
+    { title: 'Certifications', link: '/certifications' },
   ],
 };

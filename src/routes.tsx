@@ -17,7 +17,6 @@ const Skills = lazy(() => import('./pages/Skills'));
 const Projects = lazy(() => import('./pages/Projects'));
 const ContactMe = lazy(() => import('./pages/ContactMe'));
 const Music = lazy(() => import('./pages/Music'));
-const Reading = lazy(() => import('./pages/Reading'));
 const Certifications = lazy(() => import('./pages/Certifications'));
 const Quotes = lazy(() => import('./pages/Quotes'));
 const Awards = lazy(() => import('./pages/Awards'));
@@ -34,7 +33,6 @@ const sections: { path: string; element: React.ReactNode }[] = [
   { path: 'projects', element: <Projects /> },
   { path: 'contact-me', element: <ContactMe /> },
   { path: 'music', element: <Music /> },
-  { path: 'reading', element: <Reading /> },
   { path: 'certifications', element: <Certifications /> },
   { path: 'quotes', element: <Quotes /> },
   { path: 'awards', element: <Awards /> },
