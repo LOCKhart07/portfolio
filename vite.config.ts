@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { resolve } from "node:path";
 import { readFileSync, existsSync } from "node:fs";
 import { defineConfig, loadEnv, Plugin, createFilter, transformWithEsbuild } from "vite";
@@ -43,6 +44,12 @@ export default defineConfig(({ mode }) => {
         },
       }),
     ],
+    test: {
+      environment: "jsdom",
+      setupFiles: "./src/setupTests.ts",
+      css: false,
+      restoreMocks: true,
+    },
   };
 });
 
