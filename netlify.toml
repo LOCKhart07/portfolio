@@ -39,3 +39,15 @@
   for = "/.well-known/api-catalog"
     [headers.values]
     Content-Type = "application/linkset+json"
+
+# Markdown for Agents: an edge function does Accept-based content
+# negotiation on the homepage. `Accept: text/markdown` -> markdown;
+# anything else falls through to the SPA HTML. Edge functions run before
+# the SPA rewrite, so this intercepts "/" cleanly.
+[[edge_functions]]
+  path = "/"
+  function = "markdown"
+
+[[edge_functions]]
+  path = "/index.html"
+  function = "markdown"
