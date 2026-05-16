@@ -21,12 +21,12 @@
         
         <!-- Title -->
         <text x="0" y="200" font-family="Arial, sans-serif" font-size="36" fill="#ffffff">
-            AI & Full Stack Developer
+            Backend, AI &amp; Web3 Developer
         </text>
-        
+
         <!-- Skills -->
         <text x="0" y="300" font-family="Arial, sans-serif" font-size="24" fill="#b3b3b3">
-            Python • Java • Spring Boot • Vue.js • Machine Learning • AI
+            Python • Java • Spring Boot • Machine Learning • Smart Contracts
         </text>
         
         <!-- Website -->
