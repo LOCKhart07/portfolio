@@ -20,3 +20,22 @@
     Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
     Access-Control-Allow-Headers = "Origin, X-Requested-With, Content-Type, Accept, Authorization"
 # End of Selection
+
+# Agent discovery: advertise machine-readable resources on the homepage
+# response (RFC 8288 Link header, RFC 9727 API Catalog). The SPA rewrite
+# serves /index.html for "/", so set the header on both request paths.
+[[headers]]
+  for = "/"
+    [headers.values]
+    Link = '</.well-known/api-catalog>; rel="api-catalog", </sitemap.xml>; rel="describedby"'
+
+[[headers]]
+  for = "/index.html"
+    [headers.values]
+    Link = '</.well-known/api-catalog>; rel="api-catalog", </sitemap.xml>; rel="describedby"'
+
+# Serve the RFC 9727 API Catalog with its registered media type
+[[headers]]
+  for = "/.well-known/api-catalog"
+    [headers.values]
+    Content-Type = "application/linkset+json"

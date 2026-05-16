@@ -1,0 +1,28 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://portfolio.lockhart.in/",
+      "describedby": [
+        {
+          "href": "https://portfolio.lockhart.in/sitemap.xml",
+          "type": "application/xml",
+          "title": "Sitemap — canonical, machine-readable inventory of every page"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://portfolio.lockhart.in/robots.txt",
+          "type": "text/plain",
+          "title": "Crawl policy and sitemap pointer"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://github.com/LOCKhart07/portfolio",
+          "type": "text/html",
+          "title": "Source repository and human-readable documentation"
+        }
+      ]
+    }
+  ]
+}
