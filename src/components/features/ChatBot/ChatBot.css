@@ -29,6 +29,91 @@
   box-shadow: 0 4px 12px rgba(229, 9, 20, 0.3);
 }
 
+/* Gentle attention pulse until the chat is opened or the nudge dismissed */
+.chatbot-toggle.pulse {
+  animation: chatbot-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes chatbot-pulse {
+  0% {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), 0 0 0 0 rgba(229, 9, 20, 0.55);
+  }
+  70% {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), 0 0 0 14px rgba(229, 9, 20, 0);
+  }
+  100% {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), 0 0 0 0 rgba(229, 9, 20, 0);
+  }
+}
+
+/* Label pill that slides out beside the toggle */
+.chatbot-nudge {
+  position: absolute;
+  right: 56px;
+  bottom: 0;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 8px 0 14px;
+  max-width: calc(100vw - 90px);
+  background-color: #141414;
+  color: #fff;
+  border: 1px solid rgba(229, 9, 20, 0.6);
+  border-radius: 23px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  white-space: nowrap;
+  cursor: pointer;
+  animation: chatbot-nudge-in 0.35s ease forwards;
+}
+
+.chatbot-nudge:hover {
+  border-color: #e50914;
+}
+
+.chatbot-nudge-text {
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chatbot-nudge-close {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 6px;
+  flex-shrink: 0;
+  display: flex;
+}
+
+.chatbot-nudge-close:hover {
+  color: #fff;
+}
+
+@keyframes chatbot-nudge-in {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chatbot-toggle.pulse {
+    animation: none;
+  }
+
+  .chatbot-nudge {
+    animation: none;
+  }
+}
+
 .chatbot-toggle-icon {
   font-size: 20px;
   color: white;

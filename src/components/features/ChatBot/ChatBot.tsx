@@ -21,6 +21,10 @@ const INITIAL_MESSAGE: StreamingMessage = {
 
 const HIDDEN_ROUTES = ['/', '/browse'];
 
+// Once the visitor opens the chat or dismisses the nudge we never nag again
+const NUDGE_DISMISSED_KEY = 'jenai_nudge_dismissed';
+const NUDGE_DELAY_MS = 4000;
+
 const ChatBot: React.FC = () => {
     const location = useLocation();
     const [isOpen, setIsOpen] = useState(false);
@@ -29,10 +33,40 @@ const ChatBot: React.FC = () => {
     const [inputText, setInputText] = useState('');
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [nudgeDismissed, setNudgeDismissed] = useState<boolean>(
+        () => typeof window !== 'undefined' &&
+            localStorage.getItem(NUDGE_DISMISSED_KEY) === 'true'
+    );
+    const [showNudge, setShowNudge] = useState(false);
 
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
+
+    // Slide the label pill out after a short delay, unless the chat is open,
+    // we're on a hidden route, or the visitor already dismissed/opened it.
+    useEffect(() => {
+        if (nudgeDismissed || isOpen || HIDDEN_ROUTES.includes(location.pathname)) {
+            return;
+        }
+        const timer = setTimeout(() => setShowNudge(true), NUDGE_DELAY_MS);
+        return () => clearTimeout(timer);
+    }, [nudgeDismissed, isOpen, location.pathname]);
+
+    const dismissNudge = () => {
+        setShowNudge(false);
+        setNudgeDismissed(true);
+        localStorage.setItem(NUDGE_DISMISSED_KEY, 'true');
+    };
+
+    const handleToggle = () => {
+        setIsOpen(prev => !prev);
+        setShowNudge(false);
+        if (!nudgeDismissed) {
+            setNudgeDismissed(true);
+            localStorage.setItem(NUDGE_DISMISSED_KEY, 'true');
+        }
+    };
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -134,11 +168,39 @@ const ChatBot: React.FC = () => {
     return (
         <div className="chatbot-container">
             <button
-                className={`chatbot-toggle ${isOpen ? 'open' : ''}`}
-                onClick={() => setIsOpen(!isOpen)}
+                className={`chatbot-toggle ${isOpen ? 'open' : ''} ${!isOpen && !nudgeDismissed ? 'pulse' : ''}`}
+                onClick={handleToggle}
+                aria-label="Open chat with JenAI assistant"
             >
                 <span className="chatbot-toggle-icon">✦</span>
             </button>
+
+            {showNudge && !isOpen && (
+                <div
+                    className="chatbot-nudge"
+                    role="button"
+                    tabIndex={0}
+                    onClick={handleToggle}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            handleToggle();
+                        }
+                    }}
+                >
+                    <span className="chatbot-nudge-text">💬 Ask JenAI about Jenslee</span>
+                    <button
+                        className="chatbot-nudge-close"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            dismissNudge();
+                        }}
+                        aria-label="Dismiss"
+                    >
+                        <FaTimes />
+                    </button>
+                </div>
+            )}
 
             {isOpen && (
                 <div className={`chatbot-window ${isFullscreen ? 'fullscreen' : ''}`}>
