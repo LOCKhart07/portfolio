@@ -4,9 +4,9 @@
     {
       "name": "ask-about-jenslee",
       "type": "skill-md",
-      "description": "Answer questions about Jenslee Dsouza (AI & Full Stack Developer) using this portfolio's machine-readable surfaces: the markdown profile, RFC 9727 API catalog, sitemap, and the JenAI WebMCP tool.",
+      "description": "Answer questions about Jenslee Dsouza (Software Developer focused on Backend, AI & Web3) using this portfolio's machine-readable surfaces: the markdown profile, RFC 9727 API catalog, sitemap, and the JenAI WebMCP tool.",
       "url": "https://portfolio.lockhart.in/.well-known/agent-skills/ask-about-jenslee/SKILL.md",
-      "digest": "sha256:e1ba7d6092380ca580ffdc60a89e9d8438662a13f1f3d7c6745a9b342ad6cbc6"
+      "digest": "sha256:17777fc8271ffe50ed2bc2432f752c8990fee016885f893bd7ee9e778f74598c"
     }
   ]
 }

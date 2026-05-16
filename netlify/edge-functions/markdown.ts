@@ -15,20 +15,20 @@
 import type { Context } from 'https://edge.netlify.com';
 
 const MARKDOWN = `---
-title: "Jenslee Dsouza | AI & Full Stack Developer"
-description: "AI & Full Stack Developer specializing in building intelligent applications. Expert in Python, Java, Spring Boot, Vue.js, and Machine Learning. Creating scalable AI solutions and modern web applications."
+title: "Jenslee Dsouza | Software Developer focused on Backend, AI & Web3"
+description: "Software developer focused on backend, AI, and Web3. I build scalable backend services, AI-powered applications, and decentralized Web3 systems, primarily with Python, Java, and Spring Boot."
 author: "Jenslee Dsouza"
 url: "https://portfolio.lockhart.in/"
 image: "https://portfolio.lockhart.in/og-image.jpg"
-keywords: "AI Developer, Full Stack Developer, Machine Learning Engineer, Python, Java, Spring Boot, Vue.js, Flask, Deep Learning, Neural Networks"
+keywords: "Software Developer, Backend Developer, AI Developer, Web3 Developer, Machine Learning Engineer, Python, Java, Spring Boot, Smart Contracts, Decentralized Applications, Deep Learning, Neural Networks"
 generator: "markdown-for-agents (Netlify Edge Function)"
 ---
 
-# Jenslee Dsouza — AI & Full Stack Developer
+# Jenslee Dsouza: Software Developer focused on Backend, AI & Web3
 
-AI & Full Stack Developer specializing in building intelligent
-applications. Expert in Python, Java, Spring Boot, Vue.js, and Machine
-Learning. Creating scalable AI solutions and modern web applications.
+Software developer focused on backend, AI, and Web3. I build scalable
+backend services, AI-powered applications, and decentralized Web3
+systems, primarily with Python, Java, and Spring Boot.
 
 This portfolio is a client-rendered single-page app styled as a Netflix
 clone; content is served per "profile" persona. The canonical,
@@ -63,21 +63,22 @@ crawlable URLs below render the full content for the recruiter persona.
   "@type": "Person",
   "name": "Jenslee Dsouza",
   "url": "https://portfolio.lockhart.in/",
-  "jobTitle": "AI & Full Stack Developer",
+  "jobTitle": "Software Developer focused on Backend, AI & Web3",
   "sameAs": [
     "https://github.com/jenslee",
     "https://linkedin.com/in/jenslee"
   ],
   "knowsAbout": [
+    "Backend Development",
     "Artificial Intelligence",
     "Machine Learning",
     "Deep Learning",
+    "Web3",
+    "Smart Contracts",
+    "Decentralized Applications",
     "Python",
     "Java",
     "Spring Boot",
-    "Vue.js",
-    "Full Stack Development",
-    "AI Solutions",
     "Neural Networks"
   ],
   "worksFor": {

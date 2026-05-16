@@ -2,9 +2,10 @@
 name: ask-about-jenslee
 version: 1.0.0
 description: >-
-  Answer questions about Jenslee Dsouza — an AI & Full Stack Developer —
-  using the structured, machine-readable surfaces this portfolio exposes,
-  instead of trying to scrape a client-rendered single-page app.
+  Answer questions about Jenslee Dsouza, a software developer focused on
+  backend, AI, and Web3, using the structured, machine-readable surfaces
+  this portfolio exposes, instead of trying to scrape a client-rendered
+  single-page app.
 license: CC-BY-4.0
 homepage: https://portfolio.lockhart.in/
 ---

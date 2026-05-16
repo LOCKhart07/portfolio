@@ -1,6 +1,6 @@
 {
   "short_name": "Jenslee",
-  "name": "Jenslee Dsouza - AI & Full Stack Developer",
+  "name": "Jenslee Dsouza - Software Developer focused on Backend, AI & Web3",
   "icons": [
     {
       "src": "favicon.ico",
@@ -24,5 +24,5 @@
   "background_color": "#ffffff",
   "orientation": "portrait",
   "scope": ".",
-  "description": "AI & Full Stack Developer specializing in building intelligent applications"
+  "description": "Software developer focused on backend, AI, and Web3, building scalable backend services and AI-powered applications"
 }
