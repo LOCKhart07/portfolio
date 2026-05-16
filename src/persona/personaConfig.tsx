@@ -75,12 +75,16 @@ export const contactCtaLabel: Record<ProfileType, string> = {
 // Profile-page background. Was previously passed via router state from
 // browse.tsx and broke on refresh / shared links; now deep-link safe.
 export const backgroundGif: Record<ProfileType, string> = {
+  // Dwight (The Office) holding up his three résumés.
   recruiter:
     'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExOTZ5eWwwbjRpdWM1amxyd3VueHhteTVzajVjeGZtZGJ1dDc4MXMyNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dg/16u7Ifl2T4zYfQ932F/giphy.gif',
+  // Pixel-art hooded ape coding at a desk in headphones.
   engineer:
     'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnNsdDE2YXYxZnU5MzJ3bjIxYzRiOW5rbHYydWVzMzN1cXl2NTU5MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8fQ1oiRxx9stbdECAo/giphy.gif',
+  // Captain Planet — "by your powers combined".
   collaborator:
-    'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExc28yMjMyZmJ6eWtxbmNwdDV6cXk4dWZmcjFhZms2cXBjN2h5ZDJjeSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QjZXUBUr89CkiWLPjL/giphy.gif',
+    'https://media.giphy.com/media/0Av9l0VIc01y1isrDw/giphy.gif',
+  // Snowboarder carving down a mountain (National Geographic).
   explorer:
     'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmxib24ycWo2cjlmazh0NGV5NTZ2Mzd2YWY0M2tvam9oYXBwYW1ocCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ERKMnDK6tkzJe8YVa3/giphy-downsized-large.gif',
 };
