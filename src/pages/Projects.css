@@ -24,6 +24,32 @@
   margin: 0 auto;
 }
 
+/* Defined locally on purpose: CSS is code-split per lazy route, so this page
+   cannot rely on @keyframes fadeInUp from WorkExperience.css being loaded.
+   Without these keyframes the animation is a no-op and every card stays at
+   opacity:0 — present and clickable but invisible (the "blank Projects
+   page"). */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Safety net: if the animation never runs at all (very old engine, animation
+   stripped by an extension, etc.) the card must still end up visible rather
+   than stuck at opacity:0. */
+@media (prefers-reduced-motion: reduce) {
+  .project-card {
+    animation: none;
+    opacity: 1;
+  }
+}
+
 .project-card:hover {
   transform: scale(1.05);
   box-shadow: 0 10px 20px rgba(244, 0, 13, 0.6); /* Netflix shadow */
