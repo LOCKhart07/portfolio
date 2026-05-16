@@ -30,7 +30,7 @@ This portfolio is built with love and:
 - 🌐 **Netlify** (Hosting and CDN)
 - 🛡️ **DatoCMS** (Content Management)
 - 📊 **Google Analytics 4** (Privacy-focused analytics)
-- 🎵 **Spotify API** (Music Integration)
+- 🎵 **Spotify-stats backend** (custom service, not the Spotify API directly — powers Music)
 
 ---
 
@@ -96,8 +96,10 @@ npm install
 4. **Configure Environment Variables**: Create a `.env` file and set up the necessary API keys and configurations:
 ```env
 REACT_APP_GA_TRACKING_ID=your_ga4_id
-REACT_APP_DATOCMS_API_TOKEN=your_datocms_token
-REACT_APP_SPOTIFY_STATS_API_KEY=your_spotify_api_key
+REACT_APP_DATOCMSTOKEN_DEFAULT=your_datocms_token
+REACT_APP_SPOTIFY_STATS_API_BASE_URL=your_spotify_stats_backend_url
+REACT_APP_SPOTIFY_STATS_API_KEY=your_spotify_stats_api_key
+REACT_APP_ASSISTANT_API_BASE_URL=your_chatbot_backend_url
 ```
 
 5. **Run the Project**: Start the development server.
@@ -153,7 +155,7 @@ Your feedback is valuable and helps make this project better for everyone. Thank
 ## 📧 Contact Me
 
 - 💼 [Portfolio Website](https://portfolio.lockhart.in)
-- 📧 [dsouzajenslee@gmail.com](mailto:dsouzajenslee@example.com)
+- 📧 [dsouzajenslee@gmail.com](mailto:dsouzajenslee@gmail.com)
 - 🔗 [LinkedIn](https://www.linkedin.com/in/jensleedsouza/)
 
 ---

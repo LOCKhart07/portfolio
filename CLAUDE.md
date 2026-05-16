@@ -8,11 +8,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 | --- | --- |
 | Dev server (Vite, port 3000, opens browser) | `npm start` or `npm run dev` |
 | Production build → `build/` | `npm run build` |
-| Run tests | `npm test` (Jest via `react-scripts test`, watch mode) |
+| Run tests | `npm test` (Vitest, single run) |
+| Run tests in watch mode | `npm run test:watch` (`vitest`) |
 | Run a single test file | `npm test -- src/App.test.tsx` |
+| Typecheck (no emit) | `npm run typecheck` (`tsc --noEmit`) |
 | Deploy to GitHub Pages | `npm run deploy` (Netlify is the primary host; see below) |
 
-There is no lint script and no CI workflow. `.nvmrc` pins Node 20.12.2, but `netlify.toml` and the README build with Node 18 — match the deploy target (18) if a version conflict surfaces.
+There is no lint script and no CI workflow. Node is pinned to **24.15.0** consistently across `.nvmrc`, `netlify.toml` (`NODE_VERSION`), and the README (`nvm install`/`nvm use` reads `.nvmrc`) — keep all three in sync if you bump it.
 
 ## Build system gotcha: CRA → Vite migration
 
@@ -24,11 +26,11 @@ This was a Create React App project migrated to Vite. `vite.config.ts` is mostly
 - SVGs import as React components (`ReactComponent`) via an SVGR plugin, mirroring CRA.
 - Images are compressed at build time by `vite-plugin-image-optimizer`.
 
-The runtime app uses **Vite**, but `npm test` still runs **Jest via `react-scripts`** (CRA's `react-app/jest` config, jsdom). `src/App.test.tsx` is the stale default CRA stub (asserts "learn react") and does not reflect the real UI — it will fail if run. Treat the test setup as non-functional scaffolding unless you intentionally rebuild it.
+Tests run on **Vitest** (`react-scripts` is gone). The config is the `test` block in `vite.config.ts` (`environment: 'jsdom'`, `setupFiles: './src/setupTests.ts'`), so tests share the app's Vite resolution — absolute `src/` imports, the SVGR plugin, the `process.env` define. `npm test` is `vitest run` (single pass, CI-safe); `npm run test:watch` is the watcher. `src/App.test.tsx` is now a real smoke test (mounts the full `<App>` and asserts the splash logo); other suites: `src/components/common/NavBar.test.tsx`, `src/persona/personaConfig.test.ts`, `src/persona/PersonaContext.test.tsx`.
 
 ## Environment variables
 
-The README's documented variable names are out of date. The names actually read by the code (authoritative):
+The names actually read by the code (authoritative — keep the README's `.env` example in sync):
 
 - `REACT_APP_DATOCMSTOKEN_DEFAULT` — DatoCMS GraphQL bearer token (`src/queries/getDatoCmsToken.ts`)
 - `REACT_APP_GA_TRACKING_ID` — Google Analytics 4 measurement ID
@@ -41,10 +43,9 @@ All missing vars degrade to `''` rather than throwing.
 
 Single-page React 18 + React Router v6 app styled as a Netflix clone. Entry: `src/index.tsx` (wraps `<App>` in `<BrowserRouter>`) → `src/App.tsx` (renders the route table plus a global `ConsentBanner` and `ChatBot`).
 
-**Routing** is a flat array in `src/routes.tsx` — add routes there. The intended UX flow:
-`/` (`NetflixTitle` splash) → `/browse` (profile picker) → `/profile/:profileName` → content pages. Content pages are wrapped in `<Layout>`; the splash and browse screens are not.
+**Routing** is built in `src/routes.tsx` from a `sections` array (one entry per content page) — add a page by adding a `sections` entry, not a hand-written route. Each section is mounted twice: canonically at `/profile/:profileName/<section>` (persona in the URL) and at the legacy flat `/<section>`, which `LegacyRedirect` bounces to the visitor's last-used persona. Everything except the `/` splash and `Layout` is code-split via `lazy()`. UX flow: `/` (`NetflixTitle` splash) → `/browse` (profile picker) → `/profile/:profileName` → section pages. Section pages and `/profile/:profileName` are wrapped in `<Layout>`; the splash and browse screens are not.
 
-**Profile personas** drive content. There are four: `recruiter | developer | stalker | adventurer`. `profilePage.tsx` validates `:profileName` and falls back to `recruiter`. The persona is passed down to `TopPicksRow`/`ContinueWatching`, where `topPicksConfig` decides which sections (and ordering) each persona sees. Changing what a persona sees = editing those config objects, not the routes.
+**Profile personas** drive content. The persona module is `src/persona/`: `personaConfig.tsx` holds `ProfileType` (`recruiter | developer | stalker | adventurer`), `coercePersona` (recruiter fallback), the per-persona maps (`avatarMap`, `contactCtaLabel`, `backgroundGif`, `imageMap`), and `topPicksConfig` (which sections, and their order, each persona sees). `PersonaContext.tsx` provides `PersonaProvider` — rendered inside `Layout`; reads `:profileName`, caches `lastPersona` to localStorage, and *redirects* an invalid persona segment to its recruiter equivalent rather than silently rendering a fallback — and the `usePersona()` hook (recruiter fallback when called outside a provider, e.g. the global ChatBot). Changing what a persona sees = editing `topPicksConfig`/the persona maps, not the routes.
 
 **Data sources** — three independent backends, no shared API layer:
 
