@@ -5,6 +5,7 @@ import usePageTracking from "./hooks/usePageTracking";
 import ConsentBanner from './components/common/ConsentBanner';
 import ChatBot from './components/features/ChatBot/ChatBot';
 import RouteFallback from './components/common/RouteFallback';
+import ErrorBoundary from './components/common/ErrorBoundary';
 import { registerWebMcpTools } from './webmcp';
 
 // Route configuration
@@ -19,17 +20,19 @@ const App: React.FC = () => {
 
   return (
     <div style={{ position: 'relative', minHeight: '100vh' }}>
-      <Suspense fallback={<RouteFallback />}>
-        <Routes>
-          {routes.map((route, index) => (
-            <Route
-              key={index}
-              path={route.path}
-              element={route.element}
-            />
-          ))}
-        </Routes>
-      </Suspense>
+      <ErrorBoundary>
+        <Suspense fallback={<RouteFallback />}>
+          <Routes>
+            {routes.map((route, index) => (
+              <Route
+                key={index}
+                path={route.path}
+                element={route.element}
+              />
+            ))}
+          </Routes>
+        </Suspense>
+      </ErrorBoundary>
       <ConsentBanner />
       <div id="chatbot-root" style={{ position: 'relative', zIndex: 9999 }}>
         <ChatBot />

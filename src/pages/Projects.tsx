@@ -83,17 +83,43 @@ const techIcons: { [key: string]: JSX.Element } = {
 
 const Projects: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([])
+  const [status, setStatus] = useState<'loading' | 'error' | 'ready'>('loading');
 
   useEffect(() => {
+    let active = true;
     async function fetchProjects() {
-      const data = await getProjects();
-      setProjects(data);
+      try {
+        const data = await getProjects();
+        if (!active) return;
+        // A CMS hiccup / changed field permissions can return null/undefined
+        // instead of an array. Don't setState a non-array — `.length`/`.map`
+        // in render would throw and blank the route.
+        setProjects(Array.isArray(data) ? data : []);
+        setStatus('ready');
+      } catch {
+        if (active) setStatus('error');
+      }
     }
 
-    fetchProjects()
+    fetchProjects();
+    return () => {
+      active = false;
+    };
   }, [])
 
-  if (projects.length === 0) return <div>Loading...</div>;
+  if (status === 'loading') {
+    return <div className="projects-container">Loading...</div>;
+  }
+  if (status === 'error') {
+    return (
+      <div className="projects-container">
+        Couldn&apos;t load projects right now. Please try again later.
+      </div>
+    );
+  }
+  if (projects.length === 0) {
+    return <div className="projects-container">No projects to show yet.</div>;
+  }
   const handleProjectClick = (project: Project) => {
     trackEvent('Project', 'Click', project.title);
     if (project.link) {
