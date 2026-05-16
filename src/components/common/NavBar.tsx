@@ -4,7 +4,7 @@ import { FaHome, FaBriefcase, FaTools, FaProjectDiagram, FaEnvelope } from 'reac
 import 'styles/Navbar.css';
 import netflixLogo from 'images/logos/jenslee-netflix-logo.webp';
 import { usePersona } from '../../persona/PersonaContext';
-import { avatarMap } from '../../persona/personaConfig';
+import { avatarMap, contactCtaLabel } from '../../persona/personaConfig';
 
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
@@ -42,10 +42,10 @@ const Navbar: React.FC = () => {
           </Link>
           <ul className="navbar-links">
             <li><Link to="/browse">Home</Link></li>
-            <li><Link to={`${base}/work-experience`}>Professional</Link></li>
+            <li><Link to={`${base}/work-experience`}>Career</Link></li>
             <li><Link to={`${base}/skills`}>Skills</Link></li>
             <li><Link to={`${base}/projects`}>Projects</Link></li>
-            <li><Link to={`${base}/contact-me`}>Hire Me</Link></li>
+            <li><Link to={`${base}/contact-me`}>{contactCtaLabel[persona]}</Link></li>
           </ul>
         </div>
         <div className="navbar-right">
@@ -69,10 +69,10 @@ const Navbar: React.FC = () => {
         </div>
         <ul>
           <li><Link to="/browse" onClick={closeSidebar}><FaHome /> Home</Link></li>
-          <li><Link to={`${base}/work-experience`} onClick={closeSidebar}><FaBriefcase /> Professional</Link></li>
+          <li><Link to={`${base}/work-experience`} onClick={closeSidebar}><FaBriefcase /> Career</Link></li>
           <li><Link to={`${base}/skills`} onClick={closeSidebar}><FaTools /> Skills</Link></li>
           <li><Link to={`${base}/projects`} onClick={closeSidebar}><FaProjectDiagram /> Projects</Link></li>
-          <li><Link to={`${base}/contact-me`} onClick={closeSidebar}><FaEnvelope /> Hire Me</Link></li>
+          <li><Link to={`${base}/contact-me`} onClick={closeSidebar}><FaEnvelope /> {contactCtaLabel[persona]}</Link></li>
         </ul>
       </div>
     </>

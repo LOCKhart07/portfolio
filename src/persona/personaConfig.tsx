@@ -63,6 +63,15 @@ export const avatarMap: Record<ProfileType, string> = {
   adventurer: yellowImage,
 };
 
+// Navbar contact CTA label. The link always routes to /contact-me; only the
+// wording changes so each persona gets a call-to-action in its own register.
+export const contactCtaLabel: Record<ProfileType, string> = {
+  recruiter: 'Hire Me',
+  developer: "Let's Build",
+  stalker: 'Get in Touch',
+  adventurer: 'Say Hi',
+};
+
 // Profile-page background. Was previously passed via router state from
 // browse.tsx and broke on refresh / shared links; now deep-link safe.
 export const backgroundGif: Record<ProfileType, string> = {
