@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Certifications.css';
+import PersonaIntro from '../persona/PersonaIntro';
 import { FaExternalLinkAlt, FaUniversity } from 'react-icons/fa';
 import { SiUdemy, SiCoursera, SiIeee } from 'react-icons/si';
 import { Certification } from '../types/types';
@@ -28,6 +29,7 @@ const Certifications: React.FC = () => {
 
   return (
     <div className="certifications-container">
+      <PersonaIntro section="/certifications" />
       <div className="certifications-grid">
         {certifications.map((cert, index) => (
           <a href={cert.link} key={index} target="_blank" rel="noopener noreferrer" className="certification-card" style={{ '--delay': `${index * 0.2}s` } as React.CSSProperties}>

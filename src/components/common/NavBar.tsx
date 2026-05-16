@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaHome, FaBriefcase, FaTools, FaProjectDiagram, FaEnvelope } from 'react-icons/fa'; // Import icons
 import 'styles/Navbar.css';
 import netflixLogo from 'images/logos/jenslee-netflix-logo.webp';
-import blueImage from 'images/profiles/blue.webp';
+import { usePersona } from '../../persona/PersonaContext';
+import { avatarMap } from '../../persona/personaConfig';
 
 const Navbar: React.FC = () => {
-  const location = useLocation();
   const navigate = useNavigate();
+  const { persona } = usePersona();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const profileImage = location.state?.profileImage || blueImage;
+  // Derived from the persona URL segment, so it stays correct on refresh /
+  // deep-link (previously read from router state, which is lost on reload).
+  const profileImage = avatarMap[persona];
+  const base = `/profile/${persona}`;
 
   const handleScroll = () => {
     setIsScrolled(window.scrollY > 80);
@@ -38,10 +42,10 @@ const Navbar: React.FC = () => {
           </Link>
           <ul className="navbar-links">
             <li><Link to="/browse">Home</Link></li>
-            <li><Link to="/work-experience">Professional</Link></li>
-            <li><Link to="/skills">Skills</Link></li>
-            <li><Link to="/projects">Projects</Link></li>
-            <li><Link to="/contact-me">Hire Me</Link></li>
+            <li><Link to={`${base}/work-experience`}>Professional</Link></li>
+            <li><Link to={`${base}/skills`}>Skills</Link></li>
+            <li><Link to={`${base}/projects`}>Projects</Link></li>
+            <li><Link to={`${base}/contact-me`}>Hire Me</Link></li>
           </ul>
         </div>
         <div className="navbar-right">
@@ -65,10 +69,10 @@ const Navbar: React.FC = () => {
         </div>
         <ul>
           <li><Link to="/browse" onClick={closeSidebar}><FaHome /> Home</Link></li>
-          <li><Link to="/work-experience" onClick={closeSidebar}><FaBriefcase /> Professional</Link></li>
-          <li><Link to="/skills" onClick={closeSidebar}><FaTools /> Skills</Link></li>
-          <li><Link to="/projects" onClick={closeSidebar}><FaProjectDiagram /> Projects</Link></li>
-          <li><Link to="/contact-me" onClick={closeSidebar}><FaEnvelope /> Hire Me</Link></li>
+          <li><Link to={`${base}/work-experience`} onClick={closeSidebar}><FaBriefcase /> Professional</Link></li>
+          <li><Link to={`${base}/skills`} onClick={closeSidebar}><FaTools /> Skills</Link></li>
+          <li><Link to={`${base}/projects`} onClick={closeSidebar}><FaProjectDiagram /> Projects</Link></li>
+          <li><Link to={`${base}/contact-me`} onClick={closeSidebar}><FaEnvelope /> Hire Me</Link></li>
         </ul>
       </div>
     </>

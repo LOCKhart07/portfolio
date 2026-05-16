@@ -1,6 +1,7 @@
 // Quotes.tsx
 import React, { useEffect, useState } from 'react';
 import './Quotes.css';
+import PersonaIntro from '../persona/PersonaIntro';
 import { Quote } from '../types/types';
 import { getQuotes } from '../queries/getQuotes';
 
@@ -47,6 +48,7 @@ const Quotes: React.FC = () => {
         <div className="quotes-container">
             <h2 className="quotes-title">💭 Words That Stuck</h2>
             <p className="quotes-intro">A collection of quotes that have shaped my professional journey and personal growth.</p>
+            <PersonaIntro section="/quotes" />
             <div className="quotes-grid">
                 {quotes.map((quote, index) => (
                     <div key={quote.text} className="quote-card" style={{ '--delay': `${index * 0.1}s` } as React.CSSProperties}>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Recommendations.css';
+import PersonaIntro from '../persona/PersonaIntro';
 import { getRecommendations } from '../queries/getRecommendations';
 import { Recommendation } from '../types/types';
 
@@ -27,6 +28,7 @@ const Recommendations: React.FC = () => {
 
   return (
     <div className='timeline-container'>
+      <PersonaIntro section="/recommendations" />
       {recommendations.map((recommendation) => (
         <div key={`${recommendation.name}-${recommendation.date}`} className="recommendation-card" onClick={() => window.open(recommendation.link, '_blank')}>
           <div className="recommendation-header centered-header">

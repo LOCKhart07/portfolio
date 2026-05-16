@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './Skills.css';
+import PersonaIntro from '../persona/PersonaIntro';
+import { usePersona } from '../persona/PersonaContext';
+import { orderByPriority } from '../persona/personaConfig';
 import { getSkills } from '../queries/getSkills';
 
 import { FaReact, FaNodeJs, FaAws, FaDocker, FaJava, FaCube, FaChartLine, FaServer, FaCoins, FaRobot } from 'react-icons/fa';
@@ -61,6 +64,7 @@ const iconMap: { [key: string]: JSX.Element } = {
 const Skills: React.FC = () => {
 
   const [skillsData, setSkillsData] = useState<Skill[]>([]);
+  const { content } = usePersona();
 
   useEffect(() => {
     async function fetchSkills() {
@@ -78,9 +82,16 @@ const Skills: React.FC = () => {
     acc[skill.category].push(skill);
     return acc;
   }, {});
+  // Categories most relevant to the persona render first (stable otherwise).
+  const orderedCategories = orderByPriority(
+    Object.keys(skillsByCategory),
+    (c) => c,
+    content.sections['/skills']?.priorityTags,
+  );
   return (
     <div className="skills-container">
-      {Object.keys(skillsByCategory).map((category, index) => (
+      <PersonaIntro section="/skills" />
+      {orderedCategories.map((category, index) => (
         <div key={index} className="skill-category">
           <h3 className="category-title">{category}</h3>
           <div className="skills-grid">

@@ -10,31 +10,18 @@ import './browse.css';
 const Browse: React.FC = () => {
   const navigate = useNavigate();
 
+  // Avatars are the profile-picker art only. The per-persona background GIF and
+  // navbar avatar now live in personaConfig and are derived from the URL, so
+  // nothing needs to be threaded through router state.
   const profiles = [
-    {
-      name: "recruiter",
-      image: blueImage,
-      backgroundGif: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExOTZ5eWwwbjRpdWM1amxyd3VueHhteTVzajVjeGZtZGJ1dDc4MXMyNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dg/16u7Ifl2T4zYfQ932F/giphy.gif" // Dwight
-    },
-    {
-      name: "developer",
-      image: greyImage,
-      backgroundGif: "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnNsdDE2YXYxZnU5MzJ3bjIxYzRiOW5rbHYydWVzMzN1cXl2NTU5MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8fQ1oiRxx9stbdECAo/giphy.gif" // Monkey Typing Code
-    },
-    {
-      name: "stalker",
-      image: redImage,
-      backgroundGif: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExc28yMjMyZmJ6eWtxbmNwdDV6cXk4dWZmcjFhZms2cXBjN2h5ZDJjeSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QjZXUBUr89CkiWLPjL/giphy.gif" // Dark, abstract digital lights
-    },
-    {
-      name: "adventurer",
-      image: yellowImage,
-      backgroundGif: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmxib24ycWo2cjlmazh0NGV5NTZ2Mzd2YWY0M2tvam9oYXBwYW1ocCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ERKMnDK6tkzJe8YVa3/giphy-downsized-large.gif" // Dark ocean waves at night
-    },
+    { name: "recruiter", image: blueImage },
+    { name: "developer", image: greyImage },
+    { name: "stalker", image: redImage },
+    { name: "adventurer", image: yellowImage },
   ];
 
-  const handleProfileClick = (profile: { name: string; image: string; backgroundGif: string }) => {
-    navigate(`/profile/${profile.name}`, { state: { profileImage: profile.image, backgroundGif: profile.backgroundGif } });
+  const handleProfileClick = (profile: { name: string; image: string }) => {
+    navigate(`/profile/${profile.name}`);
   };
 
   return (

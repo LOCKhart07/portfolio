@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Awards.css';
+import PersonaIntro from '../persona/PersonaIntro';
 import { motion } from 'framer-motion';
 import { Award } from '../types/types';
 import { getAwards } from '../queries/getAwards';
@@ -57,6 +58,7 @@ const Awards: React.FC = () => {
                 <h1>Awards & Recognition</h1>
                 <p>Celebrating achievements and milestones throughout my journey</p>
             </motion.div>
+            <PersonaIntro section="/awards" />
 
             <div className="awards-grid">
                 {awards.map((award, index) => (
