@@ -96,10 +96,107 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=2" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2" />
     <link rel="manifest" href="/site.webmanifest" />
+
+    <!--
+      Critical CSS for the pre-React static hero below. Kills the blank
+      white flash (the #141414 body bg lives in the JS-bundled index.css)
+      and styles the hero to blend with the NetflixTitle splash. Selectors
+      are scoped under `#root .seo-hero`; React 18 createRoot().render()
+      discards all #root children on mount, so the hero — and its reliance
+      on these rules — is gone by first interaction. ~1KB harmless residue.
+    -->
+    <style>
+      html, body { margin: 0; background: #141414; }
+      #root .seo-hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 0.75rem;
+        padding: 2rem 1.25rem;
+        box-sizing: border-box;
+        background: #141414;
+        color: #fff;
+        font-family: 'Netflix Sans', Helvetica Neue, Segoe UI, Roboto, Ubuntu, sans-serif;
+      }
+      #root .seo-hero h1 {
+        margin: 0;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        font-size: clamp(2rem, 7vw, 3.75rem);
+      }
+      #root .seo-hero .seo-tagline {
+        margin: 0;
+        color: #e50914;
+        font-weight: 600;
+        font-size: clamp(1rem, 2.5vw, 1.4rem);
+      }
+      #root .seo-hero .seo-bio {
+        max-width: 46rem;
+        margin: 0.25rem 0 0;
+        line-height: 1.6;
+        color: #d2d2d2;
+        font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+      }
+      #root .seo-hero nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1.25rem;
+        justify-content: center;
+        margin-top: 1.25rem;
+      }
+      #root .seo-hero a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 0.95rem;
+        border-bottom: 1px solid transparent;
+      }
+      #root .seo-hero a:hover { border-bottom-color: #e50914; }
+      #root .seo-hero .seo-social { margin-top: 1rem; color: #9b9b9b; font-size: 0.9rem; }
+      #root .seo-hero .seo-social a { color: #9b9b9b; }
+    </style>
   <script type="module" src="src/index"></script></head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root">
+      <!--
+        Static, crawlable hero. This is the page Googlebot reads: real text
+        + real links to every sitemap URL, present in the HTML with zero JS
+        (fixes "Crawled - currently not indexed", which was caused by an
+        empty <div id="root">). React replaces all of this on mount, so a
+        human sees it only during the pre-hydration window. Copy is reused
+        verbatim from this file's <title>/meta description/JSON-LD; links
+        mirror sitemap.xml (recruiter persona = canonical crawl target).
+      -->
+      <main class="seo-hero">
+        <h1>Jenslee Dsouza</h1>
+        <p class="seo-tagline">Software Developer focused on Backend, AI &amp; Web3</p>
+        <p class="seo-bio">
+          Software developer focused on Backend, AI &amp; Web3 — building
+          autonomous on-chain agents at Valory with Python, Java &amp; Spring
+          Boot, LLM/RAG and Web3 integration.
+        </p>
+        <nav aria-label="Portfolio sections">
+          <a href="/profile/recruiter">Portfolio</a>
+          <a href="/profile/recruiter/work-experience">Work Experience</a>
+          <a href="/profile/recruiter/projects">Projects</a>
+          <a href="/profile/recruiter/skills">Skills</a>
+          <a href="/profile/recruiter/certifications">Certifications</a>
+          <a href="/profile/recruiter/recommendations">Recommendations</a>
+          <a href="/profile/recruiter/awards">Awards</a>
+          <a href="/profile/recruiter/music">Music</a>
+          <a href="/profile/recruiter/quotes">Quotes</a>
+          <a href="/profile/recruiter/contact-me">Contact</a>
+        </nav>
+        <p class="seo-social">
+          <a href="https://github.com/LOCKhart07" rel="noopener">GitHub</a>
+          ·
+          <a href="https://www.linkedin.com/in/jensleedsouza/" rel="noopener">LinkedIn</a>
+        </p>
+      </main>
+    </div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
