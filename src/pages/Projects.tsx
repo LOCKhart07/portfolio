@@ -7,6 +7,17 @@ import { getProjects } from '../queries/getProjects';
 import { GrDeploy, GrKubernetes } from "react-icons/gr";
 import { trackEvent } from '../hooks/usePageTracking';
 
+// DatoCMS assets are Imgix-backed. The raw `image.url` is a 2x portfolio-card
+// PNG (~300-360KB each, 8 eager on the page ≈ 2.6MB). Request a compressed,
+// width-capped, auto-format (AVIF/WebP) rendition instead: `auto=format`
+// negotiates the best format the browser accepts, `auto=compress` picks an
+// optimal quality, `fit=max` never upscales. Cards render at most ~550px wide,
+// so 900px covers high-DPI without shipping the full 2x asset.
+const cardImage = (url: string): string => {
+  const sep = url.includes('?') ? '&' : '?';
+  return `${url}${sep}auto=format,compress&w=900&fit=max`;
+};
+
 const techIcons: { [key: string]: JSX.Element } = {
   "ReactJS": <FaReact />,
   "NodeJS": <FaNodeJs />,
@@ -141,7 +152,15 @@ const Projects: React.FC = () => {
             onClick={() => handleProjectClick(project)}
           >
             {project.image?.url ? (
-              <img src={project.image.url} alt={project.title} className="project-image" />
+              <img
+                src={cardImage(project.image.url)}
+                alt={project.title}
+                className="project-image"
+                width={550}
+                height={200}
+                loading="lazy"
+                decoding="async"
+              />
             ) : (
               <div className="project-image project-image-fallback" aria-hidden="true">
                 {project.title?.charAt(0) ?? '★'}
