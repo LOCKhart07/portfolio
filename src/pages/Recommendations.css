@@ -1,99 +1,170 @@
-/* Ensure the container takes up the full viewport height and centers the content */
-.timeline-container {
+.recommendations-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 6rem 2rem 3rem;
+  background-color: #141414;
+  min-height: 100vh;
+}
+
+.recommendations-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.recommendations-header h1 {
+  font-size: clamp(1.6rem, 6vw, 2.5rem);
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.recommendations-header p {
+  font-size: 1.1rem;
+  color: #b3b3b3;
+}
+
+.recommendations-status {
+  text-align: center;
+  color: #808080;
+  font-size: 1.1rem;
+}
+
+.recommendations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.recommendation-card {
+  position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-  padding: 5rem 1rem 2rem;
-  width: 100%;
-  margin: 0;
-}
-
-/* Styling for the recommendation card */
-.recommendation-card {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  background-color: #1e1e1e; /* Slightly lighter for contrast */
+  height: 100%;
+  background: #1e1e1e;
   color: #fff;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 8px 20px rgba(255, 0, 0, 0.3), 0 0 10px rgba(255, 0, 0, 0.2); /* Softer shadow with subtle glow */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: 1px dotted #e50914; /* Netflix red border */
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #333;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  opacity: 0;
+  animation: fadeInUp 0.5s forwards ease-in-out;
+  animation-delay: var(--delay);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
-.recommendation-card:hover {
-  transform: scale(1.03); /* Slight zoom on hover */
-  box-shadow: 0 12px 30px rgba(255, 0, 0, 0.5), 0 0 15px rgba(255, 0, 0, 0.4); /* Enhanced shadow on hover */
-}
-
-@media (max-width: 900px) {
-  .recommendation-card {
-    width: 100%;
+/* Defined locally: CSS is code-split per lazy route, so this page cannot
+   rely on @keyframes fadeInUp from another route's stylesheet being loaded. */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-.centered-header {
+@media (prefers-reduced-motion: reduce) {
+  .recommendation-card {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+.recommendation-card:hover,
+.recommendation-card:focus-visible {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
+  border-color: #e50914;
+  outline: none;
+}
+
+.quote-icon {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.75rem;
+  font-size: 1.8rem;
+  color: rgba(229, 9, 20, 0.25);
+}
+
+.recommendation-header {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  padding-right: 2rem;
 }
 
 .profile-pic {
-  margin-right: 20px;
-  margin-bottom: 0;
-  width: 70px;
-  height: 70px;
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  border: 2px solid #e50914; /* Netflix red border */
+  object-fit: cover;
+  border: 2px solid #e50914;
 }
 
 .header-text {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.header-text h3,
-.header-text p {
-  text-align: center;
+  min-width: 0;
 }
 
 .header-text h3 {
-  font-size: clamp(1.1rem, 4.5vw, 1.5rem);
-  color: #e50914; /* Netflix red for name */
+  font-size: 1.15rem;
+  color: #e50914;
   margin: 0;
 }
 
 .header-text p {
-  margin: 3px 0;
+  margin: 3px 0 0;
   font-size: 0.9rem;
   color: #999;
 }
 
-.date {
-  color: #ccc;
-  font-size: 0.8rem;
-}
-
 .recommendation-body {
-  font-size: 1rem;
+  flex: 1;
+  font-size: 0.95rem;
   line-height: 1.6;
+  color: #d9d9d9;
 }
 
 .recommendation-body p {
-  margin-bottom: 15px;
+  margin: 0;
 }
 
-.recommendation-body strong {
-  color: #e50914; /* Highlighted text in Netflix red */
+.recommendation-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid #333;
 }
 
-.recommendation-body p:first-of-type {
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin-bottom: 20px;
+.recommendation-date {
+  font-size: 0.8rem;
+  color: #808080;
+}
+
+.recommendation-link-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-left: auto;
+  font-size: 0.85rem;
+  color: #e50914;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .recommendations-container {
+    padding: 5rem 1rem 2rem;
+  }
+
+  .recommendation-card {
+    padding: 1.5rem;
+  }
 }
