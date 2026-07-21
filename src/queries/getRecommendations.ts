@@ -4,7 +4,7 @@ import { Recommendation } from '../types/types';
 
 const GET_RECOMMENDATIONS = `
   query {
-    allRecommendations {
+    allRecommendations(orderBy: date_DESC) {
       profilePicture {
         url
       }

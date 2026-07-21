@@ -29,6 +29,9 @@ const Recommendations: React.FC = () => {
     if (link) window.open(link, '_blank', 'noopener,noreferrer');
   };
 
+  const formatDate = (isoDate: string) =>
+    new Date(isoDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
   return (
     <div className="recommendations-container">
       <div className="recommendations-header">
@@ -72,7 +75,9 @@ const Recommendations: React.FC = () => {
               </div>
               {recommendation.link && (
                 <div className="recommendation-footer">
-                  {recommendation.date && <span className="recommendation-date">{recommendation.date}</span>}
+                  {recommendation.date && (
+                    <span className="recommendation-date">{formatDate(recommendation.date)}</span>
+                  )}
                   <span className="recommendation-link-hint">
                     <FaLinkedin /> View on LinkedIn
                   </span>
