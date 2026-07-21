@@ -51,3 +51,9 @@
 [[edge_functions]]
   path = "/index.html"
   function = "markdown"
+
+# Stable, shareable resume link — always redirects to whatever PDF is
+# currently set in DatoCMS, so the shared URL never needs to change.
+[[edge_functions]]
+  path = "/resume"
+  function = "resume"
