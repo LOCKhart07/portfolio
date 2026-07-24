@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './Skills.css';
 import { getSkills } from '../queries/getSkills';
 
-import { FaReact, FaNodeJs, FaAws, FaDocker, FaJava, FaCube, FaChartLine, FaServer, FaCoins, FaRobot } from 'react-icons/fa';
-import { SiRubyonrails, SiTypescript, SiPostgresql, SiMysql, SiKubernetes, SiGooglecloud, SiSpringboot, SiPhp, SiNetlify, SiHeroku, SiRabbitmq, SiImessage, SiFastapi, SiFlask, SiPython, SiJavascript, SiDjango, SiLangchain, SiApachespark, SiApachekafka, SiDocker, SiVectary, SiGit, SiNginx, SiDash, SiArangodb, SiOpensearch, SiRedis, SiVuedotjs, SiHtml5, SiCss3, SiSelenium, SiSecurityscorecard, SiGnubash, SiWeb3Dotjs, SiEthereum, SiGraphql, SiSolidity } from 'react-icons/si';
+import { FaReact, FaNodeJs, FaAws, FaDocker, FaJava, FaCube, FaChartLine, FaServer, FaCoins, FaRobot, FaRoute, FaSlidersH } from 'react-icons/fa';
+import { SiRubyonrails, SiTypescript, SiPostgresql, SiMysql, SiKubernetes, SiGooglecloud, SiSpringboot, SiPhp, SiNetlify, SiHeroku, SiRabbitmq, SiImessage, SiFastapi, SiFlask, SiPython, SiJavascript, SiDjango, SiLangchain, SiApachespark, SiApachekafka, SiDocker, SiVectary, SiGit, SiNginx, SiDash, SiArangodb, SiOpensearch, SiRedis, SiVuedotjs, SiHtml5, SiCss3, SiSelenium, SiSecurityscorecard, SiGnubash, SiWeb3Dotjs, SiEthereum, SiGraphql, SiSolidity, SiGooglegemini, SiClaude, SiOpenai } from 'react-icons/si';
 import { Skill } from '../types/types';
 
 const iconMap: { [key: string]: JSX.Element } = {
@@ -55,6 +55,11 @@ const iconMap: { [key: string]: JSX.Element } = {
   SiSolidity: <SiSolidity />,
   FaCoins: <FaCoins />,
   FaRobot: <FaRobot />,
+  FaRoute: <FaRoute />,
+  FaSlidersH: <FaSlidersH />,
+  SiGooglegemini: <SiGooglegemini />,
+  SiClaude: <SiClaude />,
+  SiOpenai: <SiOpenai />,
 };
 
 
