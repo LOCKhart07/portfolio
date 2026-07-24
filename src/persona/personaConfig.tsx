@@ -177,6 +177,32 @@ export const continueWatchingConfig: Record<ProfileType, ContinueItem[]> = {
   ],
 };
 
+// Starter prompts shown in JenAI (the ChatBot) when a persona opens a fresh
+// conversation. Phrased as the visitor would ask them, and angled at what
+// that persona's topPicksConfig already says they came here for.
+export const chatSuggestedQuestions: Record<ProfileType, string[]> = {
+  recruiter: [
+    "What's Jenslee's work experience?",
+    'What are the strongest technical skills?',
+    'What do past colleagues say?',
+  ],
+  engineer: [
+    "What's Jenslee been building lately?",
+    'What does the tech stack look like?',
+    'What certifications does Jenslee hold?',
+  ],
+  collaborator: [
+    "What's it like working with Jenslee?",
+    'What projects has Jenslee shipped?',
+    'How do I get in touch?',
+  ],
+  explorer: [
+    "What's Jenslee working on for fun?",
+    'What music is Jenslee into?',
+    'Any interesting awards or quotes?',
+  ],
+};
+
 // Persona keys that shipped in shared links / bookmarks before the
 // recruiter|engineer|collaborator|explorer rename. PersonaProvider redirects
 // these to the new key (preserving the rest of the path) so old external

@@ -131,9 +131,10 @@
   right: 20px;
   width: 350px;
   height: 500px;
-  background-color: #141414;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(165deg, #1a1a1a, #101010);
+  border: 1px solid #262626;
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -142,46 +143,91 @@
   transition: all 0.3s ease;
 }
 
+.chatbot-window::before {
+  content: '';
+  height: 3px;
+  flex-shrink: 0;
+  background: linear-gradient(90deg, #e50914, #b1060f);
+}
+
 .chatbot-window.fullscreen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  /* Anchored to the same bottom-right corner as the collapsed window (which
+     only ever sets bottom/right, never top/left) so it grows from that
+     corner instead of jumping to a top-left origin. */
   bottom: 0;
-  width: 100%;
-  height: 100%;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
   border-radius: 0;
   animation: none;
 }
 
 .chatbot-header {
-  padding: 16px;
-  background-color: #e50914;
+  padding: 14px 16px;
+  background-color: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid #262626;
   color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-shrink: 0;
+}
+
+.chatbot-header-identity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.chatbot-avatar {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #e50914, #8f050f);
+  box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.15);
+  font-size: 14px;
 }
 
 .chatbot-header h3 {
   margin: 0;
-  font-size: 18px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.chatbot-status {
+  margin: 1px 0 0;
+  font-size: 11px;
+  color: #999;
 }
 
 .chatbot-controls {
   display: flex;
-  gap: 10px;
+  gap: 6px;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .close-button {
   background: none;
   border: none;
-  color: white;
-  font-size: 24px;
+  color: #ccc;
+  font-size: 18px;
   cursor: pointer;
-  padding: 0;
+  padding: 4px;
   line-height: 1;
+  border-radius: 6px;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.close-button:hover {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.08);
 }
 
 .messages-container {
@@ -195,23 +241,114 @@
 
 .message {
   max-width: 80%;
-  padding: 12px;
-  border-radius: 12px;
+  padding: 10px 14px;
+  border-radius: 16px;
   position: relative;
+  animation: messageIn 0.25s ease forwards;
+}
+
+@keyframes messageIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .message.user {
-  background-color: #e50914;
+  background: linear-gradient(145deg, #e50914, #b1060f);
   color: white;
   align-self: flex-end;
   border-bottom-right-radius: 4px;
 }
 
 .message.assistant {
-  background-color: #333;
-  color: white;
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid #262626;
+  color: #f0f0f0;
   align-self: flex-start;
   border-bottom-left-radius: 4px;
+}
+
+.message.assistant.typing {
+  padding: 12px 14px;
+}
+
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.typing-indicator span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #999;
+  animation: typingBounce 1.2s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.typing-indicator span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes typingBounce {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  30% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+.suggested-questions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 2px;
+  animation: messageIn 0.25s ease forwards;
+}
+
+.suggested-question {
+  max-width: 100%;
+  background: rgba(229, 9, 20, 0.08);
+  color: #f0b8bb;
+  border: 1px solid rgba(229, 9, 20, 0.35);
+  border-radius: 25px;
+  padding: 8px 14px;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.suggested-question:hover {
+  transform: translateY(-2px);
+  background: rgba(229, 9, 20, 0.16);
+  border-color: #e50914;
+  color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .message,
+  .suggested-questions {
+    animation: none;
+  }
+
+  .typing-indicator span {
+    animation: none;
+    opacity: 0.8;
+  }
 }
 
 .message-content {
@@ -226,40 +363,54 @@
 }
 
 .input-container {
-  padding: 16px;
-  background-color: #1f1f1f;
+  padding: 14px;
+  background-color: rgba(255, 255, 255, 0.02);
+  border-top: 1px solid #262626;
   display: flex;
   gap: 8px;
+  flex-shrink: 0;
 }
 
 .message-input {
   flex-grow: 1;
-  padding: 12px;
+  padding: 10px 16px;
   border: 1px solid #333;
-  border-radius: 6px;
-  background-color: #141414;
+  border-radius: 25px;
+  background-color: rgba(255, 255, 255, 0.04);
   color: white;
   font-size: 14px;
+  min-width: 0;
+}
+
+.message-input::placeholder {
+  color: #777;
 }
 
 .message-input:focus {
   outline: none;
   border-color: #e50914;
+  background-color: rgba(255, 255, 255, 0.07);
 }
 
 .send-button {
-  padding: 8px 16px;
-  background-color: #e50914;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #e50914, #b1060f);
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 50%;
   cursor: pointer;
-  font-weight: 500;
-  transition: background-color 0.2s ease;
+  font-size: 14px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.send-button:hover {
-  background-color: #f40612;
+.send-button:hover:not(:disabled) {
+  transform: scale(1.06);
+  box-shadow: 0 4px 12px rgba(229, 9, 20, 0.35);
 }
 
 @keyframes slideIn {
@@ -323,22 +474,24 @@
 }
 
 .send-button:disabled {
-  background-color: #cccccc;
+  background: #333;
 }
 
 .fullscreen-button {
   background: none;
   border: none;
-  color: white;
-  font-size: 20px;
+  color: #ccc;
+  font-size: 15px;
   cursor: pointer;
-  padding: 0;
+  padding: 4px;
   line-height: 1;
-  transition: transform 0.2s ease;
+  border-radius: 6px;
+  transition: color 0.2s ease, background-color 0.2s ease;
 }
 
 .fullscreen-button:hover {
-  transform: scale(1.1);
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.08);
 }
 
 /* On phones the fixed 350x500 window overflows — size it to the viewport */

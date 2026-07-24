@@ -6,8 +6,10 @@ import { marked } from 'marked';
 import './ChatBot.css';
 import { StreamingMessage, ChatHistory } from './types';
 import { sendChatMessage, processStreamingResponse } from './queries';
-import { FaExpand, FaCompress } from 'react-icons/fa';
+import { FaExpand, FaCompress, FaPaperPlane } from 'react-icons/fa';
 import { FaTimes } from 'react-icons/fa';
+import { usePersona } from 'persona/PersonaContext';
+import { chatSuggestedQuestions } from 'persona/personaConfig';
 
 // Configure marked to use synchronous mode
 marked.setOptions({ async: false });
@@ -27,6 +29,7 @@ const NUDGE_DELAY_MS = 4000;
 
 const ChatBot: React.FC = () => {
     const location = useLocation();
+    const { persona } = usePersona();
     const [isOpen, setIsOpen] = useState(false);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [messages, setMessages] = useState<StreamingMessage[]>([INITIAL_MESSAGE]);
@@ -110,13 +113,13 @@ const ChatBot: React.FC = () => {
         });
     };
 
-    const handleSend = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!inputText.trim() || isLoading) return;
+    const sendMessage = async (rawText: string) => {
+        const text = rawText.trim();
+        if (!text || isLoading) return;
 
         const userMessage: StreamingMessage = {
             message_id: uuidv4(),
-            text: inputText.trim(),
+            text,
             sender: 'user',
             timestamp: new Date(),
         };
@@ -155,6 +158,15 @@ const ChatBot: React.FC = () => {
             setIsLoading(false);
         }
     };
+
+    const handleSend = (e: React.FormEvent) => {
+        e.preventDefault();
+        sendMessage(inputText);
+    };
+
+    // Only a fresh conversation (just the greeting) offers starter prompts.
+    const showSuggestions = messages.length === 1 && !isLoading;
+    const isWaitingForReply = isLoading && messages[messages.length - 1]?.sender === 'user';
 
     // Hide chatbot on specified routes
     if (HIDDEN_ROUTES.includes(location.pathname)) {
@@ -205,7 +217,13 @@ const ChatBot: React.FC = () => {
             {isOpen && (
                 <div className={`chatbot-window ${isFullscreen ? 'fullscreen' : ''}`}>
                     <div className="chatbot-header">
-                        <h3>JenAI Assistant</h3>
+                        <div className="chatbot-header-identity">
+                            <span className="chatbot-avatar">✦</span>
+                            <div>
+                                <h3>JenAI</h3>
+                                <p className="chatbot-status">Ask about Jenslee</p>
+                            </div>
+                        </div>
                         <div className="chatbot-controls">
                             <button
                                 className="fullscreen-button"
@@ -214,7 +232,7 @@ const ChatBot: React.FC = () => {
                             >
                                 {isFullscreen ? <FaCompress /> : <FaExpand />}
                             </button>
-                            <button className="close-button" onClick={() => setIsOpen(false)}>
+                            <button className="close-button" onClick={() => setIsOpen(false)} aria-label="Close chat">
                                 <FaTimes />
                             </button>
                         </div>
@@ -235,6 +253,30 @@ const ChatBot: React.FC = () => {
                                 </div>
                             </div>
                         ))}
+
+                        {isWaitingForReply && (
+                            <div className="message assistant typing">
+                                <div className="typing-indicator">
+                                    <span /><span /><span />
+                                </div>
+                            </div>
+                        )}
+
+                        {showSuggestions && (
+                            <div className="suggested-questions">
+                                {chatSuggestedQuestions[persona].map((question) => (
+                                    <button
+                                        key={question}
+                                        type="button"
+                                        className="suggested-question"
+                                        onClick={() => sendMessage(question)}
+                                    >
+                                        {question}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+
                         <div ref={messagesEndRef} />
                     </div>
 
@@ -247,8 +289,13 @@ const ChatBot: React.FC = () => {
                             className="message-input"
                             disabled={isLoading}
                         />
-                        <button type="submit" className="send-button" disabled={isLoading}>
-                            {isLoading ? 'Sending...' : 'Send'}
+                        <button
+                            type="submit"
+                            className="send-button"
+                            disabled={isLoading || !inputText.trim()}
+                            aria-label="Send message"
+                        >
+                            <FaPaperPlane />
                         </button>
                     </form>
                 </div>
