@@ -354,7 +354,6 @@
 }
 
 .message-content {
-  margin-bottom: 4px;
   line-height: 1.4;
 }
 
@@ -375,12 +374,6 @@
 .message-markdown pre,
 .message-markdown blockquote {
   margin: 0.5em 0;
-}
-
-.message-timestamp {
-  font-size: 10px;
-  opacity: 0.7;
-  text-align: right;
 }
 
 .input-container {

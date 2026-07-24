@@ -248,9 +248,6 @@ const ChatBot: React.FC = () => {
                                     <div className="message-markdown" dangerouslySetInnerHTML={{ __html: markdownToHTML(message.text) }} />
                                     {message.isStreaming && <span className="streaming-dot">...</span>}
                                 </div>
-                                <div className="message-timestamp">
-                                    {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                </div>
                             </div>
                         ))}
 
