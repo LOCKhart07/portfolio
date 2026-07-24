@@ -245,7 +245,7 @@ const ChatBot: React.FC = () => {
                                 className={`message ${message.sender === 'assistant' ? 'assistant' : 'user'}`}
                             >
                                 <div className="message-content">
-                                    <div dangerouslySetInnerHTML={{ __html: markdownToHTML(message.text) }} />
+                                    <div className="message-markdown" dangerouslySetInnerHTML={{ __html: markdownToHTML(message.text) }} />
                                     {message.isStreaming && <span className="streaming-dot">...</span>}
                                 </div>
                                 <div className="message-timestamp">
