@@ -183,12 +183,12 @@ export const continueWatchingConfig: Record<ProfileType, ContinueItem[]> = {
 export const chatSuggestedQuestions: Record<ProfileType, string[]> = {
   recruiter: [
     "What's Jenslee's work experience?",
-    'What are the strongest technical skills?',
-    'What do past colleagues say?',
+    'What are his strongest technical skills?',
+    'What do his past colleagues say?',
   ],
   engineer: [
     "What's Jenslee been building lately?",
-    'What does the tech stack look like?',
+    'What tech stack is Jenslee familiar with?',
     'What certifications does Jenslee hold?',
   ],
   collaborator: [
