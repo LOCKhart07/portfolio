@@ -10,7 +10,7 @@ import { FaExpand, FaCompress, FaPaperPlane, FaMicrophone, FaVolumeUp, FaVolumeM
 import { FaTimes } from 'react-icons/fa';
 import { usePersona } from 'persona/PersonaContext';
 import { chatSuggestedQuestions } from 'persona/personaConfig';
-import { getSpeechRecognitionConstructor, isSpeechSynthesisSupported, extractSpeakableChunks, stripMarkdownForSpeech } from './voice';
+import { getSpeechRecognitionConstructor, isSpeechSynthesisSupported, extractSpeakableChunks, stripMarkdownForSpeech, correctSpeechTranscript } from './voice';
 
 // Configure marked to use synchronous mode
 marked.setOptions({ async: false });
@@ -149,10 +149,11 @@ const ChatBot: React.FC = () => {
         recognition.maxAlternatives = 1;
 
         recognition.onresult = (event) => {
-            const transcript = Array.from(event.results)
+            const rawTranscript = Array.from(event.results)
                 .map(result => result[0].transcript)
                 .join(' ')
                 .trim();
+            const transcript = correctSpeechTranscript(rawTranscript);
             if (transcript) {
                 sendMessage(inputText ? `${inputText} ${transcript}` : transcript);
             }

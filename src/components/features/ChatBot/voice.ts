@@ -10,6 +10,25 @@ export function isSpeechSynthesisSupported(): boolean {
     return typeof window !== 'undefined' && 'speechSynthesis' in window;
 }
 
+// SpeechRecognition has no reliable way to bias its vocabulary toward domain-specific proper
+// nouns (SpeechGrammarList exists but Chrome largely ignores it for free-form dictation), so
+// known mis-hearings are corrected here instead. Extend as new ones turn up.
+const TRANSCRIPT_CORRECTIONS: [pattern: RegExp, replacement: string][] = [
+    [/\bdensely\b/gi, 'Jenslee'],
+    [/\bltr matrix\b/gi, 'LTIMindtree'],
+    [/\bltr mindtree\b/gi, 'LTIMindtree'],
+    [/\bjewellery\b/gi, 'Valory'],
+    [/\bvalery\b/gi, 'Valory'],
+    [/\bgallery\b/gi, 'Valory'],
+];
+
+export function correctSpeechTranscript(transcript: string): string {
+    return TRANSCRIPT_CORRECTIONS.reduce(
+        (text, [pattern, replacement]) => text.replace(pattern, replacement),
+        transcript
+    );
+}
+
 const SENTENCE_BOUNDARY = /[.!?](?:\s|$)|\n+/;
 
 // Pulls complete sentences off the front of a streaming text buffer so they can be spoken
