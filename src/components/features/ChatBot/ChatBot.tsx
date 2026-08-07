@@ -6,10 +6,11 @@ import { marked } from 'marked';
 import './ChatBot.css';
 import { StreamingMessage, ChatHistory } from './types';
 import { sendChatMessage, processStreamingResponse } from './queries';
-import { FaExpand, FaCompress, FaPaperPlane } from 'react-icons/fa';
+import { FaExpand, FaCompress, FaPaperPlane, FaMicrophone, FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
 import { FaTimes } from 'react-icons/fa';
 import { usePersona } from 'persona/PersonaContext';
 import { chatSuggestedQuestions } from 'persona/personaConfig';
+import { getSpeechRecognitionConstructor, isSpeechSynthesisSupported, extractSpeakableChunks, stripMarkdownForSpeech } from './voice';
 
 // Configure marked to use synchronous mode
 marked.setOptions({ async: false });
@@ -27,6 +28,12 @@ const HIDDEN_ROUTES = ['/', '/browse'];
 const NUDGE_DISMISSED_KEY = 'jenai_nudge_dismissed';
 const NUDGE_DELAY_MS = 4000;
 
+const VOICE_OUTPUT_ENABLED_KEY = 'jenai_voice_output_enabled';
+
+// Resolved once at module load: neither availability changes at runtime.
+const SpeechRecognitionCtor = getSpeechRecognitionConstructor();
+const voiceOutputSupported = isSpeechSynthesisSupported();
+
 const ChatBot: React.FC = () => {
     const location = useLocation();
     const { persona } = usePersona();
@@ -41,10 +48,50 @@ const ChatBot: React.FC = () => {
             localStorage.getItem(NUDGE_DISMISSED_KEY) === 'true'
     );
     const [showNudge, setShowNudge] = useState(false);
+    const [isListening, setIsListening] = useState(false);
+    const [voiceOutputEnabled, setVoiceOutputEnabled] = useState<boolean>(
+        () => typeof window !== 'undefined' &&
+            localStorage.getItem(VOICE_OUTPUT_ENABLED_KEY) === 'true'
+    );
+    const recognitionRef = useRef<SpeechRecognition | null>(null);
+    // How much of each streaming message's text has already been sent to speechSynthesis,
+    // so re-renders only speak the newly arrived tail.
+    const spokenLengthRef = useRef<Map<string, number>>(new Map());
 
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
+
+    // Speak newly streamed-in sentences from the most recent assistant message as they
+    // complete, rather than waiting for the whole response.
+    useEffect(() => {
+        if (!voiceOutputEnabled || !voiceOutputSupported) return;
+
+        const lastMessage = messages[messages.length - 1];
+        if (!lastMessage || lastMessage.sender !== 'assistant') return;
+
+        const alreadySpoken = spokenLengthRef.current.get(lastMessage.message_id) ?? 0;
+        const unspoken = lastMessage.text.slice(alreadySpoken);
+        if (!unspoken) return;
+
+        const { chunks, consumedLength } = extractSpeakableChunks(unspoken, !lastMessage.isStreaming);
+        if (consumedLength === 0) return;
+
+        spokenLengthRef.current.set(lastMessage.message_id, alreadySpoken + consumedLength);
+
+        chunks.forEach(chunk => {
+            const spoken = stripMarkdownForSpeech(chunk);
+            if (!spoken) return;
+            window.speechSynthesis.speak(new SpeechSynthesisUtterance(spoken));
+        });
+    }, [messages, voiceOutputEnabled]);
+
+    // Stop any in-flight mic input / speech playback as soon as the chat is closed.
+    useEffect(() => {
+        if (isOpen) return;
+        recognitionRef.current?.stop();
+        if (voiceOutputSupported) window.speechSynthesis.cancel();
+    }, [isOpen]);
 
     // Slide the label pill out after a short delay, unless the chat is open,
     // we're on a hidden route, or the visitor already dismissed/opened it.
@@ -77,6 +124,45 @@ const ChatBot: React.FC = () => {
 
     const toggleFullscreen = () => {
         setIsFullscreen(!isFullscreen);
+    };
+
+    const toggleVoiceOutput = () => {
+        setVoiceOutputEnabled(prev => {
+            const next = !prev;
+            localStorage.setItem(VOICE_OUTPUT_ENABLED_KEY, String(next));
+            if (!next && voiceOutputSupported) window.speechSynthesis.cancel();
+            return next;
+        });
+    };
+
+    const toggleListening = () => {
+        if (!SpeechRecognitionCtor) return;
+
+        if (isListening) {
+            recognitionRef.current?.stop();
+            return;
+        }
+
+        const recognition = new SpeechRecognitionCtor();
+        recognition.lang = 'en-US';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        recognition.onresult = (event) => {
+            const transcript = Array.from(event.results)
+                .map(result => result[0].transcript)
+                .join(' ')
+                .trim();
+            if (transcript) {
+                sendMessage(inputText ? `${inputText} ${transcript}` : transcript);
+            }
+        };
+        recognition.onerror = () => setIsListening(false);
+        recognition.onend = () => setIsListening(false);
+
+        recognitionRef.current = recognition;
+        setIsListening(true);
+        recognition.start();
     };
 
     const handleStreamingResponse = async (response: Response) => {
@@ -116,6 +202,8 @@ const ChatBot: React.FC = () => {
     const sendMessage = async (rawText: string) => {
         const text = rawText.trim();
         if (!text || isLoading) return;
+
+        if (voiceOutputSupported) window.speechSynthesis.cancel();
 
         const userMessage: StreamingMessage = {
             message_id: uuidv4(),
@@ -225,6 +313,16 @@ const ChatBot: React.FC = () => {
                             </div>
                         </div>
                         <div className="chatbot-controls">
+                            {voiceOutputSupported && (
+                                <button
+                                    className={`voice-output-button ${voiceOutputEnabled ? 'active' : ''}`}
+                                    onClick={toggleVoiceOutput}
+                                    title={voiceOutputEnabled ? 'Mute voice replies' : 'Read replies aloud'}
+                                    aria-label={voiceOutputEnabled ? 'Mute voice replies' : 'Read replies aloud'}
+                                >
+                                    {voiceOutputEnabled ? <FaVolumeUp /> : <FaVolumeMute />}
+                                </button>
+                            )}
                             <button
                                 className="fullscreen-button"
                                 onClick={toggleFullscreen}
@@ -286,6 +384,18 @@ const ChatBot: React.FC = () => {
                             className="message-input"
                             disabled={isLoading}
                         />
+                        {SpeechRecognitionCtor && (
+                            <button
+                                type="button"
+                                className={`mic-button ${isListening ? 'listening' : ''}`}
+                                onClick={toggleListening}
+                                disabled={isLoading}
+                                aria-label={isListening ? 'Stop voice input' : 'Start voice input'}
+                                title={isListening ? 'Stop voice input' : 'Start voice input'}
+                            >
+                                <FaMicrophone />
+                            </button>
+                        )}
                         <button
                             type="submit"
                             className="send-button"
