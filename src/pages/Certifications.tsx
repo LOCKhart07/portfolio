@@ -4,6 +4,7 @@ import { FaExternalLinkAlt, FaUniversity } from 'react-icons/fa';
 import { SiUdemy, SiCoursera, SiIeee } from 'react-icons/si';
 import { Certification } from '../types/types';
 import { getCertifications } from '../queries/getCertifications';
+import { useDocumentHead } from '../hooks/useDocumentHead';
 const iconData: { [key: string]: JSX.Element } = {
   'udemy': <SiUdemy />,
   'coursera': <SiCoursera />,
@@ -12,6 +13,10 @@ const iconData: { [key: string]: JSX.Element } = {
 }
 
 const Certifications: React.FC = () => {
+  useDocumentHead({
+    title: 'Certifications | Jenslee Dsouza — Backend, AI & Web3 Developer',
+    description: 'Professional certifications in software engineering, cloud and AI held by Jenslee Dsouza.',
+  });
 
   const [certifications, setCertifications] = useState<Certification[]>([]);
 

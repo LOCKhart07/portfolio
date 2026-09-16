@@ -3,8 +3,14 @@ import React, { useEffect, useState } from 'react';
 import './Quotes.css';
 import { Quote } from '../types/types';
 import { getQuotes } from '../queries/getQuotes';
+import { useDocumentHead } from '../hooks/useDocumentHead';
 
 const Quotes: React.FC = () => {
+    useDocumentHead({
+      title: 'Quotes | Jenslee Dsouza — Backend, AI & Web3 Developer',
+      description: "Quotes that have shaped Jenslee Dsouza's professional journey and personal growth.",
+    });
+
     const [quotes, setQuotes] = useState<Quote[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);

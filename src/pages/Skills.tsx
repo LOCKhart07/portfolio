@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Skills.css';
 import { getSkills } from '../queries/getSkills';
+import { useDocumentHead } from '../hooks/useDocumentHead';
 
 import { FaReact, FaNodeJs, FaAws, FaDocker, FaJava, FaCube, FaChartLine, FaServer, FaCoins, FaRobot, FaRoute, FaSlidersH } from 'react-icons/fa';
 import { SiRubyonrails, SiTypescript, SiPostgresql, SiMysql, SiKubernetes, SiGooglecloud, SiSpringboot, SiPhp, SiNetlify, SiHeroku, SiRabbitmq, SiImessage, SiFastapi, SiFlask, SiPython, SiJavascript, SiDjango, SiLangchain, SiApachespark, SiApachekafka, SiDocker, SiVectary, SiGit, SiNginx, SiDash, SiArangodb, SiOpensearch, SiRedis, SiVuedotjs, SiHtml5, SiCss3, SiSelenium, SiSecurityscorecard, SiGnubash, SiWeb3Dotjs, SiEthereum, SiGraphql, SiSolidity, SiGooglegemini, SiClaude, SiOpenai } from 'react-icons/si';
@@ -64,6 +65,10 @@ const iconMap: { [key: string]: JSX.Element } = {
 
 
 const Skills: React.FC = () => {
+  useDocumentHead({
+    title: 'Skills | Jenslee Dsouza — Backend, AI & Web3 Developer',
+    description: 'Technical skills across backend engineering, AI/LLM systems and Web3 — Python, Java, Spring Boot, FastAPI, LangChain, Solidity, Kubernetes and more.',
+  });
 
   const [skillsData, setSkillsData] = useState<Skill[]>([]);
 
