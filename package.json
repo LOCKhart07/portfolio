@@ -26,6 +26,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "postinstall": "playwright install chromium || true",
     "start": "vite",
     "build": "vite build && node scripts/prerender.mjs",
     "typecheck": "tsc --noEmit",
