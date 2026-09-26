@@ -7,9 +7,14 @@ import { FaStar as StarIcon } from 'react-icons/fa';
 import './WorkExperience.css';
 import { TimelineItem } from '../types/types';
 import { getTimeline } from '../queries/getTimeline';
+import { useDocumentHead } from '../hooks/useDocumentHead';
 
 
 const WorkExperience: React.FC = () => {
+  useDocumentHead({
+    title: 'Work Experience | Jenslee Dsouza — Backend, AI & Web3 Developer',
+    description: "Career timeline: backend, AI and Web3 roles — including building autonomous on-chain agents at Valory — plus the education that led there.",
+  });
 
   const [timeLineData, setTimeLineData] = useState<TimelineItem[] | null>(null);
 

@@ -3,8 +3,14 @@ import './Recommendations.css';
 import { FaQuoteLeft, FaLinkedin } from 'react-icons/fa';
 import { getRecommendations } from '../queries/getRecommendations';
 import { Recommendation } from '../types/types';
+import { useDocumentHead } from '../hooks/useDocumentHead';
 
 const Recommendations: React.FC = () => {
+  useDocumentHead({
+    title: 'Recommendations | Jenslee Dsouza — Backend, AI & Web3 Developer',
+    description: 'What colleagues and managers have said about working with Jenslee Dsouza.',
+  });
+
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

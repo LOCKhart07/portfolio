@@ -6,6 +6,7 @@ import { Project } from '../types/types';
 import { getProjects } from '../queries/getProjects';
 import { GrDeploy, GrKubernetes } from "react-icons/gr";
 import { trackEvent } from '../hooks/usePageTracking';
+import { useDocumentHead } from '../hooks/useDocumentHead';
 
 // DatoCMS assets are Imgix-backed. The raw `image.url` is a 2x portfolio-card
 // PNG (~300-360KB each, 8 eager on the page ≈ 2.6MB). Request a compressed,
@@ -103,6 +104,11 @@ const techIcons: { [key: string]: JSX.Element } = {
 
 
 const Projects: React.FC = () => {
+  useDocumentHead({
+    title: 'Projects | Jenslee Dsouza — Backend, AI & Web3 Developer',
+    description: 'Selected projects spanning backend services, AI-powered applications and Web3/blockchain systems, built primarily with Python, Java and Spring Boot.',
+  });
+
   const [projects, setProjects] = useState<Project[]>([])
   const [status, setStatus] = useState<'loading' | 'error' | 'ready'>('loading');
 

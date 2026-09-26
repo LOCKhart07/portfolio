@@ -3,8 +3,14 @@ import './Awards.css';
 import { motion } from 'framer-motion';
 import { Award } from '../types/types';
 import { getAwards } from '../queries/getAwards';
+import { useDocumentHead } from '../hooks/useDocumentHead';
 
 const Awards: React.FC = () => {
+    useDocumentHead({
+      title: 'Awards & Recognition | Jenslee Dsouza — Backend, AI & Web3 Developer',
+      description: "Awards and recognitions earned throughout Jenslee Dsouza's career.",
+    });
+
     const [awards, setAwards] = useState<Award[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);

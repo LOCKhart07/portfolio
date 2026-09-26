@@ -3,6 +3,7 @@ import './Music.css';
 import { Song } from '../types/types';
 import { getTopSpotifyTracks } from '../queries/getTopSpotifyTracks';
 import { getBlacklistedMusic } from '../queries/getBlacklistedMusic';
+import { useDocumentHead } from '../hooks/useDocumentHead';
 const favoriteGenres = ["Pop", "Indian Indie", "Alternative", "J-pop", "Classical"];
 // const favoriteSongs = [
 //   { title: "Too Sweet", artist: "Hozier", imgSrc: "https://cdn-images.dzcdn.net/images/cover/7a7c512b717a4aa7452f3c3e46675322/500x500-000000-80-0-0.jpg" },
@@ -11,6 +12,11 @@ const favoriteGenres = ["Pop", "Indian Indie", "Alternative", "J-pop", "Classica
 // ];
 
 const Music: React.FC = () => {
+  useDocumentHead({
+    title: 'Music | Jenslee Dsouza — Backend, AI & Web3 Developer',
+    description: "Jenslee Dsouza's favorite genres and top tracks.",
+  });
+
   const [topTracks, setTopTracks] = useState<Song[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

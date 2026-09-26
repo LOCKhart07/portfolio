@@ -166,9 +166,24 @@ function basePlugin(): Plugin {
 		name: "base-plugin",
 		config(_, { mode }) {
 			const { PUBLIC_URL } = loadEnv(mode, ".", ["PUBLIC_URL"]);
-			return {
-				base: PUBLIC_URL || "",
-			};
+			// Vite's `base` is baked into every asset URL in the built HTML/CSS.
+			// It must be origin-relative: using PUBLIC_URL's full absolute origin
+			// here (as this used to) means the built JS/CSS only ever loads when
+			// the page happens to be served from that exact origin — every other
+			// origin serving the same build (a Netlify deploy preview, GH Pages
+			// via its CNAME'd custom domain, local `vite preview`) 404s on every
+			// asset, so React never mounts there at all. Take just PUBLIC_URL's
+			// pathname instead — "/" for this repo's root-domain `homepage`, or
+			// the subpath for a GH-Pages-style "https://user.github.io/repo" one.
+			let base = "/";
+			if (PUBLIC_URL) {
+				try {
+					base = new URL(PUBLIC_URL).pathname || "/";
+				} catch {
+					base = PUBLIC_URL;
+				}
+			}
+			return { base };
 		},
 	};
 }

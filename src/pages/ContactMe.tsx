@@ -5,8 +5,13 @@ import { FaEnvelope, FaPhoneAlt, FaLinkedin } from 'react-icons/fa';
 import { ContactMe as IContactMe } from '../types/types';
 import { getContactMe } from '../queries/getContactMe';
 import { trackEvent } from '../hooks/usePageTracking';
+import { useDocumentHead } from '../hooks/useDocumentHead';
 
 const ContactMe: React.FC = () => {
+  useDocumentHead({
+    title: 'Contact | Jenslee Dsouza — Backend, AI & Web3 Developer',
+    description: 'Get in touch with Jenslee Dsouza — software developer focused on Backend, AI & Web3.',
+  });
 
   const [userData, setUserData] = useState<IContactMe>()
 
