@@ -39,11 +39,6 @@ function readSitemapRoutes() {
   return locs.filter((path) => path !== '/');
 }
 
-function readProductionOrigin() {
-  const { homepage } = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf-8'));
-  return new URL(homepage).origin;
-}
-
 async function waitForServer(url, attempts = 60) {
   for (let i = 0; i < attempts; i++) {
     try {
@@ -81,7 +76,6 @@ async function prerenderRoute(context, routePath) {
 async function main() {
   const { chromium } = await import('playwright');
   const routes = readSitemapRoutes();
-  const productionOrigin = readProductionOrigin();
 
   // Spawn the local `vite` binary directly, not `npx vite`: npx runs the
   // real server as a *child* of itself, so killing the npx process (what
@@ -128,23 +122,6 @@ async function main() {
     });
     try {
       const context = await browser.newContext();
-
-      // The production build's `base` is the site's absolute origin (see
-      // `homepage` in package.json / `basePlugin` in vite.config.ts), so
-      // every asset URL in the HTML points at production
-      // (https://portfolio.lockhart.in/assets/...) — which doesn't exist
-      // yet pre-deploy. Reroute those requests back to this preview server,
-      // which is serving the exact same files straight from the build dir.
-      await context.route(`${productionOrigin}/**`, async (route) => {
-        const url = new URL(route.request().url());
-        const res = await fetch(`${PREVIEW_ORIGIN}${url.pathname}${url.search}`);
-        const body = Buffer.from(await res.arrayBuffer());
-        await route.fulfill({
-          status: res.status,
-          headers: Object.fromEntries(res.headers.entries()),
-          body,
-        });
-      });
 
       for (const routePath of routes) {
         await prerenderRoute(context, routePath);
