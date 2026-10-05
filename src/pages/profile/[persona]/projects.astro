@@ -1,0 +1,15 @@
+---
+import ProfileLayout from '../../../layouts/ProfileLayout.astro';
+import Projects from '../../../components/sections/Projects';
+import { getProjects } from '../../../queries/getProjects';
+import { personaPaths, type ProfileType } from '../../../persona/personas';
+
+export const getStaticPaths = personaPaths;
+
+const persona = Astro.params.persona as ProfileType;
+const projects = await getProjects();
+---
+
+<ProfileLayout persona={persona} title="Projects">
+  <Projects projects={projects} />
+</ProfileLayout>

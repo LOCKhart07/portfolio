@@ -1,6 +1,6 @@
 // queries/getAwards.ts
 import datoCMSClient from './datoCMSClient';
-import { Award } from '../types/types';
+import type { Award } from '../types/types';
 
 const GET_AWARDS = `
   query {

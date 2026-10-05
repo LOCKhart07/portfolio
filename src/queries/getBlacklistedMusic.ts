@@ -1,6 +1,6 @@
 // queries/getBlacklistedMusic.ts
 import datoCMSClient from './datoCMSClient';
-import { BlacklistedMusic as BlacklistedMusics } from '../types/types';
+import type { BlacklistedMusic as BlacklistedMusics } from '../types/types';
 
 const GET_BLACKLISTED_MUSIC = `
   query {

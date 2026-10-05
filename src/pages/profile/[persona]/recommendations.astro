@@ -1,0 +1,15 @@
+---
+import ProfileLayout from '../../../layouts/ProfileLayout.astro';
+import Recommendations from '../../../components/sections/Recommendations';
+import { getRecommendations } from '../../../queries/getRecommendations';
+import { personaPaths, type ProfileType } from '../../../persona/personas';
+
+export const getStaticPaths = personaPaths;
+
+const persona = Astro.params.persona as ProfileType;
+const data = await getRecommendations();
+---
+
+<ProfileLayout persona={persona} title="Recommendations">
+  <Recommendations recommendations={data} />
+</ProfileLayout>

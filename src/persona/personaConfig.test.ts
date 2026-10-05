@@ -1,7 +1,7 @@
 import { test, expect, describe } from 'vitest';
 import {
   PERSONAS,
-  ProfileType,
+  type ProfileType,
   isPersona,
   coercePersona,
   imageMap,

@@ -16,9 +16,8 @@ Welcome to my personal portfolio project! 🚀 This website showcases my work, s
 - ⚡ **Fast & Responsive**: Built with modern web technologies for seamless performance
 - 🎨 **Customizable**: Modular and easy to adapt to your own needs
 - 📈 **Professional Yet Personal**: Highlights projects, skills, and achievements
-- 🔒 **Privacy-Focused**: GDPR-compliant analytics with user consent management
 - ♿ **Accessibility**: Follows WCAG guidelines with semantic HTML and ARIA attributes
-- 📊 **Analytics**: Google Analytics 4 integration with privacy-first approach
+- 📊 **Analytics**: Google Analytics 4, loaded after the page is interactive
 
 ---
 
@@ -26,35 +25,20 @@ Welcome to my personal portfolio project! 🚀 This website showcases my work, s
 
 This portfolio is built with love and:
 
-- ⚛️ **React** (Frontend)
+- 🚀 **Astro** (prerendered pages; React for the interactive islands)
 - 🌐 **Netlify** (Hosting and CDN)
 - 🛡️ **DatoCMS** (Content Management)
-- 📊 **Google Analytics 4** (Privacy-focused analytics)
+- 📊 **Google Analytics 4**
 - 🎵 **Spotify-stats backend** (custom service, not the Spotify API directly — powers Music)
 
 ---
 
-## 🔒 Privacy Features
+## ⚡ Performance
 
-The portfolio includes several privacy-focused features:
-
-- **Consent Management**: Users can opt-in/out of analytics
-- **GDPR Compliance**: Analytics are disabled by default
-- **Data Minimization**: Only essential data is collected
-- **Transparent Controls**: Clear consent banner with easy opt-out
-- **Local Storage**: User preferences are remembered
-
----
-
-## ⚡ Performance Optimizations
-
-Recent performance improvements include:
-
-- **Optimized Icon Loading**: Efficient icon management system
-- **Lazy Loading**: Images and components load on demand
-- **Memoization**: Prevents unnecessary re-renders
-- **Accessibility**: Semantic HTML and keyboard navigation
-- **Event Tracking**: Efficient user interaction monitoring
+- **Prerendered**: every page is built to static HTML with its DatoCMS content baked in, so content shows with the first response
+- **Islands**: only interactive parts (chatbot, music, intro splash) ship JavaScript, and the chatbot loads when the browser is idle
+- **Instant navigation**: view transitions plus hover prefetching between sections
+- **Immutable assets**: hashed build assets are cached for a year
 
 ---
 
@@ -102,19 +86,20 @@ REACT_APP_SPOTIFY_STATS_API_KEY=your_spotify_stats_api_key
 REACT_APP_ASSISTANT_API_BASE_URL=your_chatbot_backend_url
 ```
 
-5. **Run the Project**: Start the development server.
+5. **Run the Project**: Start the development server (it fetches DatoCMS content as pages render).
 ```bash
 npm start
 ```
 
-6. **Visit the Local Server**: Open your browser and navigate to `http://localhost:3000`.
+6. **Visit the Local Server**: Open your browser and navigate to `http://localhost:3000`. To check the production output, run `npm run build && npm run preview`.
 
 7. **Deploy to Netlify**:
    - Create a Netlify account and connect your repository
    - Configure build settings:
      - Build command: `npm run build`
      - Publish directory: `build`
-   - Set up environment variables in Netlify dashboard
+   - Set up environment variables in Netlify dashboard (include the Deploy Previews context so PR previews can fetch DatoCMS)
+   - Content is fetched at build time, so add a Netlify build hook to DatoCMS (Project settings → Build triggers) to republish on content edits
    - Configure custom domain if needed
 
 ---

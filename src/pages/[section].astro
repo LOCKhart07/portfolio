@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SECTIONS, legacyRedirectTarget } from '../persona/personas';
+
+// Old flat paths (/projects, /skills, …) from before personas lived in the
+// URL. They redirect to the visitor's last-used persona (recruiter fallback).
+export const getStaticPaths = () => SECTIONS.map((section) => ({ params: { section } }));
+
+const { section } = Astro.params;
+const fallback = legacyRedirectTarget(section, null);
+---
+
+<BaseLayout>
+  <meta slot="head" name="robots" content="noindex" />
+  <noscript slot="head"><meta http-equiv="refresh" content={`0; url=${fallback}`} /></noscript>
+  <p data-section={section} id="legacy-redirect" style="color: #fff; padding: 2rem;">
+    Redirecting to <a href={fallback} style="color: #fff;">{fallback}</a>…
+  </p>
+</BaseLayout>
+
+<script>
+  import { LAST_PERSONA_KEY, legacyRedirectTarget } from '../persona/personas';
+
+  const section = document.getElementById('legacy-redirect')?.dataset.section;
+  if (section) {
+    let stored: string | null = null;
+    try {
+      stored = localStorage.getItem(LAST_PERSONA_KEY);
+    } catch {
+      /* storage disabled — recruiter fallback */
+    }
+    location.replace(legacyRedirectTarget(section, stored));
+  }
+</script>

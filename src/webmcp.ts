@@ -12,7 +12,7 @@
 
 import { v4 as uuidv4 } from 'uuid';
 import { sendChatMessage, processStreamingResponse } from './components/features/ChatBot/queries';
-import { ChatHistory } from './components/features/ChatBot/types';
+import type { ChatHistory } from './components/features/ChatBot/types';
 
 interface McpToolResult {
   content: { type: 'text'; text: string }[];

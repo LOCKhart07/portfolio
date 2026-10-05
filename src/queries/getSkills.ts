@@ -1,6 +1,6 @@
 // queries/getTimeline.ts
 import datoCMSClient from './datoCMSClient';
-import { Skill } from '../types/types';
+import type { Skill } from '../types/types';
 
 const GET_SKILLS = `
 {

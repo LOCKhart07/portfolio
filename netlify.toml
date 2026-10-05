@@ -2,11 +2,9 @@
   command = "npm run build"
   publish = "build"
 
-# Handle Single Page Application routing
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# No SPA catch-all: every page is a prerendered file, unknown URLs get the
+# real 404.html, and persona redirect rules are generated into _redirects at
+# build time (astro.config.ts → buildRedirects in src/persona/personas.ts).
 
 [build.environment]
   NODE_VERSION = "24.15.0"
@@ -21,9 +19,16 @@
     Access-Control-Allow-Headers = "Origin, X-Requested-With, Content-Type, Accept, Authorization"
 # End of Selection
 
+# Astro's hashed build assets never change under the same name: cache them
+# forever so return visits skip the network entirely.
+[[headers]]
+  for = "/_astro/*"
+    [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
 # Agent discovery: advertise machine-readable resources on the homepage
-# response (RFC 8288 Link header, RFC 9727 API Catalog). The SPA rewrite
-# serves /index.html for "/", so set the header on both request paths.
+# response (RFC 8288 Link header, RFC 9727 API Catalog). "/" is served from
+# /index.html, so set the header on both request paths.
 [[headers]]
   for = "/"
     [headers.values]
@@ -42,8 +47,7 @@
 
 # Markdown for Agents: an edge function does Accept-based content
 # negotiation on the homepage. `Accept: text/markdown` -> markdown;
-# anything else falls through to the SPA HTML. Edge functions run before
-# the SPA rewrite, so this intercepts "/" cleanly.
+# anything else falls through to the prerendered HTML.
 [[edge_functions]]
   path = "/"
   function = "markdown"

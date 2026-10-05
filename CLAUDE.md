@@ -6,59 +6,60 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 | Task | Command |
 | --- | --- |
-| Dev server (Vite, port 3000, opens browser) | `npm start` or `npm run dev` |
+| Dev server (Astro, port 3000, opens browser) | `npm start` or `npm run dev` |
 | Production build → `build/` | `npm run build` |
+| Serve the production build locally | `npm run preview` |
 | Run tests | `npm test` (Vitest, single run) |
 | Run tests in watch mode | `npm run test:watch` (`vitest`) |
-| Run a single test file | `npm test -- src/App.test.tsx` |
-| Typecheck (no emit) | `npm run typecheck` (`tsc --noEmit`) |
+| Run a single test file | `npm test -- src/persona/personas.test.ts` |
+| Typecheck incl. `.astro` files | `npm run typecheck` (`astro check`) |
 | Deploy to GitHub Pages | `npm run deploy` (Netlify is the primary host; see below) |
 
 There is no lint script and no CI workflow. Node is pinned to **24.15.0** consistently across `.nvmrc`, `netlify.toml` (`NODE_VERSION`), and the README (`nvm install`/`nvm use` reads `.nvmrc`) — keep all three in sync if you bump it.
 
-## Build system gotcha: CRA → Vite migration
+## Build system: Astro, prerendered
 
-This was a Create React App project migrated to Vite. `vite.config.ts` is mostly a **CRA-compatibility shim** and is the key file to understand before touching build behavior:
+The site is an **Astro** static build (`output: 'static'`, `outDir: 'build'`; see `astro.config.ts`). Every URL is prerendered to HTML at build time with its DatoCMS content baked in. React (`@astrojs/react`) is used for components; most render to HTML on the server and ship **no JS**, and only these are hydrated islands: `ChatBot` (`client:idle`, `transition:persist`), `Music` (`client:visible`, live Spotify data), and `NetflixTitle` (`client:load`, the `/` splash). `<ClientRouter />` in `BaseLayout` gives SPA-style navigation, with `prefetch` on hover.
 
-- Env vars must be prefixed `REACT_APP_`. They are exposed as `process.env.REACT_APP_*` (not `import.meta.env`) via a `define` plugin in `vite.config.ts`. Code reads `process.env.*` throughout.
-- Base path comes from the `homepage` field in `package.json` (→ `PUBLIC_URL`).
-- `index.html` supports `%ENV_VAR%` substitution.
-- SVGs import as React components (`ReactComponent`) via an SVGR plugin, mirroring CRA.
-- Images are compressed at build time by `vite-plugin-image-optimizer`.
+Gotchas:
+- **Env vars keep their `REACT_APP_` names** and are read as `process.env.REACT_APP_*`. `astro.config.ts` loads `.env` onto `process.env` for build-time code, and `define`s **only** the client-safe vars in its `CLIENT_ENV` list into browser bundles. The DatoCMS token is deliberately not in that list: it must never reach a browser bundle, so never import `src/queries/datoCMSClient.ts` (or a `get*` that uses it) from an island.
+- **Image imports are `ImageMetadata`**, not strings: use `.src` (see the maps in `personaConfig.tsx`).
+- **Type-only imports must use `import type`** (`verbatimModuleSyntax`); a plain import of a type fails the build with `MISSING_EXPORT`.
+- Module scripts run once per visit under the ClientRouter, so per-page work hangs off the `astro:page-load` event (`src/scripts/global.ts`, `NavBar.astro`, `ProfileLayout.astro`).
+- Path aliases are explicit in `tsconfig.json` (`images/*`, `persona/*`, `sounds/*`, `styles/*`).
+- DatoCMS edits only appear after a rebuild (a Netlify build hook triggered from DatoCMS). Queries are memoized per build in `datoCMSClient.ts`, so the four personas don't refetch the same data.
 
-Tests run on **Vitest** (`react-scripts` is gone). The config is the `test` block in `vite.config.ts` (`environment: 'jsdom'`, `setupFiles: './src/setupTests.ts'`), so tests share the app's Vite resolution — absolute `src/` imports, the SVGR plugin, the `process.env` define. `npm test` is `vitest run` (single pass, CI-safe); `npm run test:watch` is the watcher. `src/App.test.tsx` is now a real smoke test (mounts the full `<App>` and asserts the splash logo); other suites: `src/components/common/NavBar.test.tsx`, `src/persona/personaConfig.test.ts`, `src/persona/PersonaContext.test.tsx`.
+Tests run on **Vitest** via Astro's `getViteConfig` (`vitest.config.ts`: jsdom, `src/setupTests.ts`), so they share the app's resolution. `.astro` components are tested with the Container API in `// @vitest-environment node` files (`src/components/common/NavBar.test.ts`). The test config pins `REACT_APP_GA_TRACKING_ID` to `G-TEST`. Suites: `src/persona/personas.test.ts`, `src/persona/personaConfig.test.ts`, `src/components/sections/Projects.test.tsx`, `src/components/common/NavBar.test.ts`, `src/lib/analytics.test.ts`, `src/components/features/ChatBot/voice.test.ts`.
 
 ## Environment variables
 
 The names actually read by the code (authoritative — keep the README's `.env` example in sync):
 
-- `REACT_APP_DATOCMSTOKEN_DEFAULT` — DatoCMS GraphQL bearer token (`src/queries/getDatoCmsToken.ts`)
+- `REACT_APP_DATOCMSTOKEN_DEFAULT` — DatoCMS GraphQL bearer token, **build time only** (`src/queries/getDatoCmsToken.ts`)
 - `REACT_APP_GA_TRACKING_ID` — Google Analytics 4 measurement ID
 - `REACT_APP_SPOTIFY_STATS_API_BASE_URL` + `REACT_APP_SPOTIFY_STATS_API_KEY` — custom Spotify-stats backend (`src/queries/spotifyClient.ts`)
 - `REACT_APP_ASSISTANT_API_BASE_URL` — chatbot streaming backend (`src/components/features/ChatBot/queries.ts`)
 
-All missing vars degrade to `''` rather than throwing.
+All missing vars degrade to `''` rather than throwing. Netlify must expose the DatoCMS token to the Deploy Previews context too, or PR preview builds fail.
 
 ## Architecture
 
-Single-page React 18 + React Router v6 app styled as a Netflix clone. Entry: `src/index.tsx` (wraps `<App>` in `<BrowserRouter>`) → `src/App.tsx` (renders the route table plus a global `ConsentBanner` and `ChatBot`).
+Netflix-clone portfolio. Pages live in `src/pages/` (file-based routing); layouts are `src/layouts/BaseLayout.astro` (head/meta/JSON-LD, ClientRouter, global script) and `ProfileLayout.astro` (navbar + persistent chatbot + `lastPersona` cache). React section components live in `src/components/sections/` (not `src/pages/`, which is Astro's routing dir) and take their data as **props**.
 
-**Routing** is built in `src/routes.tsx` from a `sections` array (one entry per content page) — add a page by adding a `sections` entry, not a hand-written route. Each section is mounted twice: canonically at `/profile/:profileName/<section>` (persona in the URL) and at the legacy flat `/<section>`, which `LegacyRedirect` bounces to the visitor's last-used persona. Everything except the `/` splash and `Layout` is code-split via `lazy()`. UX flow: `/` (`NetflixTitle` splash) → `/browse` (profile picker) → `/profile/:profileName` → section pages. Section pages and `/profile/:profileName` are wrapped in `<Layout>`; the splash and browse screens are not.
+**Routing.** UX flow: `/` (`NetflixTitle` splash; returning visitors with `lastPersona` set are bounced to `/browse` by an inline head script before paint, and any click or key skips it) → `/browse` (profile picker, plain links) → `/profile/[persona]` → `/profile/[persona]/<section>`. Every page under `profile/[persona]/` uses `getStaticPaths = personaPaths`. The section list is `SECTIONS` in `src/persona/personas.ts`; adding a section means adding to `SECTIONS`, a `src/pages/profile/[persona]/<section>.astro`, and its component. Legacy flat paths (`/projects`) are prerendered by `src/pages/[section].astro` and redirect client-side to the last persona (`legacyRedirectTarget`). Bad or renamed persona segments are handled by Netlify rules **generated** into `build/_redirects` by `buildRedirects()` (an `astro:build:done` hook in `astro.config.ts`). The rule order matters and is tested.
 
-**Profile personas** drive content. The persona module is `src/persona/`: `personaConfig.tsx` holds `ProfileType` (`recruiter | developer | stalker | adventurer`), `coercePersona` (recruiter fallback), the per-persona maps (`avatarMap`, `contactCtaLabel`, `backgroundGif`, `imageMap`), and `topPicksConfig` (which sections, and their order, each persona sees). `PersonaContext.tsx` provides `PersonaProvider` — rendered inside `Layout`; reads `:profileName`, caches `lastPersona` to localStorage, and *redirects* an invalid persona segment to its recruiter equivalent rather than silently rendering a fallback — and the `usePersona()` hook (recruiter fallback when called outside a provider, e.g. the global ChatBot). Changing what a persona sees = editing `topPicksConfig`/the persona maps, not the routes.
+**Profile personas** drive content ordering. `src/persona/personas.ts` holds the dependency-free primitives (`ProfileType` = `recruiter | engineer | collaborator | explorer`, `PERSONAS`, `coercePersona`, `LEGACY_PERSONA_ALIASES`, `LAST_PERSONA_KEY`, `SECTIONS`, the redirect builders), so browser scripts can import it without the image graph. `personaConfig.tsx` re-exports those and adds the maps (`avatarMap`, `contactCtaLabel`, `backgroundGif`, `imageMap`, `chatSuggestedQuestions`) and `topPicksConfig`/`continueWatchingConfig`. The persona comes from `Astro.params.persona` and is passed down as a prop (there is no context provider). Changing what a persona sees = editing `topPicksConfig`/the persona maps, not the routes.
 
 **Data sources** — three independent backends, no shared API layer:
 
-1. **DatoCMS (primary content)** via GraphQL. Each `src/queries/getX.ts` pairs a query string with a typed fetch function, all going through the shared `datoCMSClient` (`graphql-request`, bearer auth). Response shapes live in `src/types/types.ts` and mirror the DatoCMS models documented in the README. To add content: define the model in DatoCMS, add an interface to `types.ts`, add a `getX.ts`, consume it in the relevant page.
-2. **Spotify-stats backend** via `spotifyClient.ts` (axios). This is a custom backend, not the Spotify API directly. Powers `Music` / top-tracks.
-3. **Chatbot assistant** in `src/components/features/ChatBot/`. `queries.ts` POSTs to `/chat/stream` and manually parses a newline-delimited JSON stream (the split regex in `processStreamingResponse` is a known fragile workaround). Rendered globally from `App.tsx`, not route-scoped.
+1. **DatoCMS (primary content)**, fetched **at build time** in page frontmatter. Each `src/queries/getX.ts` pairs a query string with a typed fetch function, all going through the memoized `datoCMSClient` (`graphql-request`, bearer auth). Response shapes live in `src/types/types.ts`. To add content: define the model in DatoCMS, add an interface to `types.ts`, add a `getX.ts`, call it in the page's frontmatter and pass it to the component.
+2. **Spotify-stats backend** via `spotifyClient.ts` (axios), called live from the `Music` island. This is a custom backend, not the Spotify API directly. The Music blacklist comes from DatoCMS at build time as a prop.
+3. **Chatbot assistant** in `src/components/features/ChatBot/`. `queries.ts` POSTs to `/chat/stream` and manually parses a newline-delimited JSON stream (the split regex in `processStreamingResponse` is a known fragile workaround). Mounted only by `ProfileLayout`.
 
-**Analytics is privacy-first and consent-gated.** `src/hooks/usePageTracking.tsx` *defers* GA4 (`react-ga4`) entirely: nothing is initialized and no `gtag.js` is loaded until the visitor clicks Accept in `ConsentBanner`. `updateAnalyticsConsent(true)` calls `ReactGA.initialize` (with `send_page_view: false`, so `ReactGA.send` is the single source of pageviews) and records the current page; declining never loads GA; a returning visitor with `localStorage.analyticsConsent === 'true'` initializes on load so pageviews still count. Pageviews and `trackEvent` only fire while consent is `'true'`. Do not call `ReactGA` directly, and do not move `ReactGA.initialize` back to module load (the old code did this plus passed `consent/ad_storage/analytics_storage` as `gtag('config')` params — Consent Mode that never applied — which leaked a `page_view` before the banner was answered). Route through `trackEvent`/`updateAnalyticsConsent` so the pre-consent gate holds.
+**Analytics** (`src/lib/analytics.ts`, wired up in `src/scripts/global.ts`) is GA4 via `react-ga4` with **no consent gate** (an explicit decision; the old consent banner was removed). GA initializes on every visit but is deferred to `requestIdleCallback` so it never competes with first paint. `send_page_view: false`, so pageviews come only from the `astro:page-load` listener. Static pages have no click handlers: trackable elements carry `data-track="Category|Action|Label"`, which one delegated listener reports. Don't call `ReactGA` directly; go through this module.
 
-**Imports** are absolute from `src/` (`tsconfig.json` `baseUrl: "src"` + `vite-tsconfig-paths`), e.g. `import Skills from 'images/sections/Skills.webp'`. `src/hooks/usePageTracking.tsx` is the single tracking module — `App`, `ConsentBanner`, `ProfileBanner`, `ContactMe`, and `Projects` all import it; do not reintroduce a second copy (there used to be a byte-identical stray `src/usePageTracking.tsx` that double-initialized GA).
-
-**Styling** is plain per-component CSS files colocated with components or under `src/styles/` and imported directly; CSS Modules are declared in types but not used in practice.
+**Styling** is plain per-component CSS files colocated with components or under `src/styles/`, imported directly; CSS Modules are not used. Static cards are real `<a>` elements, so their CSS resets link styling (`a.project-card`, etc.).
 
 ## Deployment
 
-Hosted on **Netlify** (`netlify.toml`: build `npm run build`, publish `build/`, SPA redirect to `/index.html`, permissive CORS headers). The `gh-pages` deploy scripts in `package.json` are secondary. `homepage` in `package.json` (`https://portfolio.lockhart.in`) sets the build base path — keep it correct when changing hosting.
+Hosted on **Netlify** (`netlify.toml`: build `npm run build`, publish `build/`, immutable caching for `/_astro/*`, permissive CORS headers, edge functions for `/` markdown negotiation and `/resume`). There is no SPA catch-all rewrite; unknown URLs get the real `404.html`. The `gh-pages` deploy scripts in `package.json` are secondary and don't support the generated `_redirects`. The site URL (`https://portfolio.lockhart.in`) is `site` in `astro.config.ts`; it drives canonical and OG URLs, and canonical links collapse every persona to the recruiter URL.

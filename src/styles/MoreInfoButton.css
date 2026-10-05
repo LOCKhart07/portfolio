@@ -1,5 +1,6 @@
 .more-info-button {
   display: inline-flex;
+  text-decoration: none;
   align-items: center;
   padding: 10px 20px;
   background-color: rgba(109, 109, 110, 0.7); /* Netflix secondary color */

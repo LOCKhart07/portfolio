@@ -1,6 +1,6 @@
 // queries/getProfileBanner.ts
 import datoCMSClient from './datoCMSClient';
-import { ProfileBanner } from '../types/types';
+import type { ProfileBanner } from '../types/types';
 
 const GET_PROFILE_BANNER = `
  {

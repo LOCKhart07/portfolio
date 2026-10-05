@@ -1,14 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import './TopPicksRow.css';
-import { ProfileType, imageMap, topPicksConfig } from '../persona/personaConfig';
+import { imageMap, topPicksConfig, type ProfileType } from '../persona/personaConfig';
 
 interface TopPicksRowProps {
   profile: ProfileType;
 }
 
 const TopPicksRow: React.FC<TopPicksRowProps> = ({ profile }) => {
-  const navigate = useNavigate();
   const topPicks = topPicksConfig[profile];
 
   return (
@@ -16,17 +14,17 @@ const TopPicksRow: React.FC<TopPicksRowProps> = ({ profile }) => {
       <h2 className="row-title">Today's Top Picks for {profile.charAt(0).toUpperCase() + profile.slice(1)}</h2>
       <div className="card-row">
         {topPicks.map((pick, index) => (
-          <div
+          <a
             key={index}
             className="pick-card"
-            onClick={() => navigate(`/profile/${profile}${pick.route}`)}
+            href={`/profile/${profile}${pick.route}`}
             style={{ animationDelay: `${index * 0.2}s` }} // Adding delay based on index
           >
             <img src={imageMap[pick.title]} alt={pick.title} className="pick-image" />
             <div className="overlay">
               <div className="pick-label">{pick.title}</div>
             </div>
-          </div>
+          </a>
         ))}
       </div>
     </div>
