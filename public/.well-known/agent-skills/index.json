@@ -4,9 +4,9 @@
     {
       "name": "ask-about-jenslee",
       "type": "skill-md",
-      "description": "Answer questions about Jenslee Dsouza (Software Developer focused on Backend, AI & Web3) using this portfolio's machine-readable surfaces: the markdown profile, RFC 9727 API catalog, sitemap, and the JenAI WebMCP tool.",
+      "description": "Answer questions about Jenslee Dsouza (Software Developer focused on Backend, AI & Web3) using this portfolio's machine-readable surfaces: the markdown profile, RFC 9727 API catalog, sitemap, and the JenAI assistant (remote MCP server and WebMCP tool).",
       "url": "https://portfolio.lockhart.in/.well-known/agent-skills/ask-about-jenslee/SKILL.md",
-      "digest": "sha256:17777fc8271ffe50ed2bc2432f752c8990fee016885f893bd7ee9e778f74598c"
+      "digest": "sha256:05747a8b4ae9943c48a50c19e8f6c15d6627236ee9db2c18b34493f61ffa126f"
     }
   ]
 }

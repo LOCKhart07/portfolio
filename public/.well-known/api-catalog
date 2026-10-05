@@ -30,6 +30,16 @@
           "title": "Source repository and human-readable documentation"
         }
       ]
+    },
+    {
+      "anchor": "https://portfolio.lockhart.in/mcp",
+      "service-doc": [
+        {
+          "href": "https://portfolio.lockhart.in/.well-known/agent-skills/ask-about-jenslee/SKILL.md",
+          "type": "text/markdown",
+          "title": "Remote MCP server (Streamable HTTP, stateless) — tools: ask_jenai, list_portfolio_sections"
+        }
+      ]
     }
   ]
 }

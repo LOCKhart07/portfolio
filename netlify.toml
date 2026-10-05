@@ -61,3 +61,9 @@
 [[edge_functions]]
   path = "/resume"
   function = "resume"
+
+# Remote MCP server (Streamable HTTP, stateless) exposing the JenAI
+# assistant as a tool — the server-side twin of src/webmcp.ts.
+[[edge_functions]]
+  path = "/mcp"
+  function = "mcp"

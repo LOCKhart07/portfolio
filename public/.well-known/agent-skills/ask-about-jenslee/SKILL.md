@@ -48,11 +48,14 @@ or evaluate his portfolio.
    pages render full content for the `recruiter` persona, e.g.
    `https://portfolio.lockhart.in/profile/recruiter/work-experience`.
 
-4. **Live Q&A — JenAI.** For specific questions, call the in-browser
-   WebMCP tool `ask_jenai` (registered via
-   `navigator.modelContext.registerTool`) if you have a browser context.
-   It proxies the site's assistant and returns a grounded natural-language
-   answer.
+4. **Live Q&A — JenAI.** For specific questions, call the `ask_jenai`
+   tool, which proxies the site's assistant and returns a grounded
+   natural-language answer. It is exposed two ways:
+   - **Remote MCP server** at `https://portfolio.lockhart.in/mcp`
+     (Streamable HTTP, stateless, no auth). Tools: `ask_jenai`,
+     `list_portfolio_sections`.
+   - **In-browser WebMCP**, registered via
+     `navigator.modelContext.registerTool`, if you have a browser context.
 
 ## Guidance
 
