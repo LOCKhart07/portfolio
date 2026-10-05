@@ -4,6 +4,7 @@ import {
   PERSONAS,
   SECTIONS,
   buildRedirects,
+  buildSitemap,
   legacyRedirectTarget,
   personaPaths,
 } from './personas';
@@ -77,5 +78,47 @@ describe('static paths', () => {
     ];
     const built = SECTIONS.map((s) => `/${s}`);
     expect(routes.filter((r) => !built.includes(r))).toEqual([]);
+  });
+});
+
+describe('buildSitemap', () => {
+  const parse = () => {
+    const xml = buildSitemap('https://portfolio.lockhart.in', '2026-10-05');
+    const doc = new DOMParser().parseFromString(xml, 'application/xml');
+    return { xml, doc };
+  };
+  const locs = () =>
+    [...parse().doc.getElementsByTagName('loc')].map((el) => el.textContent);
+
+  test('is well-formed XML in the sitemap namespace', () => {
+    const { doc } = parse();
+    expect(doc.getElementsByTagName('parsererror')).toHaveLength(0);
+    expect(doc.documentElement.namespaceURI).toBe('http://www.sitemaps.org/schemas/sitemap/0.9');
+  });
+
+  test('lists the home, picker and recruiter landing pages plus every section', () => {
+    expect(locs()).toEqual([
+      'https://portfolio.lockhart.in/',
+      'https://portfolio.lockhart.in/browse',
+      'https://portfolio.lockhart.in/profile/recruiter',
+      ...SECTIONS.map((s) => `https://portfolio.lockhart.in/profile/recruiter/${s}`),
+    ]);
+  });
+
+  // Other personas canonicalize to recruiter; listing them would hand Google
+  // URLs whose canonical points elsewhere.
+  test('lists only canonical recruiter URLs, each once, without trailing slashes', () => {
+    const all = locs();
+    expect(new Set(all).size).toBe(all.length);
+    for (const persona of PERSONAS.filter((p) => p !== 'recruiter')) {
+      expect(all.some((u) => u?.includes(`/profile/${persona}`))).toBe(false);
+    }
+    expect(all.filter((u) => u !== 'https://portfolio.lockhart.in/' && u?.endsWith('/'))).toEqual([]);
+  });
+
+  test('stamps every URL with the given lastmod', () => {
+    const lastmods = [...parse().doc.getElementsByTagName('lastmod')].map((el) => el.textContent);
+    expect(lastmods).toHaveLength(locs().length);
+    expect(new Set(lastmods)).toEqual(new Set(['2026-10-05']));
   });
 });

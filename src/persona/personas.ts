@@ -70,3 +70,34 @@ export const buildRedirects = (): string => {
   lines.push('/profile/:persona/*  /profile/recruiter/:splat  302');
   return lines.join('\n') + '\n';
 };
+
+/**
+ * Indexable public paths, in sitemap order. Only the recruiter copy of each
+ * page is listed: every persona's page canonicalizes to it (BaseLayout).
+ */
+export const sitemapPaths = (): string[] => [
+  '/',
+  '/browse',
+  '/profile/recruiter',
+  ...SECTIONS.map((section) => `/profile/recruiter/${section}`),
+];
+
+/**
+ * sitemap.xml body, generated at build time from the same section list the
+ * pages are built from, so it can't drift. `lastmod` is the build date:
+ * builds run on deploys and on DatoCMS publish (webhook), so it tracks real
+ * content changes. changefreq/priority are omitted; Google ignores both.
+ */
+export const buildSitemap = (site: string, lastmod: string): string => {
+  const urls = sitemapPaths()
+    .map((path) => {
+      const loc = new URL(path, site).href;
+      return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`;
+    })
+    .join('\n');
+  return (
+    '<?xml version="1.0" encoding="UTF-8"?>\n' +
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+    `${urls}\n</urlset>\n`
+  );
+};

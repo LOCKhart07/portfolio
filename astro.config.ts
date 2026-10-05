@@ -2,7 +2,9 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import { loadEnv } from 'vite';
 import { writeFile } from 'node:fs/promises';
-import { buildRedirects } from './src/persona/personas';
+import { buildRedirects, buildSitemap } from './src/persona/personas';
+
+const SITE = 'https://portfolio.lockhart.in';
 
 // Env vars keep their CRA-era `REACT_APP_` names so the Netlify env config
 // doesn't change. Two audiences:
@@ -26,7 +28,7 @@ for (const [key, value] of Object.entries(env)) {
 }
 
 export default defineConfig({
-  site: 'https://portfolio.lockhart.in',
+  site: SITE,
   output: 'static',
   outDir: './build',
   // Emit /profile/recruiter/skills as skills.html, not skills/index.html.
@@ -38,12 +40,14 @@ export default defineConfig({
   integrations: [
     react(),
     {
-      // Netlify persona redirect rules, generated from the same persona list
-      // the pages are built from (see buildRedirects).
-      name: 'netlify-redirects',
+      // Netlify persona redirect rules and the sitemap, generated from the
+      // same persona/section lists the pages are built from (personas.ts).
+      name: 'generated-files',
       hooks: {
         'astro:build:done': async ({ dir }) => {
+          const today = new Date().toISOString().slice(0, 10);
           await writeFile(new URL('_redirects', dir), buildRedirects());
+          await writeFile(new URL('sitemap.xml', dir), buildSitemap(SITE, today));
         },
       },
     },
