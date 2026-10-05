@@ -8,6 +8,7 @@ import { sendChatMessage, processStreamingResponse } from './queries';
 import { FaExpand, FaCompress, FaPaperPlane, FaMicrophone, FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
 import { FaTimes } from 'react-icons/fa';
 import { chatSuggestedQuestions, type ProfileType } from 'persona/personaConfig';
+import { readStorage, writeStorage } from '../../../lib/storage';
 import { getSpeechRecognitionConstructor, isSpeechSynthesisSupported, extractSpeakableChunks, stripMarkdownForSpeech, correctSpeechTranscript } from './voice';
 
 // Configure marked to use synchronous mode
@@ -45,14 +46,12 @@ const ChatBot: React.FC<ChatBotProps> = ({ persona }) => {
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [nudgeDismissed, setNudgeDismissed] = useState<boolean>(
-        () => typeof window !== 'undefined' &&
-            localStorage.getItem(NUDGE_DISMISSED_KEY) === 'true'
+        () => readStorage(NUDGE_DISMISSED_KEY) === 'true'
     );
     const [showNudge, setShowNudge] = useState(false);
     const [isListening, setIsListening] = useState(false);
     const [voiceOutputEnabled, setVoiceOutputEnabled] = useState<boolean>(
-        () => typeof window !== 'undefined' &&
-            localStorage.getItem(VOICE_OUTPUT_ENABLED_KEY) === 'true'
+        () => readStorage(VOICE_OUTPUT_ENABLED_KEY) === 'true'
     );
     const recognitionRef = useRef<SpeechRecognition | null>(null);
     // How much of each streaming message's text has already been sent to speechSynthesis,
@@ -107,7 +106,7 @@ const ChatBot: React.FC<ChatBotProps> = ({ persona }) => {
     const dismissNudge = () => {
         setShowNudge(false);
         setNudgeDismissed(true);
-        localStorage.setItem(NUDGE_DISMISSED_KEY, 'true');
+        writeStorage(NUDGE_DISMISSED_KEY, 'true');
     };
 
     const handleToggle = () => {
@@ -115,7 +114,7 @@ const ChatBot: React.FC<ChatBotProps> = ({ persona }) => {
         setShowNudge(false);
         if (!nudgeDismissed) {
             setNudgeDismissed(true);
-            localStorage.setItem(NUDGE_DISMISSED_KEY, 'true');
+            writeStorage(NUDGE_DISMISSED_KEY, 'true');
         }
     };
 
@@ -130,7 +129,7 @@ const ChatBot: React.FC<ChatBotProps> = ({ persona }) => {
     const toggleVoiceOutput = () => {
         setVoiceOutputEnabled(prev => {
             const next = !prev;
-            localStorage.setItem(VOICE_OUTPUT_ENABLED_KEY, String(next));
+            writeStorage(VOICE_OUTPUT_ENABLED_KEY, String(next));
             if (!next && voiceOutputSupported) window.speechSynthesis.cancel();
             return next;
         });
@@ -246,6 +245,15 @@ const ChatBot: React.FC<ChatBotProps> = ({ persona }) => {
             }]);
         } finally {
             setIsLoading(false);
+            // Safety net: once the stream has closed (or failed), nothing is
+            // streaming any more, even if the backend never sent is_final.
+            // Otherwise the "..." indicator sticks and voice output never
+            // speaks the reply's final partial sentence.
+            setMessages(prev =>
+                prev.some(msg => msg.isStreaming)
+                    ? prev.map(msg => (msg.isStreaming ? { ...msg, isStreaming: false } : msg))
+                    : prev
+            );
         }
     };
 
