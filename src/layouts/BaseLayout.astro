@@ -1,6 +1,7 @@
 ---
 import { ClientRouter } from 'astro:transitions';
 import 'styles/index.css';
+import { PROFILE, personJsonLd } from '../site/profile';
 
 interface Props {
   /** Page-specific title; the site name is appended. Omit for the default. */
@@ -10,15 +11,11 @@ interface Props {
   description?: string;
 }
 
-const SITE_TITLE = 'Jenslee Dsouza | Backend, AI & Web3 Developer';
-const DEFAULT_DESCRIPTION =
-  'Software developer focused on Backend, AI & Web3 — building autonomous on-chain agents at Valory with Python, Java & Spring Boot, LLM/RAG and Web3 integration.';
-
-const { title, description = DEFAULT_DESCRIPTION } = Astro.props;
+const { title, description = PROFILE.description } = Astro.props;
 // Per-page titles and descriptions give each URL its own signals, so Google
 // doesn't read the sections as duplicates of the homepage.
 const fullTitle =
-  Astro.props.fullTitle ?? (title ? `${title} | Jenslee Dsouza — Backend, AI & Web3 Developer` : SITE_TITLE);
+  Astro.props.fullTitle ?? (title ? `${title} | Jenslee Dsouza — Backend, AI & Web3 Developer` : PROFILE.siteTitle);
 // Personas render the same content in a different order, so every persona's
 // copy of a page points at the recruiter URL (the sitemap's crawl target).
 // build.format 'file' makes the pathname end in .html; public URLs don't.
@@ -27,21 +24,7 @@ const canonicalPath = publicPath.replace(/^\/profile\/[^/]+/, '/profile/recruite
 const canonical = new URL(canonicalPath, Astro.site).href;
 const ogImage = new URL('/og-image.jpg', Astro.site).href;
 
-const structuredData = {
-  '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: 'Jenslee Dsouza',
-  url: 'https://portfolio.lockhart.in/',
-  jobTitle: 'Software Developer focused on Backend, AI & Web3',
-  sameAs: ['https://github.com/LOCKhart07', 'https://www.linkedin.com/in/jensleedsouza/'],
-  knowsAbout: [
-    'Backend Development', 'Artificial Intelligence', 'Web3', 'Blockchain',
-    'Autonomous Agents', 'Prediction Markets', 'Python', 'Flask', 'FastAPI',
-    'Django', 'Java', 'Spring Boot', 'LLM', 'RAG', 'Generative AI', 'Docker',
-    'Kubernetes',
-  ],
-  worksFor: { '@type': 'Organization', name: 'Valory', url: 'https://www.valory.xyz/' },
-};
+const structuredData = personJsonLd();
 ---
 
 <!doctype html>
@@ -57,11 +40,8 @@ const structuredData = {
     <title>{fullTitle}</title>
     <meta name="title" content={fullTitle} />
     <meta name="description" content={description} />
-    <meta name="author" content="Jenslee Dsouza" />
-    <meta
-      name="keywords"
-      content="Software Developer, Backend Developer, AI Developer, Web3 Developer, Blockchain Developer, Autonomous Agents, On-chain Agents, Olas, Valory, Prediction Markets, Artificial Intelligence, LLM, RAG, Generative AI, Python, FastAPI, Django, Flask, Java, Spring Boot, Docker, Kubernetes, Jenslee, Jenslee Dsouza, Jenslee Developer, Jenslee Backend Developer, Jenslee AI Developer, Jenslee Web3 Developer, Jenslee India, Software Engineer"
-    />
+    <meta name="author" content={PROFILE.name} />
+    <meta name="keywords" content={PROFILE.keywords.join(', ')} />
     <link rel="canonical" href={canonical} />
 
     <meta property="og:type" content="website" />

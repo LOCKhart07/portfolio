@@ -13,22 +13,30 @@
 // fenced block).
 
 import type { Context } from 'https://edge.netlify.com';
+import { PROFILE, SITE_URL, personJsonLd } from '../../src/site/profile.ts';
+import { SECTIONS } from '../../src/persona/personas.ts';
 
-const MARKDOWN = `---
-title: "Jenslee Dsouza | Software Developer focused on Backend, AI & Web3"
-description: "Software developer focused on backend, AI, and Web3. I build scalable backend services, AI-powered applications, and decentralized Web3 systems, primarily with Python, Java, and Spring Boot."
-author: "Jenslee Dsouza"
-url: "https://portfolio.lockhart.in/"
-image: "https://portfolio.lockhart.in/og-image.jpg"
-keywords: "Software Developer, Backend Developer, AI Developer, Web3 Developer, Machine Learning Engineer, Python, Java, Spring Boot, Smart Contracts, Decentralized Applications, Deep Learning, Neural Networks"
+// Built from the same profile data as the HTML <head> and JSON-LD
+// (src/site/profile.ts) and the same section list the pages are generated
+// from, so this view can't drift from the site again.
+const sectionTitle = (slug: string) =>
+  slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+
+const yaml = (value: string) => JSON.stringify(value);
+
+export const MARKDOWN = `---
+title: ${yaml(PROFILE.siteTitle)}
+description: ${yaml(PROFILE.description)}
+author: ${yaml(PROFILE.name)}
+url: "${SITE_URL}/"
+image: "${SITE_URL}/og-image.jpg"
+keywords: ${yaml(PROFILE.keywords.join(', '))}
 generator: "markdown-for-agents (Netlify Edge Function)"
 ---
 
-# Jenslee Dsouza: Software Developer focused on Backend, AI & Web3
+# ${PROFILE.name}: ${PROFILE.jobTitle}
 
-Software developer focused on backend, AI, and Web3. I build scalable
-backend services, AI-powered applications, and decentralized Web3
-systems, primarily with Python, Java, and Spring Boot.
+${PROFILE.description}
 
 This portfolio is a prerendered site styled as a Netflix clone; content
 is served per "profile" persona. The canonical, crawlable URLs below
@@ -36,57 +44,21 @@ serve the full content for the recruiter persona as plain HTML.
 
 ## Sections
 
-- [Browse / profile picker](https://portfolio.lockhart.in/browse)
-- [Profile landing](https://portfolio.lockhart.in/profile/recruiter)
-- [Work Experience](https://portfolio.lockhart.in/profile/recruiter/work-experience)
-- [Projects](https://portfolio.lockhart.in/profile/recruiter/projects)
-- [Skills](https://portfolio.lockhart.in/profile/recruiter/skills)
-- [Certifications](https://portfolio.lockhart.in/profile/recruiter/certifications)
-- [Recommendations](https://portfolio.lockhart.in/profile/recruiter/recommendations)
-- [Awards](https://portfolio.lockhart.in/profile/recruiter/awards)
-- [Contact](https://portfolio.lockhart.in/profile/recruiter/contact-me)
-- [Music](https://portfolio.lockhart.in/profile/recruiter/music)
-- [Quotes](https://portfolio.lockhart.in/profile/recruiter/quotes)
+- [Browse / profile picker](${SITE_URL}/browse)
+- [Profile landing](${SITE_URL}/profile/recruiter)
+${SECTIONS.map((s) => `- [${sectionTitle(s)}](${SITE_URL}/profile/recruiter/${s})`).join('\n')}
 
 ## Machine-readable resources
 
-- [Sitemap](https://portfolio.lockhart.in/sitemap.xml)
-- [API catalog (RFC 9727)](https://portfolio.lockhart.in/.well-known/api-catalog)
-- [Agent Skills index (RFC v0.2.0)](https://portfolio.lockhart.in/.well-known/agent-skills/index.json)
-- [robots.txt + Content-Signal](https://portfolio.lockhart.in/robots.txt)
+- [Sitemap](${SITE_URL}/sitemap.xml)
+- [API catalog (RFC 9727)](${SITE_URL}/.well-known/api-catalog)
+- [Agent Skills index (RFC v0.2.0)](${SITE_URL}/.well-known/agent-skills/index.json)
+- [robots.txt + Content-Signal](${SITE_URL}/robots.txt)
 
 ## Structured data
 
 \`\`\`json
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Jenslee Dsouza",
-  "url": "https://portfolio.lockhart.in/",
-  "jobTitle": "Software Developer focused on Backend, AI & Web3",
-  "sameAs": [
-    "https://github.com/LOCKhart07",
-    "https://www.linkedin.com/in/jensleedsouza/"
-  ],
-  "knowsAbout": [
-    "Backend Development",
-    "Artificial Intelligence",
-    "Machine Learning",
-    "Deep Learning",
-    "Web3",
-    "Smart Contracts",
-    "Decentralized Applications",
-    "Python",
-    "Java",
-    "Spring Boot",
-    "Neural Networks"
-  ],
-  "worksFor": {
-    "@type": "Organization",
-    "name": "LTIMindtree",
-    "url": "https://www.ltimindtree.com/"
-  }
-}
+${JSON.stringify(personJsonLd(), null, 2)}
 \`\`\`
 `;
 
