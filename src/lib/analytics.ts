@@ -1,4 +1,11 @@
-import ReactGA from 'react-ga4';
+import ReactGAImport from 'react-ga4';
+
+// react-ga4 is CommonJS. In the production browser bundle the default import
+// is the whole `module.exports` (`{ default: <GA4 instance> }`), so calling
+// `.initialize` on it threw and GA never started; elsewhere (tests, dev) it is
+// the instance itself. Unwrap either shape.
+const ReactGA: typeof ReactGAImport =
+  (ReactGAImport as unknown as { default?: typeof ReactGAImport }).default ?? ReactGAImport;
 
 // Google Analytics 4, browser-only. There is no consent gate: GA starts on
 // every visit, but `startAnalytics` defers it to an idle callback so gtag.js
