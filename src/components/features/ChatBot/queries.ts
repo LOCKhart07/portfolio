@@ -22,6 +22,14 @@ export const sendChatMessage = async (
     });
 };
 
+/**
+ * Reads the backend's newline-delimited JSON stream and hands each complete
+ * line to onChunk. Network chunks don't line up with JSON lines (a line can
+ * arrive in two pieces) or with UTF-8 characters (an emoji's bytes can be
+ * split), so bytes are decoded in streaming mode into a buffer and only whole
+ * lines are parsed; the remainder is flushed when the stream ends. Same
+ * approach as netlify/edge-functions/mcp.ts.
+ */
 export const processStreamingResponse = async (
     response: Response,
     onChunk: (data: ChatResponse) => void
@@ -30,28 +38,36 @@ export const processStreamingResponse = async (
     if (!reader) return;
 
     const decoder = new TextDecoder();
+    let buffer = '';
+
+    const handleLine = (line: string) => {
+        if (!line.trim()) return;
+        let data: ChatResponse;
+        try {
+            data = JSON.parse(line);
+        } catch (e) {
+            console.error('Error parsing JSON:', e, line);
+            return;
+        }
+        // is_final lives at the top level (see ChatResponse). An empty final
+        // chunk must still be delivered: it is what ends the streaming state.
+        if (data.message?.content || data.is_final) {
+            onChunk(data);
+        }
+    };
 
     try {
         while (true) {
             const { done, value } = await reader.read();
             if (done) break;
-
-            const chunk = decoder.decode(value);
-            // Dealing with buffer issues. Needs to be fixed properly.
-            const jsonStrings = chunk.split(/\n(?={"message"|{)/).filter(str => str.trim());
-            
-            for (const jsonString of jsonStrings) {
-                try {
-                    const data = JSON.parse(jsonString);
-                    if (data.message.content || data.message.is_final) {
-                        onChunk(data);
-                    }
-                } catch (e) {
-                    console.error('Error parsing JSON:', e, jsonString);
-                }
-            }
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split('\n');
+            buffer = lines.pop() ?? '';
+            lines.forEach(handleLine);
         }
+        buffer += decoder.decode();
+        handleLine(buffer);
     } finally {
         reader.releaseLock();
     }
-}; 
+};
