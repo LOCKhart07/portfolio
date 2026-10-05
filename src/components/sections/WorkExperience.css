@@ -68,3 +68,10 @@
     animation: none;
   }
 }
+
+/* The timeline library sets --line-color on <html> from a React effect, which
+   never runs now that this page ships no JS, so the centre line had no
+   colour. Provide the library's default (#FFF) in CSS instead. */
+.vertical-timeline {
+  --line-color: #fff;
+}
