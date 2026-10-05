@@ -27,6 +27,7 @@ import greyImage from 'images/profiles/grey.webp';
 import redImage from 'images/profiles/red.webp';
 import yellowImage from 'images/profiles/yellow.webp';
 
+import type { ImageMetadata } from 'astro';
 import type { ProfileType } from './personas';
 
 // The dependency-free primitives live in personas.ts (browser scripts and
@@ -35,18 +36,26 @@ export * from './personas';
 
 // Keyed by card title. Every title used in topPicksConfig /
 // continueWatchingConfig MUST have an entry here or the card renders a broken
-// <img>.
-export const imageMap: Record<string, string> = {
-  Skills: Skills.src,
-  Experience: Experience.src,
-  Certifications: Certifications.src,
-  Recommendations: Recommendations.src,
-  'Contact Me': ContactMeImg.src,
-  'Work Permit': WorkPermit.src,
-  Projects: Projects.src,
-  Music: Music.src,
-  Quotes: Quotes.src,
-  Awards: Awards.src,
+// <img>. These are the full-size sources; the profile page resizes them to
+// card size at build time (getImage) before rendering.
+/** A card image already resized for the rows (see profile/[persona]/index.astro). */
+export interface CardImage {
+  src: string;
+  width: number;
+  height: number;
+}
+
+export const imageMap: Record<string, ImageMetadata> = {
+  Skills,
+  Experience,
+  Certifications,
+  Recommendations,
+  'Contact Me': ContactMeImg,
+  'Work Permit': WorkPermit,
+  Projects,
+  Music,
+  Quotes,
+  Awards,
 };
 
 // Small avatar shown in the navbar. Previously passed via router state
@@ -66,30 +75,6 @@ export const contactCtaLabel: Record<ProfileType, string> = {
   engineer: "Let's Build",
   collaborator: 'Work With Me',
   explorer: 'Say Hi',
-};
-
-// Profile-page background. Was previously passed via router state from
-// browse.tsx and broke on refresh / shared links; now deep-link safe.
-// Giphy serves an animated WebP for every GIF at the same media path — just
-// swap the `giphy.gif` filename for `giphy.webp`. WebP animates as a CSS
-// background-image with no autoplay policy (unlike <video>), at ~75-80% the
-// weight: recruiter 10.8MB→2.4MB, explorer 3.4MB→0.6MB, collaborator
-// 1.3MB→0.34MB. Each .webp below was verified to contain ANIM/ANMF chunks.
-export const backgroundGif: Record<ProfileType, string> = {
-  // Dwight (The Office) holding up his three résumés.
-  recruiter:
-    'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExOTZ5eWwwbjRpdWM1amxyd3VueHhteTVzajVjeGZtZGJ1dDc4MXMyNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9dg/16u7Ifl2T4zYfQ932F/giphy.webp',
-  // Pixel-art hooded ape coding at a desk in headphones. Kept as .gif: this
-  // clip is already only ~33KB (480x270, 6 frames) and Giphy returns a 0-byte
-  // body for its .webp rendition — do NOT "optimize" this to .webp.
-  engineer:
-    'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnNsdDE2YXYxZnU5MzJ3bjIxYzRiOW5rbHYydWVzMzN1cXl2NTU5MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8fQ1oiRxx9stbdECAo/giphy.gif',
-  // Captain Planet — "by your powers combined".
-  collaborator:
-    'https://media.giphy.com/media/0Av9l0VIc01y1isrDw/giphy.webp',
-  // Snowboarder carving down a mountain (National Geographic).
-  explorer:
-    'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmxib24ycWo2cjlmazh0NGV5NTZ2Mzd2YWY0M2tvam9oYXBwYW1ocCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ERKMnDK6tkzJe8YVa3/giphy.webp',
 };
 
 export interface TopPick {

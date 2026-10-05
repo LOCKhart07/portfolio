@@ -6,12 +6,12 @@ import 'styles/browse.css';
 ---
 
 <BaseLayout title="Who's Watching?">
-  <div class="browse-container">
+  <main class="browse-container">
     <p class="who-is-watching">Who's Watching?</p>
     <div class="profiles">
       {PERSONAS.map((persona) => (
         <ProfileCard name={persona} image={avatarMap[persona]} href={`/profile/${persona}`} />
       ))}
     </div>
-  </div>
+  </main>
 </BaseLayout>

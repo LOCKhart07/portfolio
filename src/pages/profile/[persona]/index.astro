@@ -1,10 +1,12 @@
 ---
+import { getImage } from 'astro:assets';
 import ProfileLayout from '../../../layouts/ProfileLayout.astro';
 import ProfileBanner from '../../../profilePage/ProfileBanner';
 import TopPicksRow from '../../../profilePage/TopPicksRow';
 import ContinueWatching from '../../../profilePage/ContinueWatching';
 import { getProfileBanner } from '../../../queries/getProfileBanner';
-import { backgroundGif } from '../../../persona/personaConfig';
+import { imageMap, type CardImage } from '../../../persona/personaConfig';
+import { heroBackground } from '../../../persona/backgrounds';
 import { personaPaths, type ProfileType } from '../../../persona/personas';
 import '../../../profilePage/ProfilePage.css';
 
@@ -12,6 +14,18 @@ export const getStaticPaths = personaPaths;
 
 const persona = Astro.params.persona as ProfileType;
 const bannerData = await getProfileBanner();
+const hero = heroBackground[persona];
+
+// Section art ships at up to 2070px wide; cards render at most 250px wide
+// (pick-card), so emit a 2x rendition (500px) instead of the original.
+const images: Record<string, CardImage> = Object.fromEntries(
+  await Promise.all(
+    Object.entries(imageMap).map(async ([title, src]) => {
+      const img = await getImage({ src, width: 500, format: 'webp', quality: 70 });
+      return [title, { src: img.src, width: Number(img.attributes.width), height: Number(img.attributes.height) }];
+    }),
+  ),
+);
 ---
 
 <ProfileLayout
@@ -19,9 +33,23 @@ const bannerData = await getProfileBanner();
   fullTitle="Jenslee Dsouza | Software Developer focused on Backend, AI & Web3"
   description="Software developer focused on backend, AI, and Web3. I build scalable backend services, AI-powered applications, and decentralized Web3 systems, primarily with Python, Java, and Spring Boot."
 >
-  <div class="profile-page" style={`background-image: url(${backgroundGif[persona]})`}>
+  {/* The poster is the LCP image: announce it before any CSS/JS is parsed. */}
+  <link slot="head" rel="preload" as="image" href={hero.poster.src} fetchpriority="high" />
+  <div class="profile-page">
+    <video
+      class="profile-bg"
+      autoplay
+      muted
+      loop
+      playsinline
+      poster={hero.poster.src}
+      aria-hidden="true"
+    >
+      <source src={hero.webm} type="video/webm" />
+      <source src={hero.mp4} type="video/mp4" />
+    </video>
     <ProfileBanner bannerData={bannerData} />
   </div>
-  <TopPicksRow profile={persona} />
-  <ContinueWatching profile={persona} />
+  <TopPicksRow profile={persona} images={images} />
+  <ContinueWatching profile={persona} images={images} />
 </ProfileLayout>

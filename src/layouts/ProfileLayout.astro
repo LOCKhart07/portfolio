@@ -17,9 +17,9 @@ const { persona, title, fullTitle, description } = Astro.props;
 <BaseLayout title={title} fullTitle={fullTitle} description={description}>
   <slot name="head" slot="head" />
   <NavBar persona={persona} />
-  <div class="content">
+  <main class="content">
     <slot />
-  </div>
+  </main>
   <div id="chatbot-root" style="position: relative; z-index: 9999;">
     {/* Persisted across ClientRouter navigations so an open conversation
         survives; it still re-renders with the new persona prop. */}

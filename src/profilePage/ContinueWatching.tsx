@@ -1,12 +1,13 @@
 import React from 'react';
 import './ContinueWatching.css';
-import { imageMap, continueWatchingConfig, type ProfileType } from '../persona/personaConfig';
+import { continueWatchingConfig, type CardImage, type ProfileType } from '../persona/personaConfig';
 
 interface ContinueWatchingProps {
   profile: ProfileType;
+  images: Record<string, CardImage>;
 }
 
-const ContinueWatching: React.FC<ContinueWatchingProps> = ({ profile }) => {
+const ContinueWatching: React.FC<ContinueWatchingProps> = ({ profile, images }) => {
   const continueWatching = continueWatchingConfig[profile];
 
   return (
@@ -15,7 +16,16 @@ const ContinueWatching: React.FC<ContinueWatchingProps> = ({ profile }) => {
       <div className="card-row">
         {continueWatching.map((pick, index) => (
           <a href={`/profile/${profile}${pick.link}`} key={index} className="pick-card">
-            <img src={imageMap[pick.title]} alt={pick.title} className="pick-image" />
+            {/* Second row sits below the fold: don't compete with the hero. */}
+            <img
+              src={images[pick.title].src}
+              width={images[pick.title].width}
+              height={images[pick.title].height}
+              alt={pick.title}
+              className="pick-image"
+              loading="lazy"
+              decoding="async"
+            />
             <div className="overlay">
               <div className="pick-label">{pick.title}</div>
             </div>

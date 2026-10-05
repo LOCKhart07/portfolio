@@ -4,9 +4,22 @@
   height: 58vh;
   box-sizing: border-box;
   color: #fff;
-  background-size: cover;
-  background-position: center;
   position: relative;
+  /* Own stacking context so the background video (z-index -1) sits behind
+     the vignette and banner but above anything outside the hero. */
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* Muted looping video replacing the old CSS background-image GIF. */
+.profile-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  pointer-events: none;
 }
 
 /* Netflix-style hero treatment: a left vignette keeps the headline/buttons

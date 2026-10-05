@@ -1,12 +1,13 @@
 import React from 'react';
 import './TopPicksRow.css';
-import { imageMap, topPicksConfig, type ProfileType } from '../persona/personaConfig';
+import { topPicksConfig, type CardImage, type ProfileType } from '../persona/personaConfig';
 
 interface TopPicksRowProps {
   profile: ProfileType;
+  images: Record<string, CardImage>;
 }
 
-const TopPicksRow: React.FC<TopPicksRowProps> = ({ profile }) => {
+const TopPicksRow: React.FC<TopPicksRowProps> = ({ profile, images }) => {
   const topPicks = topPicksConfig[profile];
 
   return (
@@ -20,7 +21,14 @@ const TopPicksRow: React.FC<TopPicksRowProps> = ({ profile }) => {
             href={`/profile/${profile}${pick.route}`}
             style={{ animationDelay: `${index * 0.2}s` }} // Adding delay based on index
           >
-            <img src={imageMap[pick.title]} alt={pick.title} className="pick-image" />
+            <img
+              src={images[pick.title].src}
+              width={images[pick.title].width}
+              height={images[pick.title].height}
+              alt={pick.title}
+              className="pick-image"
+              decoding="async"
+            />
             <div className="overlay">
               <div className="pick-label">{pick.title}</div>
             </div>
