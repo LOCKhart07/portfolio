@@ -71,7 +71,9 @@
 [[headers]]
   for = "/.well-known/ai-catalog.json"
     [headers.values]
-    Content-Type = "application/ai-catalog+json"
+    # ARD requires plain application/json here (the MCP Server Card draft's
+    # application/ai-catalog+json is only a SHOULD).
+    Content-Type = "application/json"
 
 # Markdown for Agents: an edge function does Accept-based content
 # negotiation on the homepage. `Accept: text/markdown` -> markdown;

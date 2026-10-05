@@ -1,10 +1,21 @@
 {
   "specVersion": "1.0",
+  "host": {
+    "displayName": "Jenslee Dsouza",
+    "identifier": "https://portfolio.lockhart.in"
+  },
   "entries": [
     {
       "identifier": "urn:air:portfolio.lockhart.in:mcp:jenai",
+      "displayName": "JenAI — Jenslee Dsouza",
       "type": "application/mcp-server-card+json",
-      "url": "https://portfolio.lockhart.in/mcp/server-card"
+      "url": "https://portfolio.lockhart.in/mcp/server-card",
+      "representativeQueries": [
+        "what is Jenslee Dsouza's work experience",
+        "which programming languages and frameworks does Jenslee use",
+        "has Jenslee built AI agents or Web3 projects",
+        "how do I get in touch with Jenslee"
+      ]
     }
   ]
 }
