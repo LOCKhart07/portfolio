@@ -26,6 +26,7 @@ Gotchas:
 - **Image imports are `ImageMetadata`**, not strings: use `.src` (see the maps in `personaConfig.tsx`).
 - **Type-only imports must use `import type`** (`verbatimModuleSyntax`); a plain import of a type fails the build with `MISSING_EXPORT`.
 - Module scripts run once per visit under the ClientRouter, so per-page work hangs off the `astro:page-load` event (`src/scripts/global.ts`, `NavBar.astro`, `ProfileLayout.astro`).
+- **`build.format: 'file'` + `trailingSlash: 'never'` is deliberate.** Pages are emitted as `skills.html`, not `skills/index.html`, because Netlify serves a directory index only after a 301 to the trailing-slash URL, which made every click two round trips. Keep internal links slash-less. (`Astro.url.pathname` ends in `.html` in this mode; `BaseLayout` strips it for canonical URLs.)
 - Path aliases are explicit in `tsconfig.json` (`images/*`, `persona/*`, `sounds/*`, `styles/*`).
 - DatoCMS edits only appear after a rebuild (a Netlify build hook triggered from DatoCMS). Queries are memoized per build in `datoCMSClient.ts`, so the four personas don't refetch the same data.
 
