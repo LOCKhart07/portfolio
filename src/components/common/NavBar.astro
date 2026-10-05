@@ -1,0 +1,94 @@
+---
+import { FaHome, FaBriefcase, FaTools, FaProjectDiagram, FaEnvelope } from 'react-icons/fa';
+import 'styles/Navbar.css';
+import netflixLogo from 'images/logos/jenslee-netflix-logo.webp';
+import { avatarMap, contactCtaLabel, type ProfileType } from '../../persona/personaConfig';
+
+interface Props {
+  persona: ProfileType;
+}
+
+const { persona } = Astro.props;
+// Avatar and links derive from the persona URL segment, so they are right
+// on refresh and deep links.
+const base = `/profile/${persona}`;
+const links = [
+  { href: base, label: 'Home', Icon: FaHome },
+  { href: `${base}/work-experience`, label: 'Career', Icon: FaBriefcase },
+  { href: `${base}/skills`, label: 'Skills', Icon: FaTools },
+  { href: `${base}/projects`, label: 'Projects', Icon: FaProjectDiagram },
+  { href: `${base}/contact-me`, label: contactCtaLabel[persona], Icon: FaEnvelope },
+];
+---
+
+<nav class="navbar">
+  <div class="navbar-left">
+    {/* Anyone here has used a persona, so "/" would skip the splash anyway. */}
+    <a href="/browse" class="navbar-logo">
+      <img src={netflixLogo.src} alt="Netflix" />
+    </a>
+    <ul class="navbar-links">
+      {links.map(({ href, label }) => <li><a href={href}>{label}</a></li>)}
+    </ul>
+  </div>
+  <div class="navbar-right">
+    {/* Hamburger menu for mobile */}
+    <div class="hamburger" role="button" tabindex="0" aria-label="Open menu" aria-expanded="false">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <a href="/browse" aria-label="Switch profile">
+      <img src={avatarMap[persona]} alt="Profile" class="profile-icon" />
+    </a>
+  </div>
+</nav>
+
+{/* Sidebar Overlay */}
+<div class="sidebar-overlay"></div>
+
+{/* Sidebar (only visible on mobile) */}
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <img src={netflixLogo.src} alt="Netflix Logo" />
+  </div>
+  <ul>
+    {links.map(({ href, label, Icon }) => (
+      <li><a href={href}><Icon /> {label}</a></li>
+    ))}
+  </ul>
+</div>
+
+<script>
+  // Bundled once; the navbar markup is replaced on every ClientRouter
+  // navigation, so state is reapplied on astro:page-load and the hamburger
+  // uses document-level delegation instead of per-element listeners.
+  const setScrolled = () =>
+    document.querySelector('.navbar')?.classList.toggle('scrolled', window.scrollY > 80);
+
+  const setSidebar = (open: boolean) => {
+    document.querySelector('.sidebar')?.classList.toggle('open', open);
+    document.querySelector('.sidebar-overlay')?.classList.toggle('open', open);
+    document.querySelector('.hamburger')?.setAttribute('aria-expanded', String(open));
+  };
+
+  window.addEventListener('scroll', setScrolled, { passive: true });
+  document.addEventListener('astro:page-load', setScrolled);
+
+  document.addEventListener('click', (event) => {
+    const target = event.target as Element;
+    if (target.closest('.hamburger')) {
+      setSidebar(!document.querySelector('.sidebar')?.classList.contains('open'));
+    } else if (target.closest('.sidebar-overlay') || target.closest('.sidebar a')) {
+      setSidebar(false);
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    const target = event.target as Element;
+    if ((event.key === 'Enter' || event.key === ' ') && target.closest('.hamburger')) {
+      event.preventDefault();
+      setSidebar(!document.querySelector('.sidebar')?.classList.contains('open'));
+    }
+  });
+</script>

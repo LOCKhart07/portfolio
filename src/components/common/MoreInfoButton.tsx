@@ -1,14 +1,18 @@
 import React from 'react';
 import 'styles/MoreInfoButton.css';
 
+// A link styled as a Netflix button: it always opens an external URL, so a
+// real anchor works without JS. `track` becomes a data-track value for the
+// delegated analytics listener.
 interface MoreInfoButtonProps {
-  onClick: () => void;
+  href: string;
   label?: string;
+  track?: string;
 }
 
-const MoreInfoButton: React.FC<MoreInfoButtonProps> = ({ onClick, label = "More Info" }) => {
+const MoreInfoButton: React.FC<MoreInfoButtonProps> = ({ href, track, label = "More Info" }) => {
   return (
-    <button className="more-info-button" onClick={onClick} type="button">
+    <a className="more-info-button" href={href} target="_blank" rel="noopener noreferrer" data-track={track}>
       <div className="icon-container">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +33,7 @@ const MoreInfoButton: React.FC<MoreInfoButtonProps> = ({ onClick, label = "More 
       </div>
       <div className="spacer"></div>
       <span className="label">{label}</span>
-    </button>
+    </a>
   );
 };
 

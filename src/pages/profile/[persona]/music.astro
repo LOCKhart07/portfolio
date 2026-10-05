@@ -1,0 +1,19 @@
+---
+import ProfileLayout from '../../../layouts/ProfileLayout.astro';
+import Music from '../../../components/sections/Music';
+import { getBlacklistedMusic } from '../../../queries/getBlacklistedMusic';
+import { personaPaths, type ProfileType } from '../../../persona/personas';
+
+export const getStaticPaths = personaPaths;
+
+const persona = Astro.params.persona as ProfileType;
+const blacklist = (await getBlacklistedMusic()).map((track) => track.name);
+---
+
+<ProfileLayout
+  persona={persona}
+  title="Music"
+  description="Jenslee Dsouza's favorite genres and top tracks."
+>
+  <Music client:visible blacklist={blacklist} />
+</ProfileLayout>

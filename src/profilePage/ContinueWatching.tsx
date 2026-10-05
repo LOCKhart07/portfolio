@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import './ContinueWatching.css';
-import { ProfileType, imageMap, continueWatchingConfig } from '../persona/personaConfig';
+import { imageMap, continueWatchingConfig, type ProfileType } from '../persona/personaConfig';
 
 interface ContinueWatchingProps {
   profile: ProfileType;
@@ -15,12 +14,12 @@ const ContinueWatching: React.FC<ContinueWatchingProps> = ({ profile }) => {
       <h2 className="row-title">Continue watching for {profile.charAt(0).toUpperCase() + profile.slice(1)}</h2>
       <div className="card-row">
         {continueWatching.map((pick, index) => (
-          <Link to={`/profile/${profile}${pick.link}`} key={index} className="pick-card">
+          <a href={`/profile/${profile}${pick.link}`} key={index} className="pick-card">
             <img src={imageMap[pick.title]} alt={pick.title} className="pick-image" />
             <div className="overlay">
               <div className="pick-label">{pick.title}</div>
             </div>
-          </Link>
+          </a>
         ))}
       </div>
     </div>

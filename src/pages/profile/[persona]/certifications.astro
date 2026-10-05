@@ -1,0 +1,19 @@
+---
+import ProfileLayout from '../../../layouts/ProfileLayout.astro';
+import Certifications from '../../../components/sections/Certifications';
+import { getCertifications } from '../../../queries/getCertifications';
+import { personaPaths, type ProfileType } from '../../../persona/personas';
+
+export const getStaticPaths = personaPaths;
+
+const persona = Astro.params.persona as ProfileType;
+const data = await getCertifications();
+---
+
+<ProfileLayout
+  persona={persona}
+  title="Certifications"
+  description="Professional certifications in software engineering, cloud and AI held by Jenslee Dsouza."
+>
+  <Certifications certifications={data} />
+</ProfileLayout>

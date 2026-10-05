@@ -1,16 +1,16 @@
 // Markdown for Agents — RFC 7231 content negotiation on the homepage.
 //
-// Browsers send `Accept: text/html,...` and keep getting the React SPA.
+// Browsers send `Accept: text/html,...` and keep getting the HTML page.
 // Agents that send `Accept: text/markdown` get a markdown representation
 // of the page instead, with `Content-Type: text/markdown; charset=utf-8`,
 // an estimated `x-markdown-tokens` count, and `Vary: Accept` so the CDN
 // keys the two representations separately.
 //
-// This site is a client-rendered SPA: the HTML body is an empty
-// `<div id="root">`, so there is no server HTML to convert. The honest,
-// useful markdown representation is the page's own metadata + structured
-// data + the real navigable routes — mirroring Cloudflare's three-part
-// shape (YAML frontmatter, body markdown, JSON-LD fenced block).
+// "/" is the Netflix-style intro splash, which has almost no text of its
+// own to convert. The useful markdown representation is the site's
+// metadata + structured data + the real navigable routes — mirroring
+// Cloudflare's three-part shape (YAML frontmatter, body markdown, JSON-LD
+// fenced block).
 
 import type { Context } from 'https://edge.netlify.com';
 
@@ -30,9 +30,9 @@ Software developer focused on backend, AI, and Web3. I build scalable
 backend services, AI-powered applications, and decentralized Web3
 systems, primarily with Python, Java, and Spring Boot.
 
-This portfolio is a client-rendered single-page app styled as a Netflix
-clone; content is served per "profile" persona. The canonical,
-crawlable URLs below render the full content for the recruiter persona.
+This portfolio is a prerendered site styled as a Netflix clone; content
+is served per "profile" persona. The canonical, crawlable URLs below
+serve the full content for the recruiter persona as plain HTML.
 
 ## Sections
 
@@ -110,7 +110,7 @@ export default async (request: Request, context: Context): Promise<Response> => 
     });
   }
 
-  // Browsers and crawlers: serve the normal SPA HTML, but advertise that
+  // Browsers and crawlers: serve the normal HTML page, but advertise that
   // the response varies by Accept so a shared cache won't cross the wires.
   const response = await context.next();
   const html = new Response(response.body, response);

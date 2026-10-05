@@ -1,6 +1,6 @@
 // queries/getRecommendation.ts
 import datoCMSClient from './datoCMSClient';
-import { Recommendation } from '../types/types';
+import type { Recommendation } from '../types/types';
 
 const GET_RECOMMENDATIONS = `
   query {

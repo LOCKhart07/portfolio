@@ -1,0 +1,204 @@
+.projects-container {
+  padding: 120px 20px;
+  background-color: #141414;
+  color: #fff;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px 20px;
+  justify-content: center;
+}
+
+.project-card {
+  background: #1e1e1e;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 15px rgba(160, 16, 16, 0.6); /* Base shadow */
+  opacity: 0;
+  animation: fadeInUp 0.5s forwards ease-in-out;
+  animation-delay: var(--delay);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 550px;
+  margin: 0 auto;
+}
+
+/* Linked cards are real anchors: keep the card look, not link styling. */
+a.project-card {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Defined locally on purpose: CSS is code-split per lazy route, so this page
+   cannot rely on @keyframes fadeInUp from WorkExperience.css being loaded.
+   Without these keyframes the animation is a no-op and every card stays at
+   opacity:0 — present and clickable but invisible (the "blank Projects
+   page"). */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Safety net: if the animation never runs at all (very old engine, animation
+   stripped by an extension, etc.) the card must still end up visible rather
+   than stuck at opacity:0. */
+@media (prefers-reduced-motion: reduce) {
+  .project-card {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+.project-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(244, 0, 13, 0.6); /* Netflix shadow */
+  cursor: pointer;
+}
+
+.project-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 2px solid #e50914;
+  transition: transform 0.3s ease;
+}
+
+/* Shown when a project has no image in DatoCMS (keeps the grid uniform
+   instead of crashing / collapsing the card). */
+.project-image-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  font-weight: 700;
+  color: #e50914;
+  background: #2a2a2a;
+}
+
+.project-card:hover .project-image {
+  transform: scale(1.05);
+}
+
+.project-details {
+  padding: 20px;
+}
+
+.project-details h3 {
+  font-size: 1.2rem;
+  color: #e74e56;
+  margin-bottom: 10px;
+  color: #e50914;
+}
+
+.project-details p {
+  font-size: 0.8rem;
+  margin-bottom: 15px;
+  line-height: 1.2rem;
+}
+
+.tech-used {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.tech-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 12px;
+  background: #2c2c2c;
+  color: #fff;
+  font-size: 0.8rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.tech-badge:hover {
+  transform: scale(1.1);
+  background-color: #e50914;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(229, 9, 20, 0.6); /* Netflix shadow */
+}
+
+.tech-badge svg {
+  margin-right: 5px;
+  font-size: 1.2rem;
+}
+
+/* Responsive styles for mobile and tablet */
+@media (max-width: 1200px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .projects-container {
+    padding: 80px 20px;
+  }
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 24px 0;
+  }
+  .project-card {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  .project-image {
+    height: 160px;
+  }
+  .project-details {
+    padding: 14px;
+  }
+  .project-details h3 {
+    font-size: 1rem;
+  }
+  .project-details p {
+    font-size: 0.9rem;
+    line-height: 1.3rem;
+  }
+  .tech-used {
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .tech-badge {
+    font-size: 0.9rem;
+    padding: 4px 8px;
+  }
+  .tech-badge svg {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .projects-container {
+    padding: 60px 10px;
+  }
+  .project-image {
+    height: 110px;
+  }
+  .project-details {
+    padding: 8px;
+  }
+  .project-details h3 {
+    font-size: 0.95rem;
+  }
+  .project-details p {
+    font-size: 0.8rem;
+    line-height: 1.1rem;
+  }
+  .tech-badge {
+    font-size: 0.8rem;
+    padding: 3px 6px;
+  }
+}

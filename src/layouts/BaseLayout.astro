@@ -1,0 +1,99 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import 'styles/index.css';
+
+interface Props {
+  /** Page-specific title; the site name is appended. Omit for the default. */
+  title?: string;
+  /** Complete title, used as-is (overrides `title`). */
+  fullTitle?: string;
+  description?: string;
+}
+
+const SITE_TITLE = 'Jenslee Dsouza | Backend, AI & Web3 Developer';
+const DEFAULT_DESCRIPTION =
+  'Software developer focused on Backend, AI & Web3 — building autonomous on-chain agents at Valory with Python, Java & Spring Boot, LLM/RAG and Web3 integration.';
+
+const { title, description = DEFAULT_DESCRIPTION } = Astro.props;
+// Per-page titles and descriptions give each URL its own signals, so Google
+// doesn't read the sections as duplicates of the homepage.
+const fullTitle =
+  Astro.props.fullTitle ?? (title ? `${title} | Jenslee Dsouza — Backend, AI & Web3 Developer` : SITE_TITLE);
+// Personas render the same content in a different order, so every persona's
+// copy of a page points at the recruiter URL (the sitemap's crawl target).
+// build.format 'file' makes the pathname end in .html; public URLs don't.
+const publicPath = Astro.url.pathname.replace(/(\/index)?\.html$/, '') || '/';
+const canonicalPath = publicPath.replace(/^\/profile\/[^/]+/, '/profile/recruiter');
+const canonical = new URL(canonicalPath, Astro.site).href;
+const ogImage = new URL('/og-image.jpg', Astro.site).href;
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Jenslee Dsouza',
+  url: 'https://portfolio.lockhart.in/',
+  jobTitle: 'Software Developer focused on Backend, AI & Web3',
+  sameAs: ['https://github.com/LOCKhart07', 'https://www.linkedin.com/in/jensleedsouza/'],
+  knowsAbout: [
+    'Backend Development', 'Artificial Intelligence', 'Web3', 'Blockchain',
+    'Autonomous Agents', 'Prediction Markets', 'Python', 'Flask', 'FastAPI',
+    'Django', 'Java', 'Spring Boot', 'LLM', 'RAG', 'Generative AI', 'Docker',
+    'Kubernetes',
+  ],
+  worksFor: { '@type': 'Organization', name: 'Valory', url: 'https://www.valory.xyz/' },
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="google" content="notranslate" />
+    <meta name="robots" content="index, follow" />
+
+    <title>{fullTitle}</title>
+    <meta name="title" content={fullTitle} />
+    <meta name="description" content={description} />
+    <meta name="author" content="Jenslee Dsouza" />
+    <meta
+      name="keywords"
+      content="Software Developer, Backend Developer, AI Developer, Web3 Developer, Blockchain Developer, Autonomous Agents, On-chain Agents, Olas, Valory, Prediction Markets, Artificial Intelligence, LLM, RAG, Generative AI, Python, FastAPI, Django, Flask, Java, Spring Boot, Docker, Kubernetes, Jenslee, Jenslee Dsouza, Jenslee Developer, Jenslee Backend Developer, Jenslee AI Developer, Jenslee Web3 Developer, Jenslee India, Software Engineer"
+    />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonical} />
+    <meta property="twitter:title" content={fullTitle} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+    <link rel="icon" href="/favicon.ico?v=2" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=2" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=2" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <slot name="head" />
+    <ClientRouter />
+  </head>
+  <body>
+    <div style="position: relative; min-height: 100vh;">
+      <slot />
+    </div>
+    <script>
+      import '../scripts/global';
+    </script>
+  </body>
+</html>

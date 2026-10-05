@@ -5,7 +5,7 @@
 // TopPicksRow.tsx and ContinueWatching.tsx. Everything persona-related now
 // lives here so the personas can actually differ instead of drifting.
 
-import React, { ReactNode } from 'react';
+import React, { type ReactNode } from 'react';
 import {
   FaCode, FaBriefcase, FaCertificate, FaHandsHelping,
   FaProjectDiagram, FaEnvelope, FaMusic, FaQuoteLeft, FaTrophy,
@@ -27,40 +27,36 @@ import greyImage from 'images/profiles/grey.webp';
 import redImage from 'images/profiles/red.webp';
 import yellowImage from 'images/profiles/yellow.webp';
 
-export type ProfileType = 'recruiter' | 'engineer' | 'collaborator' | 'explorer';
+import type { ProfileType } from './personas';
 
-export const PERSONAS: ProfileType[] = ['recruiter', 'engineer', 'collaborator', 'explorer'];
-
-export const isPersona = (x?: string): x is ProfileType =>
-  !!x && (PERSONAS as readonly string[]).includes(x);
-
-export const coercePersona = (x?: string): ProfileType =>
-  isPersona(x) ? x : 'recruiter';
+// The dependency-free primitives live in personas.ts (browser scripts and
+// the _redirects generator import them without this module's image graph).
+export * from './personas';
 
 // Keyed by card title. Every title used in topPicksConfig /
 // continueWatchingConfig MUST have an entry here or the card renders a broken
 // <img>.
 export const imageMap: Record<string, string> = {
-  Skills,
-  Experience,
-  Certifications,
-  Recommendations,
-  'Contact Me': ContactMeImg,
-  'Work Permit': WorkPermit,
-  Projects,
-  Music,
-  Quotes,
-  Awards,
+  Skills: Skills.src,
+  Experience: Experience.src,
+  Certifications: Certifications.src,
+  Recommendations: Recommendations.src,
+  'Contact Me': ContactMeImg.src,
+  'Work Permit': WorkPermit.src,
+  Projects: Projects.src,
+  Music: Music.src,
+  Quotes: Quotes.src,
+  Awards: Awards.src,
 };
 
 // Small avatar shown in the navbar. Previously passed via router state
 // (location.state.profileImage), which is lost on refresh/deep-link; deriving
 // it from the persona keeps it correct everywhere.
 export const avatarMap: Record<ProfileType, string> = {
-  recruiter: blueImage,
-  engineer: greyImage,
-  collaborator: redImage,
-  explorer: yellowImage,
+  recruiter: blueImage.src,
+  engineer: greyImage.src,
+  collaborator: redImage.src,
+  explorer: yellowImage.src,
 };
 
 // Navbar contact CTA label. The link always routes to /contact-me; only the
@@ -201,14 +197,4 @@ export const chatSuggestedQuestions: Record<ProfileType, string[]> = {
     'What music is Jenslee into?',
     'Any interesting awards or quotes?',
   ],
-};
-
-// Persona keys that shipped in shared links / bookmarks before the
-// recruiter|engineer|collaborator|explorer rename. PersonaProvider redirects
-// these to the new key (preserving the rest of the path) so old external
-// links don't 404 into the recruiter fallback.
-export const LEGACY_PERSONA_ALIASES: Record<string, ProfileType> = {
-  developer: 'engineer',
-  stalker: 'collaborator',
-  adventurer: 'explorer',
 };

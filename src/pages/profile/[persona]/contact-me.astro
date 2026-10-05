@@ -1,0 +1,19 @@
+---
+import ProfileLayout from '../../../layouts/ProfileLayout.astro';
+import ContactMe from '../../../components/sections/ContactMe';
+import { getContactMe } from '../../../queries/getContactMe';
+import { personaPaths, type ProfileType } from '../../../persona/personas';
+
+export const getStaticPaths = personaPaths;
+
+const persona = Astro.params.persona as ProfileType;
+const data = await getContactMe();
+---
+
+<ProfileLayout
+  persona={persona}
+  title="Contact"
+  description="Get in touch with Jenslee Dsouza — software developer focused on Backend, AI & Web3."
+>
+  <ContactMe userData={data} />
+</ProfileLayout>

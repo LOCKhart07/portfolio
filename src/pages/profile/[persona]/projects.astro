@@ -1,0 +1,19 @@
+---
+import ProfileLayout from '../../../layouts/ProfileLayout.astro';
+import Projects from '../../../components/sections/Projects';
+import { getProjects } from '../../../queries/getProjects';
+import { personaPaths, type ProfileType } from '../../../persona/personas';
+
+export const getStaticPaths = personaPaths;
+
+const persona = Astro.params.persona as ProfileType;
+const projects = await getProjects();
+---
+
+<ProfileLayout
+  persona={persona}
+  title="Projects"
+  description="Selected projects spanning backend services, AI-powered applications and Web3/blockchain systems, built primarily with Python, Java and Spring Boot."
+>
+  <Projects projects={projects} />
+</ProfileLayout>

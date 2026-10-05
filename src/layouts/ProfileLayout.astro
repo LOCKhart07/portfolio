@@ -1,0 +1,44 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import NavBar from '../components/common/NavBar.astro';
+import ChatBot from '../components/features/ChatBot/ChatBot';
+import type { ProfileType } from '../persona/personas';
+
+interface Props {
+  persona: ProfileType;
+  title?: string;
+  fullTitle?: string;
+  description?: string;
+}
+
+const { persona, title, fullTitle, description } = Astro.props;
+---
+
+<BaseLayout title={title} fullTitle={fullTitle} description={description}>
+  <slot name="head" slot="head" />
+  <NavBar persona={persona} />
+  <div class="content">
+    <slot />
+  </div>
+  <div id="chatbot-root" style="position: relative; z-index: 9999;">
+    {/* Persisted across ClientRouter navigations so an open conversation
+        survives; it still re-renders with the new persona prop. */}
+    <ChatBot client:idle transition:persist="jenai" persona={persona} />
+  </div>
+</BaseLayout>
+
+<script>
+  // Remember the active persona: legacy flat paths (/projects) redirect to
+  // it, and its presence marks a returning visitor who skips the splash.
+  import { LAST_PERSONA_KEY, isPersona } from '../persona/personas';
+
+  document.addEventListener('astro:page-load', () => {
+    const segment = location.pathname.split('/')[2];
+    if (!isPersona(segment)) return;
+    try {
+      localStorage.setItem(LAST_PERSONA_KEY, segment);
+    } catch {
+      /* private mode / storage disabled — non-fatal */
+    }
+  });
+</script>

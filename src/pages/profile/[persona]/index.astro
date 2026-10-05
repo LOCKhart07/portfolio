@@ -1,0 +1,27 @@
+---
+import ProfileLayout from '../../../layouts/ProfileLayout.astro';
+import ProfileBanner from '../../../profilePage/ProfileBanner';
+import TopPicksRow from '../../../profilePage/TopPicksRow';
+import ContinueWatching from '../../../profilePage/ContinueWatching';
+import { getProfileBanner } from '../../../queries/getProfileBanner';
+import { backgroundGif } from '../../../persona/personaConfig';
+import { personaPaths, type ProfileType } from '../../../persona/personas';
+import '../../../profilePage/ProfilePage.css';
+
+export const getStaticPaths = personaPaths;
+
+const persona = Astro.params.persona as ProfileType;
+const bannerData = await getProfileBanner();
+---
+
+<ProfileLayout
+  persona={persona}
+  fullTitle="Jenslee Dsouza | Software Developer focused on Backend, AI & Web3"
+  description="Software developer focused on backend, AI, and Web3. I build scalable backend services, AI-powered applications, and decentralized Web3 systems, primarily with Python, Java, and Spring Boot."
+>
+  <div class="profile-page" style={`background-image: url(${backgroundGif[persona]})`}>
+    <ProfileBanner bannerData={bannerData} />
+  </div>
+  <TopPicksRow profile={persona} />
+  <ContinueWatching profile={persona} />
+</ProfileLayout>

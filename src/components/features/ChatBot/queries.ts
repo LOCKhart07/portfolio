@@ -1,5 +1,5 @@
 // import { Message } from './types';
-import { ChatHistory, ChatResponse } from './types';
+import type { ChatHistory, ChatResponse } from './types';
 
 const API_BASE_URL = process.env.REACT_APP_ASSISTANT_API_BASE_URL;
 

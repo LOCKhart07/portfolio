@@ -1,0 +1,19 @@
+---
+import ProfileLayout from '../../../layouts/ProfileLayout.astro';
+import Skills from '../../../components/sections/Skills';
+import { getSkills } from '../../../queries/getSkills';
+import { personaPaths, type ProfileType } from '../../../persona/personas';
+
+export const getStaticPaths = personaPaths;
+
+const persona = Astro.params.persona as ProfileType;
+const data = await getSkills();
+---
+
+<ProfileLayout
+  persona={persona}
+  title="Skills"
+  description="Technical skills across backend engineering, AI/LLM systems and Web3 — Python, Java, Spring Boot, FastAPI, LangChain, Solidity, Kubernetes and more."
+>
+  <Skills skills={data} />
+</ProfileLayout>

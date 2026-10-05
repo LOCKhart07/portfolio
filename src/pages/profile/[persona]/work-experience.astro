@@ -1,0 +1,19 @@
+---
+import ProfileLayout from '../../../layouts/ProfileLayout.astro';
+import WorkExperience from '../../../components/sections/WorkExperience';
+import { getTimeline } from '../../../queries/getTimeline';
+import { personaPaths, type ProfileType } from '../../../persona/personas';
+
+export const getStaticPaths = personaPaths;
+
+const persona = Astro.params.persona as ProfileType;
+const data = await getTimeline();
+---
+
+<ProfileLayout
+  persona={persona}
+  title="Work Experience"
+  description="Career timeline: backend, AI and Web3 roles — including building autonomous on-chain agents at Valory — plus the education that led there."
+>
+  <WorkExperience timeline={data} />
+</ProfileLayout>

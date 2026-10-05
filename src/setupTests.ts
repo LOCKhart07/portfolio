@@ -6,7 +6,11 @@ import { cleanup } from '@testing-library/react';
 
 // jsdom doesn't implement HTMLMediaElement.play(); NetflixTitle calls it on
 // mount. Stub it so the splash render doesn't emit "Not implemented" noise.
-window.HTMLMediaElement.prototype.play = () => Promise.resolve();
+// (Suites that render .astro components run in the node environment, where
+// there is no window.)
+if (typeof window !== 'undefined') {
+  window.HTMLMediaElement.prototype.play = () => Promise.resolve();
+}
 
 afterEach(() => {
   cleanup();

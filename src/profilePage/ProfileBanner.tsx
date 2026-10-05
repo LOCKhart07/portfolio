@@ -1,36 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './ProfileBanner.css';
 import PlayButton from '../components/common/PlayButton';
 import MoreInfoButton from '../components/common/MoreInfoButton';
-import { getProfileBanner } from '../queries/getProfileBanner';
-import { ProfileBanner as ProfileBannerType } from '../types/types';
-import { trackEvent } from '../hooks/usePageTracking';
+import type { ProfileBanner as ProfileBannerType } from '../types/types';
 
-const ProfileBanner: React.FC = () => {
-
-
-  const [bannerData, setBannerData] = useState<ProfileBannerType | null>(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      const data = await getProfileBanner();
-      setBannerData(data);
-    }
-    fetchData();
-  }, []);
-
-  if (!bannerData) return <div>Loading...</div>;
-
-  const handlePlayClick = () => {
-    trackEvent('Profile', 'Click Resume');
-    window.open(bannerData.resumeLink.url, '_blank');
-  };
-
-  const handleLinkedinClick = () => {
-    trackEvent('Profile', 'Click LinkedIn');
-    window.open(bannerData.linkedinLink, '_blank');
-  }
-
+// Rendered at build time from DatoCMS data; ships no JS.
+const ProfileBanner: React.FC<{ bannerData: ProfileBannerType }> = ({ bannerData }) => {
   return (
     <div className="profile-banner">
       <div className="banner-content">
@@ -40,8 +15,8 @@ const ProfileBanner: React.FC = () => {
         </p>
 
         <div className="banner-buttons">
-          <PlayButton onClick={handlePlayClick} label="Resume" />
-          <MoreInfoButton onClick={handleLinkedinClick} label="Linkedin" />
+          <PlayButton href={bannerData.resumeLink.url} label="Resume" track="Profile|Click Resume" />
+          <MoreInfoButton href={bannerData.linkedinLink} label="Linkedin" track="Profile|Click LinkedIn" />
         </div>
       </div>
     </div>

@@ -1,0 +1,19 @@
+---
+import ProfileLayout from '../../../layouts/ProfileLayout.astro';
+import Awards from '../../../components/sections/Awards';
+import { getAwards } from '../../../queries/getAwards';
+import { personaPaths, type ProfileType } from '../../../persona/personas';
+
+export const getStaticPaths = personaPaths;
+
+const persona = Astro.params.persona as ProfileType;
+const data = await getAwards();
+---
+
+<ProfileLayout
+  persona={persona}
+  title="Awards & Recognition"
+  description="Awards and recognitions earned throughout Jenslee Dsouza's career."
+>
+  <Awards awards={data} />
+</ProfileLayout>

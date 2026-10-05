@@ -2,8 +2,8 @@
 // that always points at whatever PDF is currently set in DatoCMS, instead
 // of a raw datocms-assets.com URL that changes if the asset is replaced.
 //
-// Runs before the SPA rewrite (like markdown.ts), so it intercepts /resume
-// directly with a 302 rather than booting React first.
+// No page exists at /resume, so this edge function answers it directly
+// with a 302 (like markdown.ts on "/").
 
 import type { Context } from 'https://edge.netlify.com';
 
@@ -52,8 +52,8 @@ export default async (request: Request, context: Context): Promise<Response> => 
     });
   } catch (error) {
     console.error(`resume edge function failed: ${error}`);
-    // Fall through to the normal SPA so a DatoCMS hiccup doesn't 500 —
-    // visitor lands on the 404 page instead of a broken redirect.
+    // Fall through so a DatoCMS hiccup doesn't 500 — the visitor lands on
+    // the site's 404 page instead of a broken redirect.
     return context.next();
   }
 };

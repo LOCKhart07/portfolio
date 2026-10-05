@@ -4,17 +4,17 @@ import '../../styles/ProfileCard.css';
 interface ProfileCardProps {
   name: string;
   image: string;
-  onClick: () => void;
+  href: string;
 }
 
-const ProfileCard: React.FC<ProfileCardProps> = ({ name, image, onClick }) => {
+const ProfileCard: React.FC<ProfileCardProps> = ({ name, image, href }) => {
   return (
-    <div className="profile-card" onClick={onClick}>
+    <a className="profile-card" href={href}>
       <div className="image-container">
         <img src={image} alt={`${name} profile`} className="profile-image" />
       </div>
       <h3 className="profile-name">{name}</h3>
-    </div>
+    </a>
   );
 };
 

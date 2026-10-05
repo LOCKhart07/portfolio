@@ -1,15 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import DOMPurify from 'dompurify';
 import { marked } from 'marked';
 import './ChatBot.css';
-import { StreamingMessage, ChatHistory } from './types';
+import type { StreamingMessage, ChatHistory } from './types';
 import { sendChatMessage, processStreamingResponse } from './queries';
 import { FaExpand, FaCompress, FaPaperPlane, FaMicrophone, FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
 import { FaTimes } from 'react-icons/fa';
-import { usePersona } from 'persona/PersonaContext';
-import { chatSuggestedQuestions } from 'persona/personaConfig';
+import { chatSuggestedQuestions, type ProfileType } from 'persona/personaConfig';
 import { getSpeechRecognitionConstructor, isSpeechSynthesisSupported, extractSpeakableChunks, stripMarkdownForSpeech, correctSpeechTranscript } from './voice';
 
 // Configure marked to use synchronous mode
@@ -22,8 +20,6 @@ const INITIAL_MESSAGE: StreamingMessage = {
     timestamp: new Date()
 };
 
-const HIDDEN_ROUTES = ['/', '/browse'];
-
 // Once the visitor opens the chat or dismisses the nudge we never nag again
 const NUDGE_DISMISSED_KEY = 'jenai_nudge_dismissed';
 const NUDGE_DELAY_MS = 4000;
@@ -34,9 +30,14 @@ const VOICE_OUTPUT_ENABLED_KEY = 'jenai_voice_output_enabled';
 const SpeechRecognitionCtor = getSpeechRecognitionConstructor();
 const voiceOutputSupported = isSpeechSynthesisSupported();
 
-const ChatBot: React.FC = () => {
-    const location = useLocation();
-    const { persona } = usePersona();
+interface ChatBotProps {
+    persona: ProfileType;
+}
+
+// Mounted only by ProfileLayout (so never on the splash or profile picker),
+// with transition:persist so an open conversation survives navigation. The
+// persona prop updates on each navigation, re-angling the starter prompts.
+const ChatBot: React.FC<ChatBotProps> = ({ persona }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [messages, setMessages] = useState<StreamingMessage[]>([INITIAL_MESSAGE]);
@@ -93,15 +94,15 @@ const ChatBot: React.FC = () => {
         if (voiceOutputSupported) window.speechSynthesis.cancel();
     }, [isOpen]);
 
-    // Slide the label pill out after a short delay, unless the chat is open,
-    // we're on a hidden route, or the visitor already dismissed/opened it.
+    // Slide the label pill out after a short delay, unless the chat is open
+    // or the visitor already dismissed/opened it.
     useEffect(() => {
-        if (nudgeDismissed || isOpen || HIDDEN_ROUTES.includes(location.pathname)) {
+        if (nudgeDismissed || isOpen) {
             return;
         }
         const timer = setTimeout(() => setShowNudge(true), NUDGE_DELAY_MS);
         return () => clearTimeout(timer);
-    }, [nudgeDismissed, isOpen, location.pathname]);
+    }, [nudgeDismissed, isOpen]);
 
     const dismissNudge = () => {
         setShowNudge(false);
@@ -256,11 +257,6 @@ const ChatBot: React.FC = () => {
     // Only a fresh conversation (just the greeting) offers starter prompts.
     const showSuggestions = messages.length === 1 && !isLoading;
     const isWaitingForReply = isLoading && messages[messages.length - 1]?.sender === 'user';
-
-    // Hide chatbot on specified routes
-    if (HIDDEN_ROUTES.includes(location.pathname)) {
-        return null;
-    }
 
     function markdownToHTML(text: string) {
         return DOMPurify.sanitize(marked(text, { breaks: true }) as string);

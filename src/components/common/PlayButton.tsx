@@ -1,14 +1,18 @@
 import React from 'react';
 import '../../styles/PlayButton.css';
 
+// A link styled as a Netflix button: it always opens an external URL, so a
+// real anchor works without JS. `track` becomes a data-track value for the
+// delegated analytics listener.
 interface PlayButtonProps {
-  onClick: () => void;
+  href: string;
   label?: string;
+  track?: string;
 }
 
-const PlayButton: React.FC<PlayButtonProps> = ({ onClick, label = "Play" }) => {
+const PlayButton: React.FC<PlayButtonProps> = ({ href, track, label = "Play" }) => {
   return (
-    <button className="play-button" onClick={onClick} type="button">
+    <a className="play-button" href={href} target="_blank" rel="noopener noreferrer" data-track={track}>
       <div className="icon-container">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +31,7 @@ const PlayButton: React.FC<PlayButtonProps> = ({ onClick, label = "Play" }) => {
       </div>
       <div className="spacer"></div>
       <span className="label">{label}</span>
-    </button>
+    </a>
   );
 };
 

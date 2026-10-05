@@ -24,3 +24,5 @@ yarn-debug.log*
 yarn-error.log*
 
 netflix-screenshots/
+# astro generated types
+.astro/
