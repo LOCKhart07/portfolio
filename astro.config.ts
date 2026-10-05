@@ -35,7 +35,9 @@ export default defineConfig({
   // Netlify serves a directory index only after a 301 to the trailing-slash
   // URL, which made every click two round trips; a .html file is served at
   // the slash-less URL our links use.
-  build: { format: 'file' },
+  // inlineStylesheets: page CSS is only ~5KB, so ship it inside the HTML
+  // instead of as <link>s that block first paint for an extra round trip.
+  build: { format: 'file', inlineStylesheets: 'always' },
   trailingSlash: 'never',
   integrations: [
     react(),
