@@ -47,7 +47,7 @@
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  animation: slideIn 0.5s ease forwards;
+  animation: pickCardSlideIn 0.5s ease forwards;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -109,7 +109,7 @@
   }
 }
 
-@keyframes slideIn {
+@keyframes pickCardSlideIn {
   from {
     opacity: 0;
     transform: translateX(-20px);
