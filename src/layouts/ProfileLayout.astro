@@ -7,13 +7,14 @@ import type { ProfileType } from '../persona/personas';
 interface Props {
   persona: ProfileType;
   title?: string;
+  fullTitle?: string;
   description?: string;
 }
 
-const { persona, title, description } = Astro.props;
+const { persona, title, fullTitle, description } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} fullTitle={fullTitle} description={description}>
   <slot name="head" slot="head" />
   <NavBar persona={persona} />
   <div class="content">

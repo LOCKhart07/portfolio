@@ -10,6 +10,10 @@ const persona = Astro.params.persona as ProfileType;
 const data = await getSkills();
 ---
 
-<ProfileLayout persona={persona} title="Skills">
+<ProfileLayout
+  persona={persona}
+  title="Skills"
+  description="Technical skills across backend engineering, AI/LLM systems and Web3 — Python, Java, Spring Boot, FastAPI, LangChain, Solidity, Kubernetes and more."
+>
   <Skills skills={data} />
 </ProfileLayout>

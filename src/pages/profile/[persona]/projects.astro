@@ -10,6 +10,10 @@ const persona = Astro.params.persona as ProfileType;
 const projects = await getProjects();
 ---
 
-<ProfileLayout persona={persona} title="Projects">
+<ProfileLayout
+  persona={persona}
+  title="Projects"
+  description="Selected projects spanning backend services, AI-powered applications and Web3/blockchain systems, built primarily with Python, Java and Spring Boot."
+>
   <Projects projects={projects} />
 </ProfileLayout>

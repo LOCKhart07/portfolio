@@ -10,6 +10,10 @@ const persona = Astro.params.persona as ProfileType;
 const data = await getQuotes();
 ---
 
-<ProfileLayout persona={persona} title="Quotes">
+<ProfileLayout
+  persona={persona}
+  title="Quotes"
+  description="Quotes that have shaped Jenslee Dsouza's professional journey and personal growth."
+>
   <Quotes quotes={data} />
 </ProfileLayout>
