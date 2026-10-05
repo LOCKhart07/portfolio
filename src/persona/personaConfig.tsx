@@ -41,9 +41,13 @@ export * from './personas';
 /** A card image already resized for the rows (see profile/[persona]/index.astro). */
 export interface CardImage {
   src: string;
+  srcSet: string;
   width: number;
   height: number;
 }
+
+// Cards render ~45vw wide on phones and ~250-300px on desktop.
+export const CARD_IMAGE_SIZES = '(max-width: 768px) 45vw, 300px';
 
 export const imageMap: Record<string, ImageMetadata> = {
   Skills,
@@ -61,12 +65,17 @@ export const imageMap: Record<string, ImageMetadata> = {
 // Small avatar shown in the navbar. Previously passed via router state
 // (location.state.profileImage), which is lost on refresh/deep-link; deriving
 // it from the persona keeps it correct everywhere.
-export const avatarMap: Record<ProfileType, string> = {
-  recruiter: blueImage.src,
-  engineer: greyImage.src,
-  collaborator: redImage.src,
-  explorer: yellowImage.src,
+export const avatarImages: Record<ProfileType, ImageMetadata> = {
+  recruiter: blueImage,
+  engineer: greyImage,
+  collaborator: redImage,
+  explorer: yellowImage,
 };
+
+// Full-size avatar URLs (profile picker cards render them up to 200px).
+export const avatarMap = Object.fromEntries(
+  Object.entries(avatarImages).map(([persona, img]) => [persona, img.src]),
+) as Record<ProfileType, string>;
 
 // Navbar contact CTA label. The link always routes to /contact-me; only the
 // wording changes so each persona gets a call-to-action in its own register.

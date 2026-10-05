@@ -1,8 +1,9 @@
 ---
+import { getImage } from 'astro:assets';
 import { FaHome, FaBriefcase, FaTools, FaProjectDiagram, FaEnvelope } from 'react-icons/fa';
 import 'styles/Navbar.css';
 import netflixLogo from 'images/logos/jenslee-netflix-logo.webp';
-import { avatarMap, contactCtaLabel, type ProfileType } from '../../persona/personaConfig';
+import { avatarImages, contactCtaLabel, type ProfileType } from '../../persona/personaConfig';
 
 interface Props {
   persona: ProfileType;
@@ -12,6 +13,15 @@ const { persona } = Astro.props;
 // Avatar and links derive from the persona URL segment, so they are right
 // on refresh and deep links.
 const base = `/profile/${persona}`;
+
+// The logo source is 619x111 and the avatar 200x200, but they render at 30px
+// tall / 30x30. Ship 2x renditions instead of the originals.
+const logo = await getImage({ src: netflixLogo, height: 60, format: 'webp' });
+const avatar = await getImage({ src: avatarImages[persona], width: 60, height: 60, format: 'webp' });
+// getImage defaults to loading="lazy"; both images are above the fold, and a
+// duplicate attribute wouldn't override it (HTML keeps the first), so drop it.
+const { loading: _logoLoading, ...logoAttrs } = logo.attributes;
+const { loading: _avatarLoading, ...avatarAttrs } = avatar.attributes;
 const links = [
   { href: base, label: 'Home', Icon: FaHome },
   { href: `${base}/work-experience`, label: 'Career', Icon: FaBriefcase },
@@ -25,7 +35,7 @@ const links = [
   <div class="navbar-left">
     {/* Anyone here has used a persona, so "/" would skip the splash anyway. */}
     <a href="/browse" class="navbar-logo">
-      <img src={netflixLogo.src} alt="Netflix" />
+      <img src={logo.src} {...logoAttrs} alt="Jenslee Dsouza" />
     </a>
     <ul class="navbar-links">
       {links.map(({ href, label }) => <li><a href={href}>{label}</a></li>)}
@@ -39,7 +49,7 @@ const links = [
       <div></div>
     </div>
     <a href="/browse" aria-label="Switch profile">
-      <img src={avatarMap[persona]} alt="Profile" class="profile-icon" />
+      <img src={avatar.src} {...avatarAttrs} alt="Profile" class="profile-icon" />
     </a>
   </div>
 </nav>
@@ -50,7 +60,7 @@ const links = [
 {/* Sidebar (only visible on mobile) */}
 <div class="sidebar">
   <div class="sidebar-logo">
-    <img src={netflixLogo.src} alt="Netflix Logo" />
+    <img src={logo.src} {...logo.attributes} alt="Jenslee Dsouza" />
   </div>
   <ul>
     {links.map(({ href, label, Icon }) => (

@@ -1,6 +1,6 @@
 import React from 'react';
 import './ContinueWatching.css';
-import { continueWatchingConfig, type CardImage, type ProfileType } from '../persona/personaConfig';
+import { continueWatchingConfig, CARD_IMAGE_SIZES, type CardImage, type ProfileType } from '../persona/personaConfig';
 
 interface ContinueWatchingProps {
   profile: ProfileType;
@@ -19,6 +19,8 @@ const ContinueWatching: React.FC<ContinueWatchingProps> = ({ profile, images }) 
             {/* Second row sits below the fold: don't compete with the hero. */}
             <img
               src={images[pick.title].src}
+              srcSet={images[pick.title].srcSet}
+              sizes={CARD_IMAGE_SIZES}
               width={images[pick.title].width}
               height={images[pick.title].height}
               alt={pick.title}

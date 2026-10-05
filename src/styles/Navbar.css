@@ -26,6 +26,7 @@
 
 .navbar-logo img {
   height: 30px;
+  width: auto;
   margin-right: 30px;
   margin-left: 10px;
   margin-top: 5px;
@@ -72,6 +73,7 @@
 @media (max-width: 768px) {
   .navbar-logo img {
     height: 20px;
+    width: auto;
     margin-right: auto;
   }
   .profile-icon {
@@ -139,6 +141,7 @@
 
   .sidebar-logo img {
     height: 30px;
+    width: auto;
     margin-bottom: 20px;
   }
 

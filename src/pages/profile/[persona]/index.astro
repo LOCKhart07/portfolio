@@ -16,13 +16,21 @@ const persona = Astro.params.persona as ProfileType;
 const bannerData = await getProfileBanner();
 const hero = heroBackground[persona];
 
-// Section art ships at up to 2070px wide; cards render at most 250px wide
-// (pick-card), so emit a 2x rendition (500px) instead of the original.
+// Section art ships at up to 2070px wide; cards render ~300px on desktop and
+// ~45vw on phones, so emit 300w/500w renditions and let srcset pick.
 const images: Record<string, CardImage> = Object.fromEntries(
   await Promise.all(
     Object.entries(imageMap).map(async ([title, src]) => {
-      const img = await getImage({ src, width: 500, format: 'webp', quality: 70 });
-      return [title, { src: img.src, width: Number(img.attributes.width), height: Number(img.attributes.height) }];
+      const img = await getImage({ src, width: 500, widths: [300, 500], format: 'webp', quality: 70 });
+      return [
+        title,
+        {
+          src: img.src,
+          srcSet: img.srcSet.attribute,
+          width: Number(img.attributes.width),
+          height: Number(img.attributes.height),
+        },
+      ];
     }),
   ),
 );

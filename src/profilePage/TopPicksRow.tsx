@@ -1,6 +1,6 @@
 import React from 'react';
 import './TopPicksRow.css';
-import { topPicksConfig, type CardImage, type ProfileType } from '../persona/personaConfig';
+import { topPicksConfig, CARD_IMAGE_SIZES, type CardImage, type ProfileType } from '../persona/personaConfig';
 
 interface TopPicksRowProps {
   profile: ProfileType;
@@ -23,6 +23,8 @@ const TopPicksRow: React.FC<TopPicksRowProps> = ({ profile, images }) => {
           >
             <img
               src={images[pick.title].src}
+              srcSet={images[pick.title].srcSet}
+              sizes={CARD_IMAGE_SIZES}
               width={images[pick.title].width}
               height={images[pick.title].height}
               alt={pick.title}
