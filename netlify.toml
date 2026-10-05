@@ -45,6 +45,34 @@
     [headers.values]
     Content-Type = "application/linkset+json"
 
+# MCP Server Card for the /mcp edge function. Canonical at
+# <mcp-url>/server-card (listed in /.well-known/ai-catalog.json); the
+# older /.well-known/mcp/server-card.json path is a rewrite onto it.
+# Allow-Origin/Methods already come from the "/*" rule above.
+[[headers]]
+  for = "/mcp/server-card"
+    [headers.values]
+    Content-Type = "application/mcp-server-card+json"
+    Cache-Control = "public, max-age=3600"
+    Access-Control-Expose-Headers = "ETag"
+
+[[headers]]
+  for = "/.well-known/mcp/server-card.json"
+    [headers.values]
+    Content-Type = "application/mcp-server-card+json"
+    Cache-Control = "public, max-age=3600"
+    Access-Control-Expose-Headers = "ETag"
+
+[[redirects]]
+  from = "/.well-known/mcp/server-card.json"
+  to = "/mcp/server-card"
+  status = 200
+
+[[headers]]
+  for = "/.well-known/ai-catalog.json"
+    [headers.values]
+    Content-Type = "application/ai-catalog+json"
+
 # Markdown for Agents: an edge function does Accept-based content
 # negotiation on the homepage. `Accept: text/markdown` -> markdown;
 # anything else falls through to the prerendered HTML.

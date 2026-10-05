@@ -1,0 +1,23 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/v1/server-card.schema.json",
+  "name": "in.lockhart.portfolio/jenai",
+  "title": "JenAI — Jenslee Dsouza",
+  "version": "1.0.0",
+  "description": "Ask JenAI, the assistant on Jenslee Dsouza's portfolio, about his experience, skills, projects and certifications, or list the portfolio's pages.",
+  "websiteUrl": "https://portfolio.lockhart.in/",
+  "repository": {
+    "url": "https://github.com/LOCKhart07/portfolio",
+    "source": "github"
+  },
+  "icons": [
+    { "src": "https://portfolio.lockhart.in/favicon.svg", "mimeType": "image/svg+xml", "sizes": ["any"] },
+    { "src": "https://portfolio.lockhart.in/android-chrome-512x512.png", "mimeType": "image/png", "sizes": ["512x512"] }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://portfolio.lockhart.in/mcp",
+      "supportedProtocolVersions": ["2025-11-25", "2025-06-18", "2025-03-26"]
+    }
+  ]
+}

@@ -30,7 +30,7 @@ Gotchas:
 - Path aliases are explicit in `tsconfig.json` (`images/*`, `persona/*`, `sounds/*`, `styles/*`).
 - DatoCMS edits only appear after a rebuild (a Netlify build hook triggered from DatoCMS). Queries are memoized per build in `datoCMSClient.ts`, so the four personas don't refetch the same data.
 
-Tests run on **Vitest** via Astro's `getViteConfig` (`vitest.config.ts`: jsdom, `src/setupTests.ts`), so they share the app's resolution. `.astro` components are tested with the Container API in `// @vitest-environment node` files (`src/components/common/NavBar.test.ts`). The test config pins `REACT_APP_GA_TRACKING_ID` to `G-TEST`. Suites: `src/persona/personas.test.ts`, `src/persona/personaConfig.test.ts`, `src/components/sections/Projects.test.tsx`, `src/components/common/NavBar.test.ts`, `src/lib/analytics.test.ts`, `src/components/features/ChatBot/voice.test.ts`.
+Tests run on **Vitest** via Astro's `getViteConfig` (`vitest.config.ts`: jsdom, `src/setupTests.ts`), so they share the app's resolution. `.astro` components are tested with the Container API in `// @vitest-environment node` files (`src/components/common/NavBar.test.ts`). The test config pins `REACT_APP_GA_TRACKING_ID` to `G-TEST`. Suites: `src/persona/personas.test.ts`, `src/persona/personaConfig.test.ts`, `src/components/sections/Projects.test.tsx`, `src/components/common/NavBar.test.ts`, `src/lib/analytics.test.ts`, `src/components/features/ChatBot/voice.test.ts`, `netlify/mcp.test.ts` (MCP Server Card vs. the `/mcp` edge function; keep tests out of `netlify/edge-functions/`, where every file deploys as a function).
 
 ## Environment variables
 

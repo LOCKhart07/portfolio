@@ -17,7 +17,7 @@ const SITE = 'https://portfolio.lockhart.in';
 
 // Newest first; a client asking for any of these gets it echoed back,
 // anything else is offered the newest (per the lifecycle negotiation rules).
-const PROTOCOL_VERSIONS = ['2025-11-25', '2025-06-18', '2025-03-26'];
+export const PROTOCOL_VERSIONS = ['2025-11-25', '2025-06-18', '2025-03-26'];
 
 const CORS_HEADERS = {
   'access-control-allow-origin': '*',
