@@ -29,6 +29,12 @@ export default defineConfig({
   site: 'https://portfolio.lockhart.in',
   output: 'static',
   outDir: './build',
+  // Emit /profile/recruiter/skills as skills.html, not skills/index.html.
+  // Netlify serves a directory index only after a 301 to the trailing-slash
+  // URL, which made every click two round trips; a .html file is served at
+  // the slash-less URL our links use.
+  build: { format: 'file' },
+  trailingSlash: 'never',
   integrations: [
     react(),
     {

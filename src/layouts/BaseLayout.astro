@@ -16,7 +16,9 @@ const { title, description = DEFAULT_DESCRIPTION } = Astro.props;
 const fullTitle = title ? `${title} | Jenslee Dsouza` : SITE_TITLE;
 // Personas render the same content in a different order, so every persona's
 // copy of a page points at the recruiter URL (the sitemap's crawl target).
-const canonicalPath = Astro.url.pathname.replace(/^\/profile\/[^/]+/, '/profile/recruiter');
+// build.format 'file' makes the pathname end in .html; public URLs don't.
+const publicPath = Astro.url.pathname.replace(/(\/index)?\.html$/, '') || '/';
+const canonicalPath = publicPath.replace(/^\/profile\/[^/]+/, '/profile/recruiter');
 const canonical = new URL(canonicalPath, Astro.site).href;
 const ogImage = new URL('/og-image.jpg', Astro.site).href;
 
