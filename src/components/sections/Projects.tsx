@@ -1,7 +1,7 @@
 import React from 'react';
 import './Projects.css';
-import { FaReact, FaNodeJs, FaAws, FaDatabase, FaDocker, FaAngular, FaGithub, FaGitlab, FaGoogle, FaJava, FaJenkins, FaMicrosoft, FaPython, FaVuejs, FaYoutube, FaJs, FaSatelliteDish, FaMicrochip } from 'react-icons/fa';
-import { SiRubyonrails, SiPostgresql, SiMongodb, SiMaterialdesign, SiHtml5, SiCss3, SiJquery, SiAwsamplify, SiFirebase, SiTerraform, SiArgo, SiFlask, SiNginx, SiOracle, SiCloudflare, SiSelenium, SiGoogletranslate, SiFirefox, SiRider, SiSpotify, SiFastapi, SiRedis, SiGooglegemini, SiLangchain, SiDatocms, SiKotlin, SiAndroid, SiGradle, SiGithubactions, SiSqlite, SiSocketdotio, SiTypescript, SiSvelte, SiHono, SiDrizzle, SiTailwindcss } from 'react-icons/si';
+import { FaReact, FaNodeJs, FaAws, FaDatabase, FaDocker, FaAngular, FaGithub, FaGitlab, FaGoogle, FaJava, FaJenkins, FaMicrosoft, FaPython, FaVuejs, FaYoutube, FaJs, FaSatelliteDish, FaMicrochip, FaCogs } from 'react-icons/fa';
+import { SiRubyonrails, SiPostgresql, SiMongodb, SiMaterialdesign, SiHtml5, SiCss3, SiJquery, SiAwsamplify, SiFirebase, SiTerraform, SiArgo, SiFlask, SiNginx, SiOracle, SiCloudflare, SiSelenium, SiGoogletranslate, SiFirefox, SiRider, SiSpotify, SiFastapi, SiRedis, SiGooglegemini, SiLangchain, SiDatocms, SiKotlin, SiAndroid, SiGradle, SiGithubactions, SiSqlite, SiSocketdotio, SiTypescript, SiSvelte, SiHono, SiDrizzle, SiTailwindcss, SiAstro } from 'react-icons/si';
 import type { Project } from '../../types/types';
 import { GrDeploy, GrKubernetes } from "react-icons/gr";
 
@@ -96,7 +96,9 @@ const techIcons: { [key: string]: JSX.Element } = {
   'SQLite': <SiSqlite />,
   'Drizzle': <SiDrizzle />,
   'Tailwind': <SiTailwindcss />,
-  'Cloudflare R2': <SiCloudflare />
+  'Cloudflare R2': <SiCloudflare />,
+  'Astro': <SiAstro />,
+  'Web Workers': <FaCogs />
 };
 
 
